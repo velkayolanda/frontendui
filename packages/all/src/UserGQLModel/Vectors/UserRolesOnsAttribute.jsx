@@ -149,7 +149,7 @@ export const UserRolesonsAttributeInfinite = ({user}) => {
     return (
         <InfiniteScroll 
             Visualiser={'RolesonMediumCard'} 
-            actionParams={{skip: 0, limit: 10}}
+            actionParams={{...user, skip: 0, limit: 10}}
             asyncAction={UserRolesonsAttributeAsyncAction}
         />
     )

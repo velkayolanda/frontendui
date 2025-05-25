@@ -153,10 +153,10 @@ export const authorizedFetch2 = async (path, params = {}, options = {}) => {
         }
     }
     // console.log("starting batching")
-    const batchKey = getBatchKey({ body: fetchParams.body, ast });
-    if (batchKey) {
-        return enqueueBatchedRequest(batchKey, overridenPath, fetchParams);
-    } 
+    // const batchKey = getBatchKey({ body: fetchParams.body, ast });
+    // if (batchKey) {
+    //     return enqueueBatchedRequest(batchKey, overridenPath, fetchParams);
+    // } 
 
     // Perform the fetch request
     let fetchResponse = null

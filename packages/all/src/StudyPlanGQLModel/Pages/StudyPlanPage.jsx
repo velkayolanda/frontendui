@@ -1,5 +1,6 @@
 import { useParams } from "react-router"
 import { StudyPlanPageContentLazy } from "./StudyPlanPageContentLazy"
+import { StudyPlanPivotTable } from "../Components/StudyPlanPivotTable"
 
 /**
  * A page component for displaying lazy-loaded content of a studyplan entity.
@@ -42,6 +43,7 @@ export const StudyPlanPage = ({children}) => {
     const studyplan = {id}
     return (
         <StudyPlanPageContentLazy studyplan={studyplan}>
+            <StudyPlanPivotTable studyplan={studyplan} editable={false} />
             {children}
         </StudyPlanPageContentLazy>
     )

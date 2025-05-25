@@ -1,4 +1,4 @@
-import { useAsyncAction, createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
+import { useAsyncAction, createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult, createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"
 import { ErrorHandler, InfiniteScroll, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { use, useEffect } from "react";
 
@@ -66,13 +66,16 @@ query TemplateQueryRead($id: UUID!, $where: VectorInputFilter, $skip: Int, $limi
         vectors(skip: $skip, limit: $limit, where: $where) {
             __typename
             id
+            # ...TemplateMedium
         }
     }
 }
 `
 
 const TemplateVectorsAttributeAsyncAction = createAsyncGraphQLAction(
-    TemplateVectorsAttributeQuery,
+    createQueryStrLazy(TemplateVectorsAttributeQuery,
+        //TemplateMediumFragment
+    ),
     processVectorAttributeFromGraphQLResult("vectors")
 )
 

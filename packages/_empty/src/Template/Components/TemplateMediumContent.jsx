@@ -26,10 +26,6 @@ export const TemplateMediumContent = ({template, children}) => {
     return (
         <>
             <Row>
-                <Col>Program</Col>
-                <Col><ProgramLink program={student?.program} /></Col>
-            </Row>
-            <Row>
                 <Col>JSON</Col>
                 <Col><pre>{JSON.stringify(template, null, 2)}</pre></Col>
             </Row>

@@ -63,6 +63,7 @@ export const StudyPlanLiveEdit = ({studyplan, children, asyncAction=StudyPlanUpd
             <StudyPlanMediumEditableContent studyplan={entity} onChange={onChange_} onBlur={onChange_} >
                 <StudyPlanPivotTable studyplan={entity} onChange={onChange_} onBlur={onChange_} editable={true}/>
                 {children}
+                <button className="btn btn-outline-success form-control">Přidat lekci</button>
             </StudyPlanMediumEditableContent>
             {/* <StudyPlanPivotTable studyplan={entity} onChange={onChange_} onBlur={onChange_} editable={true}/> */}
         </>)}

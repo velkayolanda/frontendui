@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import Card from "react-bootstrap/Card";
 import {useEffect} from 'react'
+import { SimpleCardCapsule } from "./SimpleCardCapsule";
 
 /**
  * shared module.
@@ -26,7 +27,7 @@ import {useEffect} from 'react'
  *   <p>This is some content inside the card.</p>
  * </CardCapsule>
  */
-export const CardCapsule = ({title="", children=null, id=null}) => {
+export const CardCapsule_ = ({title="", children=null, id=null}) => {
     useEffect(() => {
         if (!id) return
         const hash = window?.location?.hash; // Get the hash from the URL
@@ -61,3 +62,4 @@ export const CardCapsule = ({title="", children=null, id=null}) => {
     )
 }
     
+export const CardCapsule = SimpleCardCapsule

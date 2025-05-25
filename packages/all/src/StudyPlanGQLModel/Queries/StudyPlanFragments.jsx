@@ -138,6 +138,10 @@ fragment StudyPlanLargeFragment on StudyPlanGQLModel {
     nameEn
     length
     eventId
+    event {
+      id
+      name
+    }
     topicId
     lessontypeId
     lessontype {

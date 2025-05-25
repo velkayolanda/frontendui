@@ -12,6 +12,7 @@ import { LessonAddGroupAsyncAction, LessonRemoveGroupAsyncAction } from "../Quer
 import { StudyPlanLessonUpdateAsyncAction } from "../../StudyPlanLessonGQLModel"
 import { LessonTypeReadPageAsyncAction } from "../../LessonTypeGQLModel/Queries/LessonTypeReadPageAsyncAction"
 import { TopicLink } from "../../TopicGQLModel"
+import { EventLink } from "../../EventGQLModel"
 
 /**
  * DialogSelectWithAsyncAction
@@ -240,6 +241,12 @@ const StudyPlanPivotTableHeader = ({studyplan, instructors, groups, facilities, 
                         asyncAction={FacilityReadPageAsyncAction}
                         calcWhere={(pattern) => ({"name": {"_ilike": `%${pattern}%`}})}
                     />}
+                </th>
+                <th 
+                    rowSpan={2}
+                    style={{ writingMode: "vertical-rl", verticalAlign: "middle", transform: "rotate(180deg)", textAlign: "center"}}
+                >
+                    Událost
                 </th>
             </tr>
             <tr>
@@ -493,6 +500,8 @@ const StudyPlanPivotInstructorSegmentRow = ({lesson, instructors, editable}) => 
 const StudyPlanPivotTableRow = ({lesson, instructors, groups, facilities, editable}) => {
     const { loading, error, fetch } = useAsyncAction(StudyPlanLessonUpdateAsyncAction, lesson, {deferred: true})
     const { handleChange } = useDelayedModelUpdate(lesson, fetch)
+    //useRemoteState
+    //useBackendState
     return (<tr>
         <th scope="row">
             {loading && <LoadingSpinner />}
@@ -520,7 +529,17 @@ const StudyPlanPivotTableRow = ({lesson, instructors, groups, facilities, editab
             />
         </td>
         <td>
-            <TopicLink topic={{id: lesson?.topicId, name: "akr"}} />
+            <Input 
+                id="length"
+                type="number" 
+                className="form-control" 
+                defaultValue={lesson?.length} 
+                disabled={!editable}
+                onChange={handleChange}
+                style={{ width: '8ch' }}
+                // onBlur={(handleChange)}
+            />
+            {/* <TopicLink topic={{id: lesson?.topicId, name: "akr"}} /> */}
             {/* <Input 
                 id="description"
                 type="text" 
@@ -555,6 +574,10 @@ const StudyPlanPivotTableRow = ({lesson, instructors, groups, facilities, editab
         <td></td>
         <StudyPlanPivotFacilitySegmentRow lesson={lesson} facilities={facilities} editable={editable}/>
         <td></td>
+        <td>
+            {lesson?.event && <EventLink event={lesson?.event} /> }
+            {lesson?.event?.id}
+        </td>
     </tr>)
 }
 
@@ -661,7 +684,8 @@ const gatherLessonsSummary = (studyplan) => {
     const {lessons=[]} = studyplan
     lessons.forEach(
         lesson => {
-            const {id="unknown", lessontype={id: "unknonw", name: "unknown"}, sum=0} = lesson
+            const id = lesson?.lessontype?.id || "uknown"
+            const {lessontype={id: "unknonw", name: "unknown"}, sum=0} = lesson
             const currentValue = (result[id] || {id, lessontype, sum})
             result[id] = {...currentValue, sum: currentValue.sum + (lesson?.length || 0)}
         }
@@ -671,17 +695,51 @@ const gatherLessonsSummary = (studyplan) => {
 
 const StudyPlanPivotTableFooter = ({studyplan, instructors, groups, facilities, children, editable, ...props}) => {
     const lessonTypesMap = gatherLessonsSummary(studyplan)
-    return (<>{Object.values(lessonTypesMap).map(
+    const total = Object.values(lessonTypesMap).map( r => r?.sum).reduce((a, v)=> a + v)
+    return (<tfoot>{Object.values(lessonTypesMap).map(
         lessontype => <tr key={lessontype?.lessontype?.id}>
-                <th colSpan={3} >{lessontype?.lessontype?.name}</th>
-                <td>{lessontype?.sum}</td>
-                <td colSpan={groups?.length+1}></td>
-                <td colSpan={instructors?.length+1}></td>
-                <td colSpan={facilities?.length+1}></td>
-                <td></td>
+                <th colSpan={2}></th>
+                <td className="text-center">{lessontype?.sum}</td>
+                <th
+                    colSpan={1+
+                        groups?.length+1 + 
+                        instructors?.length+1 + 
+                        facilities?.length+1 +
+                        1
+                    }
+                >
+                    {lessontype?.lessontype?.name}
+                </th>
             </tr>
         )}
-    </>)
+        <tr className="bg-light">
+            <th colSpan={2} className="text-center"></th>
+            <td className="text-center">{total}</td>
+            <th 
+                scope="row" 
+                colSpan={1+
+                    groups?.length+1 + 
+                    instructors?.length+1 + 
+                    facilities?.length+1 +
+                    1
+                }
+            >
+                celkem
+            </th>
+        </tr>
+        {children && <tr>
+            <th scope="row" colSpan={(
+                5+
+                groups?.length+1+
+                instructors?.length+1+
+                facilities?.length+1
+                +1
+                )}
+            >
+                {children}
+            </th>
+        </tr>}
+    </tfoot>)
 }
 
 
@@ -750,7 +808,7 @@ export const StudyPlanPivotTable = ({studyplan, editable, children, ...props}) =
                 facilities={facilities} 
                 editable={editable}
             >
-                {children}
+                
             </StudyPlanPivotTableBody>
             <StudyPlanPivotTableFooter 
                studyplan={studyplan} 
@@ -760,10 +818,11 @@ export const StudyPlanPivotTable = ({studyplan, editable, children, ...props}) =
                 onAddFacility={onAddFacility}
                 onAddGroup={onAddGroup}
                 onAddInstructor={onAddInstructor}
-                editable={editable}>
-
+                editable={editable}
+            >
+                {children}
             </StudyPlanPivotTableFooter>
-            
+
         </table>
     )
 }

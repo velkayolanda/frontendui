@@ -1,6 +1,7 @@
-import { createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
+import { createAsyncGraphQLAction, createQueryStrLazy, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
 import { InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import { UserLink, UserMediumCard } from "../../UserGQLModel";
+import { Col, Row } from "react-bootstrap";
 
 
 /**
@@ -59,6 +60,49 @@ const followUpGroupMembershipItemDelete = (group, membershipItem, dispatch) => {
 };
 
 
+const GroupMembershipsAttributeQuery = `
+query GroupQueryRead($id: UUID!, $where: MembershipInputWhereFilter, $skip: Int, $limit: Int) {
+    result: groupById(id: $id) {
+        __typename
+        id
+        memberships(skip: $skip, limit: $limit, where: $where) {
+            __typename
+            id
+            lastchange
+            created
+            createdbyId
+            changedbyId
+            rbacobjectId
+            userId
+            user {
+                __typename
+                id
+                fullname
+                email
+                rolesOn {
+                    user {
+                        id
+                        fullname
+                        email
+                    }
+                }
+                roles {
+                    id
+                }
+            }
+            groupId
+            startdate
+            enddate
+        }
+    }
+}
+`
+
+const GroupMembershipsAttributeAsyncAction = createAsyncGraphQLAction(
+    createQueryStrLazy(GroupMembershipsAttributeQuery),
+    processVectorAttributeFromGraphQLResult("memberships")
+)
+
 /**
  * A component for displaying the `memberships` attribute of an group entity.
  *
@@ -85,58 +129,60 @@ const followUpGroupMembershipItemDelete = (group, membershipItem, dispatch) => {
  *
  * <GroupMembershipsAttribute group={groupEntity} />
  */
-export const GroupMembershipsAttribute = ({group}) => {
+export const GroupMembershipsAttribute = ({group, Visualiser=UserLink}) => {
     const { memberships } = group
+    // console.log('GroupMembershipsAttribute', memberships)
     if (typeof memberships === 'undefined') return null
     return (
         <>
             {memberships.map(
                 membership => <div id={membership.id} key={membership.id}>
-                    {membership?.user && (
-                        <UserLink user={membership.user}>
-                            {/* {JSON.stringify(membership)} */}
-                        </UserLink>
-                    )}
+                    {membership?.user && <Visualiser user={membership?.user} />}
                 </div>
             )}
         </>
     )
 }
 
-const GroupMembershipsAttributeQuery = `
-query GroupQueryRead($id: id, $where: MembershipInputFilter, $skip: Int, $limit: Int) {
-    result: groupById(id: $id) {
-        __typename
-        id
-        memberships(skip: $skip, limit: $limit, where: $where) {
-            __typename
-            id
-            lastchange
-            created
-            createdbyId
-            changedbyId
-            rbacobjectId
-            userId
-            groupId
-            startdate
-            enddate
-        }
-    }
+export const GroupMembershipsAttributeCards = ({group, Visualiser=UserMediumCard}) => {
+    const { memberships } = group
+    // console.log('GroupMembershipsAttributeCards', memberships)
+    if (typeof memberships === 'undefined') return null
+    return (
+        <Row>
+            {memberships.map(
+                membership => <Col id={membership.id} key={membership.id}>
+                    {membership?.user && <Visualiser user={membership?.user} />}
+                </Col>
+            )}
+        </Row>
+    )
 }
-`
 
-const GroupMembershipsAttributeAsyncAction = createAsyncGraphQLAction(
-    GroupMembershipsAttributeQuery,
-    processVectorAttributeFromGraphQLResult("memberships")
-)
+const Visualiser = ({items}) => <GroupMembershipsAttribute group={{memberships: items}} />
+const VisualiserCards = ({items}) => <GroupMembershipsAttributeCards group={{memberships: items}} />
 
 export const GroupMembershipsAttributeInfinite = ({group}) => { 
-    const {memberships} = group
+    const {memberships=[]} = group
 
     return (
         <InfiniteScroll 
-            Visualiser={'MembershipMediumCard'} 
-            actionParams={{skip: 0, limit: 10}}
+            Visualiser={Visualiser} 
+            preloadedItems={memberships}
+            actionParams={{...group, skip: 0, limit: 10}}
+            asyncAction={GroupMembershipsAttributeAsyncAction}
+        />
+    )
+}
+
+export const GroupMembershipsAttributeCardsInfinite = ({group}) => { 
+    const {memberships=[]} = group
+
+    return (
+        <InfiniteScroll 
+            Visualiser={VisualiserCards} 
+            preloadedItems={memberships}
+            actionParams={{...group, skip: 0, limit: 10}}
             asyncAction={GroupMembershipsAttributeAsyncAction}
         />
     )

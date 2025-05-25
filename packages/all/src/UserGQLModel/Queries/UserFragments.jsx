@@ -100,7 +100,7 @@ fragment UserLargeFragment on UserGQLModel {
     startdate
     enddate
   }
-  r: roles {
+  roles {
     __typename
     id
     lastchange
@@ -114,7 +114,7 @@ fragment UserLargeFragment on UserGQLModel {
     userId
     groupId
   }
-  rOn: rolesOn {
+  rolesOn {
     __typename
     id
     lastchange

@@ -17,8 +17,8 @@ import Col from "react-bootstrap/Col"
  * 
  * @returns {JSX.Element} A React-Bootstrap column (`Col`) with the specified children.
  */
-export const MiddleColumn = ({children}) => {
+export const MiddleColumn = ({children, ...props}) => {
     return (
-        <Col xl={9} md={12}>{children}</Col> 
+        <Col xl={9} md={12} {...props}>{children}</Col> 
     )
 }

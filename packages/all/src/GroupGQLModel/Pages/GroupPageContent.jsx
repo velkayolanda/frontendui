@@ -1,7 +1,7 @@
 import { HashContainer } from "@hrbolek/uoisfrontend-shared"
 import { GroupLargeCard } from "../Components"
 import { GroupPageNavbar } from "./GroupPageNavbar"
-import { GroupMembershipsAttribute } from "../Vectors/GroupMembershipsAttribute"
+import { GroupMembershipsAttribute, GroupMembershipsAttributeCardsInfinite, GroupMembershipsAttributeInfinite } from "../Vectors/GroupMembershipsAttribute"
 import { GroupCardCapsule } from "../Components"
 import { GroupSubgroupsAttribute } from "../Vectors/GroupSubgroupsAttribute"
 import { GroupAccreditedprogramsAttribute } from "../Vectors/GroupAccreditedProgramsAttribute"
@@ -29,9 +29,10 @@ export const GroupPageContent = ({group, children, ...props}) => {
     return (<>
         <GroupPageNavbar group={group} />
         <GroupLargeCard group={group} {...props} >
-            <HashContainer firstAsDefault={false}>
+            <GroupMembershipsAttributeCardsInfinite id="administration" group={group} />
+            {/* <HashContainer firstAsDefault={false}>
                 <GroupCardCapsule id="administration" group={group} >
-                    <GroupMembershipsAttribute id="administration" group={group} />
+                    <GroupMembershipsAttributeInfinite id="administration" group={group} />
                 </GroupCardCapsule>
                 <GroupCardCapsule id="administration" group={group} >
                     <GroupSubgroupsAttribute id="administration" group={group} />
@@ -39,8 +40,8 @@ export const GroupPageContent = ({group, children, ...props}) => {
                 <GroupCardCapsule id="education" group={group} >
                     <GroupAccreditedprogramsAttribute id="education" group={group} />
                 </GroupCardCapsule>
-            </HashContainer>
-            {JSON.stringify(group?.memberships)}
+            </HashContainer> */}
+            {/* {JSON.stringify(group?.memberships)} */}
             {children}
         </GroupLargeCard>
     </>)

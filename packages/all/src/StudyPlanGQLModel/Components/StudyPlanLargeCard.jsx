@@ -1,7 +1,22 @@
 import Row from "react-bootstrap/Row"
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { StudyPlanCardCapsule } from "./StudyPlanCardCapsule"
 import { StudyPlanMediumCard } from "./StudyPlanMediumCard"
+import { useState } from "react"
+
+const styles = {
+  switchButton: {
+    position: "absolute",
+    top: "50vh",
+    left: "-14px",
+    transform: "translateY(-50vh)",
+    height: "90vh",     // nebo nějaká fixní výška, pokud chceš
+    maxHeight: "90vh",  // max 90 % výšky okna
+    padding: "0 8px",
+  }
+}
+
 
 /**
  * A large card component for displaying detailed content and layout for an studyplan entity.
@@ -28,16 +43,19 @@ import { StudyPlanMediumCard } from "./StudyPlanMediumCard"
  * </StudyPlanLargeCard>
  */
 export const StudyPlanLargeCard = ({studyplan, children}) => {
+    const [showLeft, setShowLeft] = useState(true)
     return (
         <StudyPlanCardCapsule studyplan={studyplan} >
+            <button className="btn btn-sm btn-outline-light" style={styles.switchButton} onClick={()=>setShowLeft(!showLeft)}>{showLeft ? <ChevronLeft /> : <ChevronRight />}</button> <br />
             <Row>
-                <LeftColumn>
+                {showLeft && <LeftColumn>
                     <StudyPlanMediumCard studyplan={studyplan}/>
-                </LeftColumn>
-                <MiddleColumn>
+                </LeftColumn>}
+                <MiddleColumn xl={showLeft?9:12}>
                     {children}
                 </MiddleColumn>
             </Row>
+            {/* {!showLeft && <>{children}</>} */}
         </StudyPlanCardCapsule>
     )
 }

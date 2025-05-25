@@ -51,7 +51,7 @@ export const processVectorAttributeFromGraphQLResult = (vectorname) => {
             }
 
             if (!result || !Array.isArray(result[vectorname])) {
-                console.warn(`processVectorAttributeFromGraphQLResult: No valid vector '${vectorname}' found in the result`);
+                console.warn(`processVectorAttributeFromGraphQLResult: No valid vector '${vectorname}' found in the result`, data);
                 return next(jsonResult);
             }
 

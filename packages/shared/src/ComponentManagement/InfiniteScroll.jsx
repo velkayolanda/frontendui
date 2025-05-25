@@ -76,7 +76,7 @@ export const InfiniteScroll = ({
     actionParams, 
     asyncAction, 
     Visualiser,
-    calculateNewFilter = (oldfilter) => ({...oldfilter, skip: oldfilter.skip + oldfilter.limit || 10, limit: oldfilter.limit || 10}),
+    calculateNewFilter = (oldfilter) => ({...oldfilter, skip: (oldfilter.skip || 0) + (oldfilter.limit || 10), limit: oldfilter.limit || 10}),
     children,
     onAll = () => null,
     ...props

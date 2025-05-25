@@ -58,13 +58,13 @@ export const GroupPageContentLazy = ({ group, children }) => {
               : children}
           </GroupPageContent>
         )}
-        <hr />
+        {/* <hr />
         {JSON.stringify(group)}
         <hr />
         {JSON.stringify(dispatchResult)}
         <hr />
         {JSON.stringify(entity)}
-        <hr />
+        <hr /> */}
       </>
     )
 }

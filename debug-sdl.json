@@ -7197,7 +7197,7 @@
           },
           "defaultValue": {
             "kind": "StringValue",
-            "value": "a5ef7e37-4334-45e1-aa5d-fc3b3a17d23f",
+            "value": "d9db7d9c-eb31-4aee-87cf-38c6ca5f64e2",
             "block": false
           },
           "directives": []
@@ -11513,7 +11513,7 @@
           },
           "defaultValue": {
             "kind": "StringValue",
-            "value": "63a01dbd-bd33-4ea8-be0c-df10939275d5",
+            "value": "1700c732-2699-4a3d-a97b-2bd9c18b2c09",
             "block": false
           },
           "directives": []
@@ -40559,7 +40559,7 @@
           },
           "defaultValue": {
             "kind": "StringValue",
-            "value": "a0c62f8b-14e0-4319-bec5-803600939cc1",
+            "value": "0f7bc526-0517-45d1-97af-1013a1dd5ef5",
             "block": false
           },
           "directives": []
@@ -105409,7 +105409,7 @@
           },
           "defaultValue": {
             "kind": "StringValue",
-            "value": "2025-05-20T04:34:40.043225",
+            "value": "2025-05-24T18:39:07.894075",
             "block": false
           },
           "directives": []
@@ -125894,6 +125894,27 @@
         },
         {
           "kind": "FieldDefinition",
+          "description": {
+            "kind": "StringValue",
+            "value": "type of the lesson",
+            "block": true
+          },
+          "name": {
+            "kind": "Name",
+            "value": "lessontype"
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "LessonTypeGQLModel"
+            }
+          },
+          "directives": []
+        },
+        {
+          "kind": "FieldDefinition",
           "name": {
             "kind": "Name",
             "value": "linkedWithId"
@@ -127473,6 +127494,29 @@
           "kind": "InputValueDefinition",
           "description": {
             "kind": "StringValue",
+            "value": "order in plan",
+            "block": true
+          },
+          "name": {
+            "kind": "Name",
+            "value": "order"
+          },
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Int"
+            }
+          },
+          "defaultValue": {
+            "kind": "NullValue"
+          },
+          "directives": []
+        },
+        {
+          "kind": "InputValueDefinition",
+          "description": {
+            "kind": "StringValue",
             "value": "optional client generated primary key value",
             "block": true
           },
@@ -128337,6 +128381,29 @@
           "name": {
             "kind": "Name",
             "value": "length"
+          },
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Int"
+            }
+          },
+          "defaultValue": {
+            "kind": "NullValue"
+          },
+          "directives": []
+        },
+        {
+          "kind": "InputValueDefinition",
+          "description": {
+            "kind": "StringValue",
+            "value": "order in plan",
+            "block": true
+          },
+          "name": {
+            "kind": "Name",
+            "value": "order"
           },
           "type": {
             "kind": "NamedType",

@@ -46,3 +46,50 @@ export const useDelayedModelUpdate = (initialData, onSubmit) => {
 
   return { state, setState, handleChange };
 };
+
+
+/**
+ * A custom React state hook with debounced async updates and form input integration.
+ *
+ * Behaves similarly to `useState`, but updates are debounced and sent via a provided async `onSubmit` function.
+ * Also includes a `handleChange` function suitable for form inputs with `id` and `value`.
+ *
+ * @function useRemoteState
+ * @param {Object} initialValue - The initial model value.
+ * @param {Function} onSubmit - Async function that receives updated state and returns the confirmed value.
+ *
+ * @returns {[Object, Function, Function]} Tuple of:
+ *   - `state`: current local state,
+ *   - `setRemoteState`: function to trigger update,
+ *   - `handleChange`: input handler (e.g., for `<input onChange={handleChange}>`)
+ *
+ * @example
+ * const [user, setUser, handleUserChange] = useRemoteState(userData, updateUserAsync);
+ *
+ * return (
+ *   <input id="name" value={user.name} onChange={handleUserChange} />
+ * );
+ */
+export const useRemoteState = (initialValue, onSubmit) => {
+  const [state, setState] = useState(initialValue);
+  const [delayer] = useState(() => CreateDelayer());
+
+  const setRemoteState = (next) => {
+    const newState = typeof next === 'function' ? next(state) : next;
+
+    delayer(async () => {
+      const updated = await onSubmit(newState);
+      setState(updated);
+    });
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    if (state[id] === value) return;
+
+    const newState = { ...state, [id]: value };
+    setRemoteState(newState)
+  };
+
+  return [state, setRemoteState, handleChange];
+};
