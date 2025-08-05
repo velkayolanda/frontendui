@@ -33,10 +33,11 @@ export const DigitalFormFieldMediumEditableContent = ({digitalformfield, onChang
             <Input id={"order"} type="number" label={"Pořadí"} className="form-control" defaultValue={digitalformfield?.order|| 1} onChange={onChange} onBlur={onBlur} />
             <Input id={"required"} type="text" label={"Nutná"} className="form-control" defaultValue={digitalformfield?.required|| false} onChange={onChange} onBlur={onBlur} />
 
-            <Select id={"typeId"} label={"Typ položky"} className="form-control" defaultValue={digitalformfield?.typeId} >
+            <Select id={"typeId"} label={"Typ položky"} className="form-control" defaultValue={digitalformfield?.typeId}  onChange={onChange} onBlur={onBlur} >
                 <option value="e8559764-38de-413d-8378-822bc31cdbdd">Číslo</option>
                 <option value="eed38692-157c-479c-97f6-eafe244acd1d">Datum</option>
                 <option value="cc335bb5-4e4e-40ce-8dc1-e7bfedf4d3cf">Text</option>
+                <option value="8c4bc85a-39ad-4a9b-a36f-706f404cdadd">Checkbox</option>
             </Select>
             {children}
         </>

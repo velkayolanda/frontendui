@@ -1,4 +1,5 @@
 import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared";
+import { FormSectionWithFieldsFragment } from "../../DigitalFormFieldGQLModel/Queries";
 
 export const DigitalFormLinkFragment = createQueryStrLazy(`
 fragment DigitalFormLinkFragment on DigitalFormGQLModel {
@@ -101,8 +102,29 @@ fragment DigitalFormMediumFragment on DigitalFormGQLModel {
 }
 `, DigitalFormLinkFragment);
 
+export const DigitalFormSectionsFragment = createQueryStrLazy(`
+fragment DigitalFormSectionsFragment on DigitalFormGQLModel {
+  __typename
+  sections(limit: 1000) {
+    ...FormSectionWithFieldsFragment
+    sections(limit: 100) {
+      ...FormSectionWithFieldsFragment
+      sections(limit: 100) {
+        ...FormSectionWithFieldsFragment
+        sections(limit: 100) {
+          ...FormSectionWithFieldsFragment
+        }
+      }
+    }
+  }
+}
+  `, FormSectionWithFieldsFragment)
+
 export const DigitalFormLargeFragment = createQueryStrLazy(`
 fragment DigitalFormLargeFragment on DigitalFormGQLModel {
   ...DigitalFormMediumFragment
+  ...DigitalFormSectionsFragment
 }
-`, DigitalFormMediumFragment);
+
+`, DigitalFormMediumFragment, FormSectionWithFieldsFragment, DigitalFormSectionsFragment);
+

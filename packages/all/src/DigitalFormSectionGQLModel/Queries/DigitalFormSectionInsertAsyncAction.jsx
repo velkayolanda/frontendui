@@ -9,7 +9,8 @@ mutation DigitalFormSectionInsertMutation(
   $name: String, 
   $label: String, 
   $labelEn: String,
-  $formId: UUID
+  $formId: UUID,
+  $sectionId: UUID
 ) {
   result: digitalFormSectionInsert(
     digitalFormSection: {
@@ -18,6 +19,7 @@ mutation DigitalFormSectionInsertMutation(
       label: $label, 
       labelEn: $labelEn,
       formId: $formId,
+      sectionId: $sectionId
     }
   ) {
     ... on InsertError {

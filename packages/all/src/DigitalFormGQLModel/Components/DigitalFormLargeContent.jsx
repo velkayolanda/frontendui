@@ -1,8 +1,9 @@
 import Row from "react-bootstrap/Row"
+
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { DigitalFormCardCapsule } from "./DigitalFormCardCapsule"
 import { DigitalFormMediumCard } from "./DigitalFormMediumCard"
-import { DigitalFormFields, DigitalFormSectionLargeContent, DigitalFormSections } from "../../DigitalFormSectionGQLModel/Components/DigitalFormSectionLargeContent"
+import { DigitalFormSectionLargeContent, DigitalFormSections } from "../../DigitalFormSectionGQLModel/Components/DigitalFormSectionLargeContent"
 import { useState } from "react"
 import { DigitalFormSectionButton } from "../../DigitalFormSectionGQLModel/Components/DigitalFormSectionCUDButton"
 import { PlusLg } from "react-bootstrap-icons"
@@ -32,8 +33,14 @@ import { PlusLg } from "react-bootstrap-icons"
  * </DigitalFormLargeCard>
  */
 export const DigitalFormLargeContent = ({digitalform, children}) => {
+    // const digitalform = useSelector(state => state.items[old.id]);
+    // const digitalform = old
+    console.log("DigitalFormLargeContent.render", digitalform?.sections)
     const {fields=[], sections=[]} = digitalform
-    const [activeSection, setActiveSection] = useState(sections?.[0])
+    const filtered_sections = sections.filter(
+        section => section?.formId 
+    )
+    const [activeSection, setActiveSection] = useState(filtered_sections?.[0])
     const onSectionSelect = (section) => () => setActiveSection(section)
     const onInsert = (freshDigitalFormSection) => {
         console.log("inserted", freshDigitalFormSection)
@@ -41,12 +48,11 @@ export const DigitalFormLargeContent = ({digitalform, children}) => {
     return (
         <> 
         {/* DigitalFormLargeContent<br /> */}
-            {sections.map(
+            {filtered_sections.map(
                 section => <button key={section?.id} className="btn btn-sm btn-outline-success" onClick={onSectionSelect(section)}>{section?.name ?? "Nepojmenovaná sekce"}</button>
             )}
             <br />
-            {/* <DigitalFormFields digitalformfields={fields} /> */}
-            <DigitalFormSections digitalformsections={sections} />
+            <DigitalFormSections digitalformsections={filtered_sections} />
             <DigitalFormSectionButton
                 operation="C" 
                 className="btn btn-sm btn-outline-success form-control"
@@ -58,7 +64,7 @@ export const DigitalFormLargeContent = ({digitalform, children}) => {
                     label: "Nová sekce fomuláře",
                     labelEn: "New section",
                     description: "Popis / nápověda",
-                    order: sections.lenght + 1,
+                    order: filtered_sections.lenght + 1,
                     repeatable: false,
                     repeatableMin: 1,
                     repeatableMax: 1

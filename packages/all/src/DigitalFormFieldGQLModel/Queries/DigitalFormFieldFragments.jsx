@@ -75,8 +75,6 @@ fragment DigitalFormFieldMediumFragment on DigitalFormFieldGQLModel {
   rbacobject {
     __typename
     id
-    userCanWithState
-    userCanWithoutState
   }
   formSection {
     __typename
@@ -91,7 +89,8 @@ fragment DigitalFormFieldMediumFragment on DigitalFormFieldGQLModel {
     label
     labelEn
     description
-    parentId
+    sectionId
+    formId
     order
     repatableMin
     repatableMax
@@ -114,6 +113,32 @@ fragment DigitalFormFieldMediumFragment on DigitalFormFieldGQLModel {
   }
 }
 `, DigitalFormFieldLinkFragment);
+
+export const FormSectionWithFieldsFragment = createQueryStrLazy(
+`fragment FormSectionWithFieldsFragment on DigitalFormSectionGQLModel {
+  __typename
+  id
+  name
+  lastchange
+  formId
+  sectionId
+  fields {
+    __typename
+    id
+    lastchange
+    name
+    description
+    label
+    labelEn
+    order
+    required
+    formula
+    backendFormula
+    lastchange
+    typeId
+  }
+}`)
+
 
 export const DigitalFormFieldLargeFragment = createQueryStrLazy(`
 fragment DigitalFormFieldLargeFragment on DigitalFormFieldGQLModel {

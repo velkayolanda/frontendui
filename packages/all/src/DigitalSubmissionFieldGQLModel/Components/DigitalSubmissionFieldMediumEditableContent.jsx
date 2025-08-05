@@ -1,4 +1,5 @@
 import { Input } from "@hrbolek/uoisfrontend-shared"
+import { FieldProxy } from "../_FieldTypeRegister/FieldProxy"
 
 /**
  * A component that displays medium-level content for an digitalsubmissionfield entity.
@@ -24,12 +25,17 @@ import { Input } from "@hrbolek/uoisfrontend-shared"
  * </DigitalSubmissionFieldMediumContent>
  */
 export const DigitalSubmissionFieldMediumEditableContent = ({digitalsubmissionfield, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
-    const label = digitalsubmissionfield?.field?.label
+    // const label = digitalsubmissionfield?.field?.label
+    // return (
+    //     <>           
+    //         <Input id={"value"} label={label} className="form-control" defaultValue={digitalsubmissionfield?.name|| "Název"} onChange={onChange} onBlur={onBlur}>
+    //             {children}
+    //         </Input>
+    //     </>
+    // )
     return (
-        <>           
-            <Input id={"value"} label={label} className="form-control" defaultValue={digitalsubmissionfield?.name|| "Název"} onChange={onChange} onBlur={onBlur}>
-                {children}
-            </Input>
-        </>
+        <FieldProxy digitalsubmissionfield={digitalsubmissionfield} onChange={onChange} onBlur={onBlur}>
+            {children}
+        </FieldProxy>
     )
 }

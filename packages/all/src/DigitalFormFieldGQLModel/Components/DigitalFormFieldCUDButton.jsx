@@ -71,23 +71,23 @@ export const DigitalFormFieldButton = ({ operation, children, digitalformfield, 
     const operationConfig = {
         C: {
             asyncAction: DigitalFormFieldInsertAsyncAction,
-            dialogTitle: "Vložit novou digitalformfield",
-            loadingMsg: "Vkládám novou digitalformfield",
+            dialogTitle: "Vložit novou položku formuláře",
+            loadingMsg: "Vkládám novou položku formuláře",
             renderContent: () => <DigitalFormFieldMediumEditableContent digitalformfield={digitalformfield} />,
         },
         U: {
             asyncAction: DigitalFormFieldUpdateAsyncAction,
-            dialogTitle: "Upravit digitalformfield",
-            loadingMsg: "Ukládám digitalformfield",
+            dialogTitle: "Upravit položku formuláře",
+            loadingMsg: "Ukládám položku formuláře",
             renderContent: () => <DigitalFormFieldMediumEditableContent digitalformfield={digitalformfield} />,
         },
         D: {
             asyncAction: DigitalFormFieldDeleteAsyncAction,
-            dialogTitle: "Chcete odebrat digitalformfield?",
-            loadingMsg: "Odstraňuji digitalformfield",
+            dialogTitle: "Chcete odebrat položku formuláře?",
+            loadingMsg: "Odstraňuji položku formuláře",
             renderContent: () => (
                 <h2>
-                    {digitalformfield?.name} ({digitalformfield?.name_en})
+                    {digitalformfield?.name} 
                 </h2>
             ),
         },

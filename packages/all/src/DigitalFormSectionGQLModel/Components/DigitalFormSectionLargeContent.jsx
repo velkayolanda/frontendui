@@ -12,7 +12,9 @@ import { DigitalFormSectionMediumEditableContent } from "./DigitalFormSectionMed
 import { DigitalFormSectionButton } from './DigitalFormSectionCUDButton'
 import { ArrowDown, ArrowUp, Pencil, PlusLg, SignIntersection, Trash } from "react-bootstrap-icons"
 import { DigitalSubmissionFieldMediumEditableContent } from "../../DigitalSubmissionFieldGQLModel/Components/DigitalSubmissionFieldMediumEditableContent"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
+import { DigitalFormReadAsyncAction } from "../../DigitalFormGQLModel/Queries"
 
 /**
  * A large card component for displaying detailed content and layout for an digitalformsection entity.
@@ -40,16 +42,24 @@ import { useState } from "react"
  */
 export const DigitalFormSectionLargeContent = ({digitalformsection, children}) => {
     const {fields, sections} = digitalformsection
+    console.log("DigitalFormSectionLargeContent.digitalformsection", digitalformsection)
     return (
         <>  
             {/* DigitalFormSectionLargeContent */}
-            <DigitalFormFields digitalformfields={fields} />
+            <DigitalFormSectionFields digitalsectionfields={fields} />
             <hr/>
             <DigitalFormFieldButton 
                 operation="C" 
                 className="btn btn-sm btn-outline-success form-control"
                 digitalformfield={{
-
+                    formSectionId: digitalformsection?.id,
+                    id: crypto.randomUUID(),
+                    name: "field",
+                    label: "Položka",
+                    labelEn: "Item",
+                    description: "delší popis",
+                    required: false,
+                    order: fields.length + 1
                 }}
             >
                 <PlusLg  /> Přidat položku do sekce
@@ -63,6 +73,12 @@ export const DigitalFormSectionLargeContent = ({digitalformsection, children}) =
 
 export const DigitalFormSection = ({ digitalformsection }) => {
     const {sections=[]} = digitalformsection
+    const { loading, error, fetch: formrefetch } = useAsyncAction(DigitalFormReadAsyncAction, {id: digitalformsection.formId}, {deferred: true})
+    const onDelete = async() => {
+        console.log("refetching form from section", digitalformsection)
+        const fresh = await formrefetch({id: digitalformsection.formId})
+        console.log("refetched form", fresh)
+    }
     return (
         <DigitalFormSectionCardCapsule key={digitalformsection?.id} digitalformsection={digitalformsection}>
             <SimpleCardCapsuleRightCorner>
@@ -76,6 +92,7 @@ export const DigitalFormSection = ({ digitalformsection }) => {
                 <DigitalFormSectionButton
                     operation="D" 
                     className="btn btn-sm btn-outline-danger"
+                    onDone={onDelete}
                     digitalformsection={digitalformsection}
                 >
                     <Trash  />
@@ -88,7 +105,7 @@ export const DigitalFormSection = ({ digitalformsection }) => {
                 operation="C" 
                 className="btn btn-sm btn-outline-success form-control"
                 digitalformsection={{
-                    sectionId: digitalformsection.id,
+                    sectionId: digitalformsection?.id,
                     id: crypto.randomUUID(),
                     name: "section",
                     label: "Nová vnořená sekce",
@@ -127,16 +144,42 @@ export const DigitalFormField = ({ digitalformfield }) => {
         field: digitalformfield,
         value: null
     })
+    useEffect(
+        () => setSubmissionField(old => ({...old, field: digitalformfield})),
+        [digitalformfield]
+    )
+    // console.log("DigitalFormField", submissionField)
+    const onChangeField = (e) => {
+        const value = e?.target?.value
+        setSubmissionField(
+            old => ({...old, value})
+        )
+    }
+    const onUpdateDone = async () => {
+
+    }
+    const onDeleteDone = async () => {
+
+    }
     return (<>
-        <DigitalSubmissionFieldMediumEditableContent digitalsubmissionfield={submissionField}>
+        <DigitalSubmissionFieldMediumEditableContent digitalsubmissionfield={submissionField} onChange={onChangeField} onBlur={onChangeField}>
             <SimpleCardCapsuleRightCorner>
                 {/* <button className="btn btn-sm btn-outline-success"><Pencil /></button> */}
                 <DigitalFormFieldButton 
                     operation="U" 
                     className="btn btn-sm btn-outline-success"
                     digitalformfield={digitalformfield}
+                    onDone={onUpdateDone}
                 >
                     <Pencil />
+                </DigitalFormFieldButton>
+                <DigitalFormFieldButton 
+                    operation="D" 
+                    className="btn btn-sm btn-outline-success"
+                    digitalformfield={digitalformfield}
+                    onDone={onDeleteDone}
+                >
+                    <Trash />
                 </DigitalFormFieldButton>
             </SimpleCardCapsuleRightCorner>  
         </DigitalSubmissionFieldMediumEditableContent>
@@ -149,11 +192,11 @@ export const DigitalFormField = ({ digitalformfield }) => {
         // </DigitalFormFieldCardCapsule>
     )
 }
-export const DigitalFormFields = ({ digitalformfields }) => {
-    const ordered = digitalformfields.toSorted((a,b) => {
+export const DigitalFormSectionFields = ({ digitalsectionfields }) => {
+    const ordered = digitalsectionfields.toSorted((a,b) => {
         const aorder = a?.order ?? 0;
         const border = b?.order ?? 0;
-        return border - aorder
+        return aorder - border
     })
     return (
         <>

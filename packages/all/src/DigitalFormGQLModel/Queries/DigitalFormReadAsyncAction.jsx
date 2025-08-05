@@ -3,8 +3,8 @@ import { DigitalFormLargeFragment } from "./DigitalFormFragments";
 
 const DigitalFormReadQueryStr = `
 query DigitalFormReadQuery($id: UUID!) {
-  result: digitalformById(id: $id) {
-    ...DigitalFormLarge
+  result: digitalDocumentById(id: $id) {
+    ...DigitalFormLargeFragment
   }
 }
 `

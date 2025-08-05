@@ -1,4 +1,5 @@
 import Row from "react-bootstrap/Row"
+import { useSelector } from "react-redux"
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { RequestTypeCardCapsule } from "./RequestTypeCardCapsule"
 import { RequestTypeMediumCard } from "./RequestTypeMediumCard"
@@ -30,9 +31,10 @@ import { DigitalFormLargeContent } from "../../DigitalFormGQLModel/Components/Di
  */
 export const RequestTypeLargeContent = ({requesttype, children}) => {
     const { initialForm } = requesttype
+    const formFromStore = useSelector(state => state.items[initialForm?.id])
     return (
         <>
-            <DigitalFormLargeContent digitalform={initialForm} />
+            <DigitalFormLargeContent digitalform={formFromStore} />
             {/* <pre>{JSON.stringify(requesttype, null, 4)}</pre> */}
         </>
     )
