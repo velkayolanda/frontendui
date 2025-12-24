@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { useAsyncThunkAction } from "../../../../dynamic/src/Hooks";
 import { useState } from "react";
-import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
+import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
+import { AsyncStateIndicator } from "./AsyncStateIndicator";
 
 const GQLEntityContext = createContext(null);
 export const useGQLEntityContext = () => {
@@ -95,8 +96,8 @@ export const AsyncActionProvider = ({
     return (
         <GQLEntityContext.Provider value={contextValue}>
             {/* <h1>{contextid}</h1> */}
-            {loading && <LoadingSpinner />}
-            {error && <ErrorHandler errors={error} />}
+            <AsyncStateIndicator error={error} loading={loading} />
+            
             {/* {(!loading && !error) && children} */}
             {contextValue.item && children}
             {/* {!contextValue.item && <pre>{JSON.stringify(contextValue)}</pre>} */}

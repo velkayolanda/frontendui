@@ -1,27 +1,32 @@
-import { useNavigate } from "react-router"
-import { CardCapsule, LinkURI } from "../Components"
+import { CardCapsule } from "../Components"
 import { VectorItemsURI } from "../Pages"
-import { CreateLink, CreateBody } from "./Create"
-import { Insert } from "./Insert"
-import { Update, UpdateButton } from "./Update"
-import { useEffect } from "react"
+import { CreateButton, CreateLink } from "./Create"
+import { UpdateButton, UpdateLink } from "./Update"
+import { ProxyLink } from "../../Base/Components/ProxyLink"
+import { DeleteButton } from "./Delete"
 
-const PageLink = ({children, ...props}) => {
-    const navigate = useNavigate()
-    const onClick = (e) => {
-        e.preventDefault()
-        navigate(VectorItemsURI)
-    }
-    return <a {...props} href={VectorItemsURI} onClick={onClick}>{children}</a>
-}
+export const PageLink = ({ children, preserveHash = true, preserveSearch = true, ...props }) => {
+    return (
+        <ProxyLink
+            to={VectorItemsURI}
+            preserveHash={preserveHash}
+            preserveSearch={preserveSearch}
+            {...props}
+        >
+            {children}
+        </ProxyLink>
+    );
+};
+
 export const InteractiveMutations = ({ item }) => {
     return (
-    <CardCapsule item={item} title="Nástroje">
-        {/* <Update className="btn btn-outline-success" item={item} buttonLabel={"Update"} /> */}
-        <UpdateButton className="btn btn-outline-success" item={item} buttonLabel={"Update"} />
-        <Insert className="btn btn-outline-success" item={item} buttonLabel={"Insert"} />
-        
-        <CreateLink className="btn btn-outline-success" children="Nový" />
-        <PageLink className="btn btn-outline-success">Stránka</PageLink>
-    </CardCapsule>)
+        <CardCapsule item={item} title="Nástroje">
+            <PageLink className="btn btn-outline-success">Stránka</PageLink>
+            <UpdateLink className="btn btn-outline-success" item={item}>Upravit</UpdateLink>
+            <UpdateButton className="btn btn-outline-success" item={item}>Upravit Dialog</UpdateButton>
+            <CreateButton className="btn btn-outline-success">Vytvořit nový</CreateButton>
+            <DeleteButton className="btn btn-outline-danger" >Odstranit</DeleteButton>
+            
+        </CardCapsule>
+    )
 }

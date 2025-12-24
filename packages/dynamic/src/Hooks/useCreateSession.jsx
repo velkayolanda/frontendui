@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ReadItemURI } from "../Pages/PageReadItem";
-import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
+import { useEditAction } from "./useEditAction";
 
 /**
  * @param {{
@@ -18,9 +17,13 @@ export function useCreateSession({
     initialItem,
     onAfterConfirm,
     onAfterCancel,
-    readUri = typeof ReadItemURI !== "undefined" ? ReadItemURI : null,
+    readUri,
     defaultName = "Nový typ",
 }) {
+    if (!readUri) {
+        throw Error("readUri with ':id' must be defined")
+    }
+
     const navigate = useNavigate();
 
     const baseItem = useMemo(() => {
@@ -57,7 +60,7 @@ export function useCreateSession({
         }
 
         // default: navigace na read
-        console.log("going to navigate", readUri, navigate)
+        // console.log("going to navigate", readUri, navigate)
         if (readUri && navigate) {
             const newId = result?.id ?? draft?.id;
             if (newId != null) {

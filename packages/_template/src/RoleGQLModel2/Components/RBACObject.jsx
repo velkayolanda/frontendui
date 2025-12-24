@@ -9,7 +9,7 @@ export const RBACObject = ({ item }) => {
         <BaseUI.CardCapsule item={{}} title="Moje role vůči této entitě">
             
             {currentUserRoles.map(role => (
-                <Attribute>
+                <Attribute key={role?.id}>
                     <Link item={role?.roletype} />@
                     <Link item={role?.group} />
                 </Attribute>

@@ -1,37 +1,35 @@
-import { useNavigate } from "react-router"
 import { AbsolutePermissionGate, useRoles as useRolePermission } from "../../../../dynamic/src/Hooks/useRoles"
 import { LinkURI, MediumEditableContent } from "../Components"
 import { useState } from "react"
-import { Dialog, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
+import { Dialog } from "@hrbolek/uoisfrontend-shared"
 import { ReadItemURI } from "../Pages/PageReadItem"
-import { useCreateSession } from "./useCreateSession"
+import { useCreateSession } from "../../../../dynamic/src/Hooks/useCreateSession"
 import { InsertAsyncAction } from "../Queries"
+import { AsyncStateIndicator } from "../../Base/Helpers/AsyncStateIndicator"
 
 export const CreateURI = LinkURI.replace('view', 'create')
 
-export const CreateLink = ({ ...props }) => {
-    // const { can, roleNames } = useRolePermission(item, ["administrátor"])
-    const navigate = useNavigate()
-    const handleClick = () => {
-        navigate(CreateURI)
-    }
-    return (
-        <AbsolutePermissionGate roles={["superadmin"]} >
-            {/* <button {...props} onClick={handleClick} /> */}
-            <a href="/#create" {...props} onClick={handleClick} >Create</a>
-        </AbsolutePermissionGate>
-    )
-}
+export const CreateLink = (props) => (
+    <AbsolutePermissionGate roles={["superadmin"]}>
+        <ProxyLink to={CreateURI} {...props}>Create</ProxyLink>
+    </AbsolutePermissionGate>
+);
 
 export const CreateButton = ({ children, ...props }) => {
     const [visible, setVisible] = useState(false)
-    const handleClick = (state) => () => {
-        setVisible(state)
+    const handleClick = () => {
+        setVisible(prev => !prev)
     }
+
     return (
-        <AbsolutePermissionGate>
-            <button {...props} onClick={handleClick(!visible)}>{children || "Vytvořit nový"}</button>
-            {visible && <CreateDialog onOk={handleClick(false)} onCancel={handleClick(false)} />}
+        <AbsolutePermissionGate roles={["superadmin"]} >
+            <button {...props} onClick={handleClick}>{children || "Vytvořit nový"}</button>
+            {visible && (
+                <CreateDialog 
+                    onOk={handleClick} 
+                    onCancel={handleClick} 
+                />
+            )}
         </AbsolutePermissionGate>
     )
 }
@@ -47,6 +45,7 @@ export const CreateDialog = ({
     ...props
 }) => {
     const session = useCreateSession({
+        readUri: ReadItemURI,
         mutationAsyncAction,
         onAfterConfirm: async (result) => {
             if (onOk) onOk(result);
@@ -65,9 +64,8 @@ export const CreateDialog = ({
             onOk={session.handleConfirm}
             {...props}
         >
+            <AsyncStateIndicator error={session.error} loading={session.saving} />
             <MediumEditableContent item={session.draft} onChange={session.onChange} onBlur={session.onBlur}>
-                {session.saving && <LoadingSpinner />}
-                {session.error && <ErrorHandler errors={session.error} />}
                 {children}
             </MediumEditableContent>
         </Dialog>
@@ -101,8 +99,7 @@ export const CreateBody = ({
             onBlur={session.onBlur}
             {...props}
         >
-            {session.saving && <LoadingSpinner />}
-            {session.error && <ErrorHandler errors={session.error} />}
+            <AsyncStateIndicator error={session.error} loading={session.saving} />
             {children}
 
             <button

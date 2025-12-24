@@ -1,10 +1,86 @@
 import React from "react";
+import { useCallback } from "react";
+import { useMemo } from "react";
 import { Link, useResolvedPath } from "react-router-dom";
-
+import { useNavigate } from 'react-router'
 /**
  * shared module.
  * @module shared/components
  */
+
+
+/**
+ * useLink
+ *
+ * Spočítá cílový odkaz pro react-router <Link>, včetně volitelného zachování
+ * aktuálního hash/search. Zároveň určí, zda je cílová cesta "lokální"
+ * (tj. stejný base segment jako aktuální app), a podle toho doporučí reloadDocument.
+ *
+ * @param {Object} args
+ * @param {string} args.to - cílová cesta nebo URL (relativní/absolutní)
+ * @param {boolean} [args.preserveHash=true] - pokud cílové `to` nemá hash, použij aktuální hash
+ * @param {boolean} [args.preserveSearch=true] - pokud cílové `to` nemá search, použij aktuální search
+ *
+ * @returns {{
+ *   href: string,
+ *   pathname: string,
+ *   search: string,
+ *   hash: string,
+ *   isLocal: boolean,
+ *   reloadDocument: boolean
+ * }}
+ */
+export const useLink = ({
+    to,
+    preserveHash = true,
+    preserveSearch = true,
+} = {}) => {
+    
+    const resolved = useResolvedPath(to);
+    // const navigate = useNavigate()
+    const navigate = () => null
+
+    const follow = useCallback(() => navigate(href), [navigate])
+    
+    return useMemo(() => {
+        // SSR-safe guard
+        const origin =
+            typeof window !== "undefined" ? window.location.origin : "http://localhost";
+        const currentHref =
+            typeof window !== "undefined" ? window.location.href : `${origin}/`;
+
+        const { pathname } = resolved;          // resolved target pathname
+        const base = pathname.split("/")[1] || ""; // first segment
+
+        const currentUrl = new URL(currentHref);
+        const currentHash = preserveHash ? currentUrl.hash : "";
+        const currentSearch = preserveSearch ? currentUrl.search : "";
+
+        // Resolve `to` as URL (handles both relative paths and absolute URLs)
+        const destinationUrl = new URL(to, origin);
+
+        // If destination does not specify search/hash, inherit current ones
+        destinationUrl.search = destinationUrl.search || currentSearch;
+        destinationUrl.hash = destinationUrl.hash || currentHash;
+
+        const href = destinationUrl.pathname + destinationUrl.search + destinationUrl.hash;
+
+        const isLocal =
+            typeof window !== "undefined"
+                ? window.location.pathname.startsWith(`/${base}`)
+                : true;
+        
+        return {
+            follow,
+            href,
+            pathname: destinationUrl.pathname,
+            search: destinationUrl.search,
+            hash: destinationUrl.hash,
+            isLocal,
+            reloadDocument: !isLocal,
+        };
+    }, [to, preserveHash, preserveSearch, resolved]);
+};
 
 /**
  * A `ProxyLink` component that conditionally reloads the document based on whether the link's target
@@ -25,25 +101,11 @@ import { Link, useResolvedPath } from "react-router-dom";
  * <ProxyLink to="/local-path">Local Link</ProxyLink>
  * <ProxyLink to="https://external-site.com">External Link</ProxyLink>
  */
-export const ProxyLink = ({ to, children, preserveHash=true, preserveSearch=true, ...others }) => {
-    const { pathname } = useResolvedPath(to); // Resolves the target path
-    const base = pathname.split("/")[1]; // Extracts the base path from the resolved path
+export const ProxyLink = ({ to, children, preserveHash = true, preserveSearch = true, ...others }) => {
+    const { href, reloadDocument } = useLink({ to, preserveHash, preserveSearch });
 
-    // Determines if the target path is local to the current application
-    const isLocal = window.location.pathname.startsWith(`/${base}`);
-
-    // Preserve existing hash and query parameters
-    const currentUrl = new URL(window.location.href);
-    const currentHash = preserveHash ? currentUrl.hash : ''; // Extracts the current hash
-    const currentSearch = preserveSearch ? currentUrl.search : ''; // Extracts the current query parameters
-
-    const destinationUrl = new URL(to, window.location.origin); // Resolve `to` as a complete URL
-    // const destinationUrl_hash = destinationUrl.hash
-    destinationUrl.search = destinationUrl.search || currentSearch; // Merge query parameters if missing
-    destinationUrl.hash = destinationUrl.hash || currentHash; // Merge hash if missing
-    // destinationUrl.hash = ""
     return (
-        <Link to={destinationUrl.pathname + destinationUrl.search + destinationUrl.hash} {...others} reloadDocument={!isLocal}>
+        <Link to={href} reloadDocument={reloadDocument} {...others}>
             {children}
         </Link>
     );

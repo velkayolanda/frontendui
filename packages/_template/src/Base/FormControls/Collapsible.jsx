@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 export const Collapsible = ({
-    collapsed = false,
+    collapsed = true,
     children,
     buttonLabel,
     buttonLabelCollapsed = "Zobrazit",

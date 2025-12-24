@@ -3,6 +3,8 @@ import { useGQLClient } from "../Store";
 import { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
+import { AsyncStateIndicator } from "../../../_template/src/Base/Helpers/AsyncStateIndicator";
 
 /**
  * Normalizace názvů rolí pro porovnávání.
@@ -267,33 +269,21 @@ export function useAbsoluteRoles(oneOfRoles = [], options = {}) {
     return state;
 }
 
-
+const dummyRoles = []
 export const AbsolutePermissionGate = ({
-    roles = [],
+    roles = dummyRoles,
     enabled = true,
-    showWhileLoading = false,
     loadingFallback = null,
-    deniedFallback = null,
-    errorFallback = null,
     children,
 }) => {
     const { loading, allowed, error } = useAbsoluteRoles(roles, { enabled });
 
     if (!enabled) return null;
-
-    if (loading && showWhileLoading) {
-        return (<>{loadingFallback ?? <LoadingSpinner text="Ověřuji oprávnění" />}</>);
-    }
-
-    if (error) {
-        return errorFallback ?? <ErrorHandler errors={error} />;
-    }
-
-    if (!allowed) {
-        return deniedFallback; // default null
-    }
-
-    return typeof children === "function"
-        ? children({ allowed, loading, error })
-        : children;
+    return (
+        <>  
+            {loading && loadingFallback}
+            <AsyncStateIndicator error={error} loading={!loadingFallback? loading:false} text="Ověřuji oprávnění" />
+            {allowed && children}
+        </>
+    )
 };

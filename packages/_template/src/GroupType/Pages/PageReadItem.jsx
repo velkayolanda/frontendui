@@ -19,6 +19,7 @@ export const PageReadItem = ({ children, queryAsyncAction=ReadAsyncAction, ...pr
 const Read = ({...props}) => {
     const { item } = useGQLEntityContext()
     if (!item) return null
+    // return (<pre>{JSON.stringify(item)}</pre>)
     return (
         <LargeCard item={item} {...props} >
             <MediumCardScalars item={item} />
