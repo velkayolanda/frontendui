@@ -107,8 +107,14 @@ export const Filter = ({
     }, []);
 
     const readFilter = useCallback(() => wrappedExpr, [wrappedExpr])
+    
+    const resetFilter = useCallback(() => {
+        setCurrentFilter({});
+        setJoin(joinProp);
+    }, [joinProp]);
+
     return (
-        <FilterDesignerContext.Provider value={{ handleChange, readFilter }}>
+        <FilterDesignerContext.Provider value={{ handleChange, readFilter, resetFilter }}>
 
             <SimpleCardCapsule title={label || id || "where"}>
                 {showAndOr && (
@@ -156,7 +162,7 @@ function encodeWhere(where) {
     return JSON.stringify(where);
 }
 
-export const ResetFilter = ({onClick,
+export const ResetFilterButton = ({onClick,
     paramName = "where",
     replace = true,
     ...props
@@ -173,7 +179,7 @@ export const ResetFilter = ({onClick,
         next.delete(paramName);
 
         if (onClick) onClick({ where: {} });
-        //TODO nastavit filtr ve filterContext        
+        if (filterContext.resetFilter) filterContext.resetFilter();
         setSearchParams(next, { replace });
     }, [filterContext, onClick, searchParams, setSearchParams, paramName, replace]);
 
@@ -220,7 +226,7 @@ export const StringFilter = ({
 }) => {
     const filterContext = useFilterDesigner();
     if (!filterContext) throw Error("<StringFilter /> must be placed inside <Filter />");
-
+    //TODO when filter loads or resets this must accept the values also
     const [op, setOp] = useState(initialOp);
 
     // single
