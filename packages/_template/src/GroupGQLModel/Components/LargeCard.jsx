@@ -1,8 +1,11 @@
-import { BaseUI } from "../../Base"
-import { TemplateUI } from "../../Template"
-import { CardCapsule } from "./CardCapsule"
-import { MediumContent } from "./MediumContent"
-
+// import Row from "react-bootstrap/Row"
+import { MediumCard } from "./MediumCard"
+import { CardCapsule as CardCapsule_} from "./CardCapsule"
+import { Row } from "../../Base/Components/Row"
+import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
+import { MediumContent as MediumContent_ } from "./MediumContent"
+import { InteractiveMutations } from '../Mutations/InteractiveMutations'
+import { RBACObject } from "../Scalars/RBACObject"
 
 /**
  * A large card component for displaying detailed content and layout for an template entity.
@@ -28,5 +31,22 @@ import { MediumContent } from "./MediumContent"
  *   <p>Additional content for the middle column.</p>
  * </TemplateLargeCard>
  */
-// export const LargeCard = ({ item, children }) => <TemplateUI.LargeCard item={item} children={children} CardCapsule={CardCapsule} MediumContent={MediumContent}/>
-export const LargeCard = ({ item, children }) => <BaseUI.LargeCard item={item} children={children} CardCapsule={CardCapsule} MediumContent={MediumContent}/>
+export const LargeCard = ({ item, children, CardCapsule=CardCapsule_, MediumContent=MediumContent_ }) => {
+    // console.log("LargeCard.item", item)
+    return (
+        <CardCapsule item={item} >
+            <Row>
+                <LeftColumn>
+                    <CardCapsule item={item} title="Detail">
+                        <MediumContent item={item} />
+                    </CardCapsule>
+                    <RBACObject item={item} />
+                    <InteractiveMutations item={item} />
+                </LeftColumn>
+                <MiddleColumn>
+                    {children}
+                </MiddleColumn>
+            </Row>
+        </CardCapsule>
+    )
+}

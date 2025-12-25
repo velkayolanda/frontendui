@@ -4,64 +4,24 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 import { reduceToFirstEntity, updateItemsFromGraphQLResult } from "../../../../dynamic/src/Store";
 
 const UpdateMutationStr = `
-mutation userUpdate($id: UUID!, $lastchange: DateTime!, $name: String, $surname: String, $email: String, $valid: Boolean) {
-  userUpdate(
-    user: {id: $id, lastchange: $lastchange, name: $name, surname: $surname, email: $email, valid: $valid}
+mutation groupUpdate($id: UUID!, $lastchange: DateTime!, $name: String, $email: String) {
+  groupUpdate(
+    group: {id: $id, lastchange: $lastchange, name: $name, email: $email}
   ) {
-    ... on UserGQLModel {
-      ...User
+    ... on GroupGQLModel {
+      ...Large
     }
-    ... on UserGQLModelUpdateError {
+    ... on GroupGQLModelUpdateError {
       ...Error
     }
   }
 }
 
-# fragment Role on RoleGQLModel {
-#   __typename
-#   id
-#   lastchange
-#   created
-#   createdbyId
-#   changedbyId
-#   rbacobjectId
-#   createdby {
-#     id
-#   }
-#   changedby {
-#     id
-#   }
-#   rbacobject {
-#     id
-#   }
-#   valid
-#   deputy
-#   startdate
-#   enddate
-#   roletypeId
-#   userId
-#   groupId
-#   roletype {
-#     id
-#   }
-#   user {
-#     id
-#   }
-#   group {
-#     id
-#   }
-# }
 
-fragment User on UserGQLModel {
-  __typename
-  id
-  ...Large
-}
-
-fragment Error on UserGQLModelUpdateError {
+fragment Error on GroupGQLModelUpdateError {
   __typename
   Entity {
-    ...User
+    ...Large
   }
   msg
   failed
@@ -70,6 +30,7 @@ fragment Error on UserGQLModelUpdateError {
   input
 }
 `
+
 
 const UpdateMutation = createQueryStrLazy(`${UpdateMutationStr}`, LargeFragment)
 export const UpdateAsyncAction = createAsyncGraphQLAction2(UpdateMutation, 

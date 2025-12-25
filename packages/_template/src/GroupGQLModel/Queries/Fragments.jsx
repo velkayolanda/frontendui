@@ -12,7 +12,9 @@ fragment Link on GroupGQLModel {
     id
     name
     }
+
 }
+
 `
 
 const MediumFragmentStr = `
@@ -21,13 +23,18 @@ fragment Medium on GroupGQLModel {
   rbacobject {
     ...RBRoles
   }
+    changedby {
+    __typename
+    id
+    fullname
+    }    
 }
 `
 
 const LargeFragmentStr = `
 fragment Large on GroupGQLModel {
   ...Medium
-    subgroups {
+  subgroups {
     __typename
     id
     name
@@ -36,6 +43,9 @@ fragment Large on GroupGQLModel {
       id
       name
     }
+  }
+  rolesOn {
+    ...Role
   }
 }
 `
@@ -98,5 +108,5 @@ export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 
 export const LinkFragment = createQueryStrLazy(`${LinkFragmentStr}`)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, LinkFragment, RBACFragment)
-export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment)
+export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment, RoleFragment)
   

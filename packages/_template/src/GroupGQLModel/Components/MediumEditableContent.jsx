@@ -1,9 +1,5 @@
-import { BaseUI } from "../../Base"
-import { Attribute } from "../../Base/Components/Attribute"
-import { Col } from "../../Base/Components/Col"
-import { Row } from "../../Base/Components/Row"
-import { Link } from "./Link"
-import { Link as BaseLink } from "../../Base/Components/Link"
+import { Input } from "@hrbolek/uoisfrontend-shared"
+
 /**
  * A component that displays medium-level content for an template entity.
  *
@@ -27,17 +23,13 @@ import { Link as BaseLink } from "../../Base/Components/Link"
  *   <p>Additional information about the entity.</p>
  * </TemplateMediumContent>
  */
-export const MediumContent = ({ item }) => {
-    return (<>
-        <Attribute label="Název" item={item}>
-            <Link item={item} />
-        </Attribute>
-        <Attribute label="Anglický název" item={item} attribute_name={"nameEn"} />
-        <Attribute label="Email" item={item} attribute_name={"email"} />
-        <hr/>
-        <Attribute label="Poslední změna" item={item} attribute_name={"lastchange"} />
-        <Attribute label="Provedl" item={item} attribute_name={"lastchange"}>
-            <BaseLink item={item?.changedby} />
-        </Attribute>
-    </>)
+export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
+    return (
+        <>           
+        {/* defaultValue={item?.name|| "Název"}  */}
+            <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
+            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
+            {children}
+        </>
+    )
 }

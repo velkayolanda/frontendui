@@ -1,6 +1,6 @@
+import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
 import { URIRoot } from "../../uriroot";
 import { registerLink } from "../../Base/Components/Link";
-import { TemplateUI } from "../../Template";
 
 export const LinkURI = `${URIRoot}/group/view/`;
 
@@ -10,9 +10,9 @@ export const LinkURI = `${URIRoot}/group/view/`;
  * The target URL is dynamically constructed using the `template` object's `id`, and the link displays
  * the `template` object's `name` as its clickable content.
  *
- * @function Link
+ * @function TemplateLink
  * @param {Object} props - The properties for the `TemplateLink` component.
- * @param {Object} props.item - The object representing the "template" entity.
+ * @param {Object} props.template - The object representing the "template" entity.
  * @param {string|number} props.template.id - The unique identifier for the "template" entity. Used to construct the target URL.
  * @param {string} props.template.name - The display name for the "template" entity. Used as the link text.
  *
@@ -20,7 +20,7 @@ export const LinkURI = `${URIRoot}/group/view/`;
  *
  * @example
  * // Example usage with a sample template entity:
- * const item = { id: 123, name: "Example Template Entity" };
+ * const templateEntity = { id: 123, name: "Example Template Entity" };
  * 
  * <TemplateLink template={templateEntity} />
  * // Renders: <ProxyLink to="/template/template/view/123">Example Template Entity</ProxyLink>
@@ -31,5 +31,11 @@ export const LinkURI = `${URIRoot}/group/view/`;
  *
  * @see ProxyLink - The base component used for rendering the link.
  */
-export const Link = ({ item, children }) => <TemplateUI.Link LinkURI={LinkURI} item={item}>{children || item?.name || "Chybí data"}</TemplateUI.Link>;
-registerLink("GroupGQLModel", Link);
+export const Link = ({ item, LinkURI: LinkURI_ = LinkURI, action="view", children, ...props}) => {
+    const targetURI = LinkURI_.replace('view', action);
+    return <ProxyLink to={targetURI + item?.id} {...props}>{children || item?.fullname || item?.name || item?.id || "Nevim"}</ProxyLink>
+    // return <BaseUI.Link item={item} />
+    // return <a>{children || item?.fullname || item?.name || item?.id || "Nevim"}</a>
+}
+
+registerLink('GroupGQLModel', Link)
