@@ -5,12 +5,15 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 
 const InsertMutationStr = `
 mutation InsertMutation($id: UUID, $name: String, $name_en: String) {
-  result: Insert(
-    template: {id: $id, name: $name, nameEn: $name_en}
+  result: roleInsert(
+    role: {id: $id, name: $name, nameEn: $name_en}
   ) {
     ... on InsertError {
       failed
       msg
+      input
+      code
+      location
       input
     }
     ...Large

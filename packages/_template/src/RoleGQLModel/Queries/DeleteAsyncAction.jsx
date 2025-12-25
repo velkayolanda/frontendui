@@ -4,10 +4,10 @@ import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAs
 
 const DeleteMutationStr = `
 mutation DeleteMutation($id: UUID!, $lastchange: DateTime!) {
-  result: Delete(
+  result: roleDelete(
     item : {id: $id, lastchange: $lastchange}
   ) {
-    ... on GQLModelDeleteError {
+    ... on RoleGQLModelDeleteError {
       failed
       msg
       input
