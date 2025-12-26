@@ -5,14 +5,21 @@ fragment Link on GroupGQLModel {
   __typename
   id
   lastchange
-  name
-  email
+name
+nameEn
+email
+abbreviation
+startdate
+enddate
+grouptypeId
   grouptype {
     __typename
     id
     name
     }
-    
+
+mastergroupId
+mastergroup { __typename id name }
 }
 
 `
