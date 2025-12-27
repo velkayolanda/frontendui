@@ -1,4 +1,4 @@
-import { MediumEditableContent, ReadItemURI } from "../Components"
+import { CreateURI, MediumEditableContent, ReadItemURI } from "../Components"
 import { InsertAsyncAction } from "../Queries"
 import { 
     CreateBody as BaseCreateBody, 
@@ -8,43 +8,60 @@ import {
 } from "../../Base/Mutations/Create"
 
 const DefaultContent = MediumEditableContent
-const mutationAsyncAction = InsertAsyncAction
+const MutationAsyncAction = InsertAsyncAction
 
 const permissions = {
     oneOfRoles: ["superadmin"],
     mode: "absolute",
 }
 
-export const CreateLink = ({...props}) => (
-    <BaseCreateLink {...props} uriPattern={CreateURI} />
+export const CreateLink = ({
+    uriPattern=CreateURI,
+    ...props
+}) => (
+    <BaseCreateLink {...props} uriPattern={uriPattern} />
 );
 
-export const CreateButton = ({...props}) => {
+export const CreateButton = ({
+    mutationAsyncAction=MutationAsyncAction,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
+    ...props
+}) => {
     return <BaseCreateButton 
         {...props}
-        DefaultContent={DefaultContent} 
-        readItemURI={ReadItemURI}
+        DefaultContent={defaultContent} 
+        readItemURI={readItemURI}
         mutationAsyncAction={mutationAsyncAction}
         {...permissions}
     />
 }
 
-export const CreateDialog = ({...props}) => {
+export const CreateDialog = ({
+    mutationAsyncAction=MutationAsyncAction,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
+    ...props
+}) => {
     return <BaseCreateDialog 
         {...props} 
-        DefaultContent={DefaultContent} 
-        readItemURI={ReadItemURI}
+        DefaultContent={defaultContent} 
+        readItemURI={readItemURI}
         mutationAsyncAction={mutationAsyncAction}
     />
 };
 
-export const CreateBody = ({...props}) => {
+export const CreateBody = ({
+    mutationAsyncAction=MutationAsyncAction,
+    DefaultContent:defaultContent=DefaultContent,
+    readItemURI=ReadItemURI, 
+    ...props
+}) => {
     return <BaseCreateBody 
         {...props} 
-        DefaultContent={DefaultContent} 
-        readItemURI={ReadItemURI}
+        DefaultContent={defaultContent} 
+        readItemURI={readItemURI}
         mutationAsyncAction={mutationAsyncAction}
-
     />
 };
 
