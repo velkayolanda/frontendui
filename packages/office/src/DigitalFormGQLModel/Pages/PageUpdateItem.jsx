@@ -422,8 +422,14 @@ export const UpdateFormSectionFields = ({
     onRemoveField, 
     onSubmissionFieldChange
 }) => { 
-    const formfieldsSorted = formSectionDefFields?.toSorted((a, b) => (a?.order||0)-(b?.order||0)) ?? []
-    const digital_submission_sectionFieldsSorted = digital_submission_sectionFields?.toSorted((a, b) => (a?.order||0)-(b?.order||0)) ?? []
+    const formfieldsSorted = useMemo(
+        () => formSectionDefFields?.toSorted((a, b) => (a?.order || 0) - (b?.order || 0)) ?? [],
+        [formSectionDefFields]
+    )
+    const digital_submission_sectionFieldsSorted = useMemo(
+        () => digital_submission_sectionFields?.toSorted((a, b) => (a?.order || 0) - (b?.order || 0)) ?? [],
+        [digital_submission_sectionFields]
+    )
     return (<>
         {(formfieldsSorted || []).map(
             form_field => {
@@ -459,8 +465,14 @@ const UpdateFormSectionSections = ({
     mode,
     onSubmissionSectionChange,
 }) => {
-    const formSectionsSorted = (formSections || []).toSorted((a, b) => (a?.order || 0) - (b?.order || 0))
-    const submissionSectionsSorted = (submissionSections || []).toSorted((a, b) => (a?.order || 0) - (b?.order || 0))
+    const formSectionsSorted = useMemo(
+        () => (formSections || []).toSorted((a, b) => (a?.order || 0) - (b?.order || 0)),
+        [formSections]
+    )
+    const submissionSectionsSorted = useMemo(
+        () => (submissionSections || []).toSorted((a, b) => (a?.order || 0) - (b?.order || 0)),
+        [submissionSections]
+    )
     return (
         <>
             {formSectionsSorted.map((form_section) => {
