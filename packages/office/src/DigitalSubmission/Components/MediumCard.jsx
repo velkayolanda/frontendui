@@ -1,7 +1,9 @@
 import { PersonFill } from "react-bootstrap-icons"
 import { CardCapsule } from "./CardCapsule"
 import { MediumContent } from "./MediumContent"
-import { Link } from "./Link"
+import { Link as SubmissionLink } from "./Link"
+import { Attribute } from "../../../../_template/src/Base/Components/Attribute"
+import { Link } from "../../DigitalFormGQLModel/Components"
 
 /**
  * A card component that displays detailed content for an template entity.
@@ -30,8 +32,11 @@ import { Link } from "./Link"
  */
 export const MediumCard = ({ item, children }) => {
     return (
-        <CardCapsule title={<><PersonFill /> <Link item={item} /></>}>
+        <CardCapsule title={<><PersonFill /> <SubmissionLink item={item} /></>}>
             {children}
+            <Attribute label="Formulář">
+                <Link item={item?.form} />A
+            </Attribute>
             <MediumContent item={item}>
             </MediumContent>
         </CardCapsule>

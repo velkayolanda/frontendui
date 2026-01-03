@@ -29,7 +29,7 @@ export const CreateButton = ({
     readItemURI=ReadItemURI, 
     rbacitem,
     initialitem={
-        name: "Nový",
+        name: "Novwý",
     },
     ...props
 }) => {
@@ -46,7 +46,7 @@ export const CreateButton = ({
 }
 
 export const CreateDialog = ({
-    title = "Nov(ý/é)",
+    title = "Nový dokument",
     mutationAsyncAction=MutationAsyncAction,
     DefaultContent:defaultContent=DefaultContent,
     readItemURI=ReadItemURI, 

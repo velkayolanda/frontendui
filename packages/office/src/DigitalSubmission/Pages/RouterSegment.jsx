@@ -4,8 +4,9 @@ import { PageCreateItem } from "./PageCreateItem"
 import { PageReadItem } from "./PageReadItem"
 import { PageDeleteItem } from "./PageDeleteItem"
 
-import { DeleteItemURI, UpdateItemURI } from "../Components"
+import { DeleteItemURI, FillItemURI, UpdateItemURI } from "../Components"
 import { CreateURI, ReadItemURI, VectorItemsURI } from "../Components"
+import { PageFillItem } from "./PageFillItem"
 
 /**
  * Definice segmentů rout pro Template stránky.
@@ -48,6 +49,10 @@ export const SubmissionRouterSegments = [
     {
         path: ReadItemURI,
         element: (<PageReadItem />),
+    },
+    {
+        path: FillItemURI,
+        element: (<PageFillItem />),
     },
     {
         path: UpdateItemURI,

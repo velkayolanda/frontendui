@@ -129,11 +129,11 @@ fragment DigitalSubmission on DigitalSubmissionGQLModel {
   stateId
   formId
   parentId
-  form { __typename }
-  parent { __typename }
-  sections { __typename }
-  fields { __typename }
-  submittedSectionsAll { __typename }
+  form { __typename id name }
+#   parent { __typename }
+#   sections { __typename }
+#  fields { __typename }
+#  submittedSectionsAll { __typename }
   value
   }
 

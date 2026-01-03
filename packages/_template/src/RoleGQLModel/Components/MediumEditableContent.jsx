@@ -59,10 +59,10 @@ export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>nu
             />
             <EntityLookup 
                 asyncAction={SearchGroupAsyncAction} //SearchGroupAsyncAction
-                id={"userId"} 
-                label={"Uživatel"} 
+                id={"groupId"} 
+                label={"Skupina"} 
                 className="form-control" 
-                value={item?.user} 
+                value={item?.group} 
                 onChange={onChange} 
                 onBlur={onBlur} 
             />

@@ -7,6 +7,7 @@ export const ListURI = `${modelURI}/list/`;
 export const CreateURI = `${modelURI}/create/`;
 export const ReadURI = `${modelURI}/view/`;
 export const UpdateURI = `${modelURI}/edit/`;
+export const FillURI = `${modelURI}/fill/`;
 export const DeleteURI = `${modelURI}/delete/`;
 
 export const LinkURI = ReadURI;
@@ -15,6 +16,7 @@ export const VectorItemsURI = ListURI;
 const idParam = ":id"
 export const ReadItemURI = `${LinkURI}${idParam}`;
 export const UpdateItemURI = `${UpdateURI}${idParam}`;
+export const FillItemURI = `${FillURI}${idParam}`;
 export const DeleteItemURI = `${DeleteURI}${idParam}`;
 
 /**

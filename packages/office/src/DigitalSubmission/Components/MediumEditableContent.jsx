@@ -1,4 +1,6 @@
+import { EntityLookup } from "../../../../_template/src/Base/FormControls/EntityLookup"
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { SearchAsyncAction } from "../../DigitalFormGQLModel/Queries/SearchAsyncAction"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -28,7 +30,16 @@ export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>nu
         <>           
         {/* defaultValue={item?.name|| "Název"}  */}
             <Input id={"name"} label={"Jméno"} className="form-control" value={item?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
+            {/* <Input id={"nameEn"} label={"Anglický název"} className="form-control" value={item?.nameEn|| "Anglický název"} onChange={onChange} onBlur={onBlur} /> */}
+            <EntityLookup 
+                id={"formId"} 
+                label={"Formulář"} 
+                className="form-control" 
+                asyncAction={SearchAsyncAction}
+                value={item?.form}
+                onChange={onChange} onBlur={onBlur} 
+            />
+            {JSON.stringify(item)}
             {children}
         </>
     )

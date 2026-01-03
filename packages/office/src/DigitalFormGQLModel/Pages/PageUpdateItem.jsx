@@ -541,7 +541,6 @@ const FormSectionSections = ({
     dummy,
     mode,
     onSubmissionSectionChange,
-    onAddSubmissionSection,
     onRemoveSubmissionSection,
     SubmissionFieldComponent = SubmissionFieldEdit,
     FormSectionComponent = UpdateFormSection
@@ -554,13 +553,9 @@ const FormSectionSections = ({
                 sections: [],
                 fields: [],
             };
-            if (onAddSubmissionSection) {
-                onAddSubmissionSection(payload);
-            } else {
-                onSubmissionSectionChange(payload);
-            }
+            onSubmissionSectionChange(payload);
         },
-        [onAddSubmissionSection, onSubmissionSectionChange]
+        [onSubmissionSectionChange]
     )
 
     const handleRemoveSubmissionSection = useCallback(
@@ -589,10 +584,9 @@ const FormSectionSections = ({
                 const filtered = submissionSectionsSorted.filter(
                     (s) => s?.formSectionId === form_section?.id
                 )
-                const include_add_section_button = form_section?.repeatableMax > filtered.length
                 return (
                     <div key={form_section?.id}>
-                        {filtered.map((sectionInstance) => (
+                        {filtered.map((sectionInstance, index) => (
                             <div key={sectionInstance?.id}>
                                 <UpdateSectionWrap
                                     formSectionDef={form_section}
@@ -604,26 +598,28 @@ const FormSectionSections = ({
                                     SubmissionFieldComponent={SubmissionFieldComponent}
                                     FormSectionComponent={FormSectionComponent}
                                 />
-                                {mode === "view" && filtered.length > (form_section?.repeatableMin ?? 0) && (
+                                {filtered.length > (form_section?.repeatableMin ?? 0) && (
                                     <button
                                         className="form-control btn btn-outline-danger mt-2"
                                         type="button"
                                         onClick={() =>
                                             handleRemoveSubmissionSection(form_section, sectionInstance, filtered.length)
                                         }
+                                        disabled={mode === "view"}
                                     >
-                                        - {form_section?.label ?? form_section?.name ?? "section"}
+                                        - {form_section?.label ?? form_section?.name ?? "section"} [{index+1}]
                                     </button>
                                 )}
                             </div>
                         ))}
-                        {include_add_section_button && mode === "view" && (
+                        {(form_section?.repeatableMax > filtered.length) && (
                             <button
                                 className="form-control btn btn-outline-primary"
                                 type="button"
                                 onClick={() => handleAddSubmissionSection(form_section)}
+                                disabled={mode === "view"}
                             >
-                                + {form_section?.label ?? form_section?.name ?? "section"}
+                                + {form_section?.label ?? form_section?.name ?? "section"} [{filtered.length}/{form_section?.repeatableMax}]
                             </button>
                         )}
                     </div>
@@ -691,11 +687,6 @@ export const ReadFormSection = ({
 
     const H = headingIndex[clamp(level, 1, 6)] ?? headingIndex[6];
    
-    const {
-        run: deleteField, error: errorDeleteField, loading: deletingField,
-        // entity, data 
-    } = useAsyncThunkAction(DeleteFieldAsyncAction, empty, { deferred: true })
-
     const { reRead } = useGQLEntityContext()
     
 
@@ -744,22 +735,6 @@ export const ReadFormSection = ({
         }
     }, [digital_submission_section, formSectionDef, onSubmissionSectionChange]);
 
-    const handleAddChildSubmissionSection = useCallback(
-        (child) => {
-            const parentId = digital_submission_section?.id ?? stableId();
-            const normalizedChild = { ...child, sectionId: parentId };
-            const nextSections = [
-                ...(digital_submission_section?.sections || []),
-                normalizedChild,
-            ];
-            onSubmissionSectionChange({
-                ...digital_submission_section,
-                id: parentId,
-                sections: nextSections,
-            });
-        },
-        [digital_submission_section, onSubmissionSectionChange]
-    );
 
     const handleRemoveChildSubmissionSection = useCallback(
         (child) => {
@@ -794,7 +769,20 @@ export const ReadFormSection = ({
                 {formSectionDef?.description ?? "--NEPOPSÁN--"}
 
                 <div>
-                    <FormSectionFields
+                    <FormSectionBody 
+                        formSectionDef={formSectionDef}
+                        digital_submission_section={digital_submission_section}
+                        level={level}
+                        dummy={dummy}
+                        mode={mode}
+                        reRead={reRead}
+                        onSubmissionSectionChange={handleSubmissionSectionChange}
+                        onSubmissionFieldChange={handleSubmissionFieldChange}
+                        // onAddSubmissionSection=dummyFunc,
+                        onRemoveSubmissionSection={handleRemoveChildSubmissionSection}
+                        SubmissionFieldComponent={SubmissionFieldComponent}
+                    />
+                    {/* <FormSectionFields
                         formSectionDefFields={formSectionDef?.fields || []}
                         digital_submission_sectionFields={digital_submission_section?.fields || []}
                         reRead={reRead}
@@ -810,10 +798,9 @@ export const ReadFormSection = ({
                         dummy={dummy}
                         mode={mode}
                         onSubmissionSectionChange={handleSubmissionSectionChange}
-                        onAddSubmissionSection={handleAddChildSubmissionSection}
                         onRemoveSubmissionSection={handleRemoveChildSubmissionSection}
                         SubmissionFieldComponent={SubmissionFieldComponent}
-                    />
+                    /> */}
                 </div>
             </div>
         </SimpleCardCapsule>
@@ -1098,11 +1085,9 @@ const FormSectionBody = ({
     reRead=dummyFunc,
     onSubmissionSectionChange=dummyFunc,
     onSubmissionFieldChange=dummyFunc,
-    onAddSubmissionSection=dummyFunc,
+    // onAddSubmissionSection=dummyFunc,
     onRemoveSubmissionSection=dummyFunc,
-    
     SubmissionFieldComponent=dummyFunc,
-    
     ...props
 }) => {
     // console.log("formSectionDef?.sections", formSectionDef?.sections)
@@ -1123,7 +1108,7 @@ const FormSectionBody = ({
             dummy={dummy}
             mode={mode}
             onSubmissionSectionChange={onSubmissionSectionChange}
-            onAddSubmissionSection={onAddSubmissionSection}
+            // onAddSubmissionSection={onAddSubmissionSection}
             onRemoveSubmissionSection={onRemoveSubmissionSection}
             SubmissionFieldComponent={SubmissionFieldComponent}
         />
