@@ -1,0 +1,77 @@
+name: Publish one workspace 
+
+on:
+  workflow_dispatch:
+    inputs:
+      workspace_name:
+        description: "Název npm workspace (např. @hrbolek/app_ug2)"
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies (root)
+        run: npm ci
+
+      - name: Najdi workspace path a zjisti private
+        id: meta
+        run: |
+          APP="${{ inputs.workspace_name }}"
+          WS_PATH=""
+
+          echo "Hledám workspace s name = $APP"
+
+          # Projdeme všechny patterns z package.json.workspaces (např. apps/* packages/*)
+          for pattern in $(node -p "require('./package.json').workspaces.join(' ')"); do
+            # Shell expanduje pattern na konkrétní složky
+            for dir in $pattern; do
+              if [ -f "$dir/package.json" ]; then
+                NAME=$(node -p "require('./$dir/package.json').name")
+                if [ "$NAME" = "$APP" ]; then
+                  WS_PATH="$dir"
+                fi
+              fi
+            done
+          done
+
+          if [ -z "$WS_PATH" ]; then
+            echo "❌ Workspace '$APP' nebyl nalezen v workspaces."
+            exit 1
+          fi
+
+          echo "✅ Workspace path: $WS_PATH"
+
+          # Tady je ta část s IS_PRIVATE:
+          IS_PRIVATE=$(node -p "require('./$WS_PATH/package.json').private ? 'true' : 'false'")
+          echo "is_private=$IS_PRIVATE" >> "$GITHUB_OUTPUT"
+          echo "path=$WS_PATH" >> "$GITHUB_OUTPUT"
+
+          echo "private: $IS_PRIVATE"
+
+      - name: Publish workspace
+        if: steps.meta.outputs.is_private == 'false'
+        run: |
+          APP="${{ inputs.workspace_name }}"
+          echo "Publishing $APP ..."
+          npm publish -w "$APP" --access public
+
+      - name: Workspace je private – nepublikuju
+        if: steps.meta.outputs.is_private == 'true'
+        run: |
+          echo "Workspace '${{ inputs.workspace_name }}' má v package.json private: true, publish přeskočen."
