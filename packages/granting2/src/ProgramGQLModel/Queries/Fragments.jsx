@@ -72,6 +72,11 @@ fragment Medium on ProgramGQLModel  {
         nameEn
         description
         descriptionEn
+        semesters {
+            __typename
+            id
+            order
+        }
     }
 
     students {
