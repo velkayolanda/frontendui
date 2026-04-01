@@ -28,7 +28,7 @@
  * @param {number} amount - Počet dní k posunutí.
  * @returns {string}
  */
-export const addDays = (dayStr, amount) => {
+const addDays = (dayStr, amount) => {
     const d = new Date(dayStr + "T00:00:00");
     d.setDate(d.getDate() + amount);
     const y = d.getFullYear();

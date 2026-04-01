@@ -40,10 +40,16 @@ fragment Large on UserGQLModel {
         id
         name
       }
+        rbacobject {
+        ...RBRoles
+    }
     }
     valid
     startdate
     enddate
+    rbacobject {
+        ...RBRoles
+    }
   }
   roles {
     ...Role

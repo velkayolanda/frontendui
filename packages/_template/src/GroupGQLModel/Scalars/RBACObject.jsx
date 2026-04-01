@@ -13,7 +13,7 @@ import { EntityLookup } from "../../Base/FormControls/EntityLookup"
 import { Input } from "../../Base/FormControls/Input"
 import { SearchAsyncAction as SearchUserAsyncAction } from "../../UserGQLModel/Queries/SearchAsyncAction"
 import { useEffect } from "react"
-import { useAsyncThunkAction } from "../../../../dynamic/src/Hooks"
+import { useAsync, useAsyncThunkAction } from "../../../../dynamic/src/Hooks"
 import { ReadAsyncAction } from "../../GroupGQLModel"
 import { AsyncStateIndicator } from "../../Base/Helpers/AsyncStateIndicator"
 import { InsertAsyncAction } from "../../RoleGQLModel/Queries"
@@ -25,9 +25,12 @@ export const RBACObject = ({ item }) => {
     const filtered = useMemo(() => currentUserRoles.filter(cr => cr?.valid), [currentUserRoles])
     return (
         <BaseUI.CardCapsule item={{}} title="Moje role vůči této entitě">
-            <SimpleCardCapsuleRightCorner>
-                <Edit item={item}/>
-            </SimpleCardCapsuleRightCorner>
+            {item?.__typename !== "UserGQLModel" && (
+                <SimpleCardCapsuleRightCorner>
+                    <Edit item={item}/>
+                </SimpleCardCapsuleRightCorner>
+            )}
+            
             {filtered.map(role => (
                 <Attribute key={role?.id}>
                     <Link item={role?.roletype} />@
@@ -71,8 +74,15 @@ export const RBACEdit = ({ item, onChange }) => {
     const { id="" } = item || {}
     const { entity, loading, error, run } = useAsyncThunkAction(ReadAsyncAction, {id}, {deferred: true})
     const { data, loading: saving, error: updateError, run: save } = useAsyncThunkAction(InsertAsyncAction, {id}, {deferred: true})
-
+    // const { entity=item, loading, error, run } = useAsync(ReadAsyncAction, {id}, {deferred: true})
+    // const { data, loading: saving, error: updateError, run: save } = useAsync(InsertAsyncAction, {id}, {deferred: true})
+    // const [itemCached, setItemCached] = useState(item)
     const [roles, setRoles] = useState((entity || {})?.roles||[])
+
+    // useEffect(()=>{
+    //     setItemCached(() => entity)
+    // },[entity])
+
     
     // useEffect(()=>{
     //     const newRoles = (entity || {})?.roles||[]
@@ -128,9 +138,11 @@ export const RBACEdit = ({ item, onChange }) => {
                 user: null,
             })
         )
+        // await run()
         // setRoles(prev => ([...prev, role]))
     }
     return (<>
+        {/* {JSON.stringify(roles)} */}
         <AsyncStateIndicator 
             error={error} 
             loading={loading} 

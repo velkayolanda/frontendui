@@ -1,8 +1,8 @@
 import { Attribute } from "../../../../_template/src/Base/Components/Attribute"
-import { Col as Col_ } from "../../../../_template/src/Base/Components/Col"
-import { Row } from "../../../../_template/src/Base/Components/Row"
+// import { Col as Col_ } from "../../../../_template/src/Base/Components/Col"
+// import { Row } from "../../../../_template/src/Base/Components/Row"
 import { Roles } from "../Vectors/Roles"
-import { UserRoles } from "../Vectors/UserRoles"
+// import { UserRoles } from "../Vectors/UserRoles"
 
 /**
  * A component that displays medium-level content for an template entity.
@@ -35,6 +35,12 @@ export const MediumContent = ({ item, children}) => {
             <Attribute attribute_name="surname" label="Příjmení" item={item} />
             <Attribute attribute_name="fullname" label="Celé jméno" item={item} />
             <Attribute attribute_name="email" label="Email" item={item} />
+            <Attribute attribute_name="email" label="Email" item={item}>
+                <a href={`mailto:${item?.email}`}>{item?.email}</a>
+            </Attribute>
+            <Attribute label="Telefon" item={item}>
+                <a href={`tel:+420800101202`}>800 101 202</a>
+            </Attribute>
             {children}
         </div>
         

@@ -10,9 +10,15 @@ import {
 const DefaultContent = MediumEditableContent
 const MutationAsyncAction = InsertAsyncAction
 
+// const permissions = {
+//     oneOfRoles: ["superadmin"],
+//     mode: "absolute",
+// }
+
+// ALTERNATIVE, CHECK GQLENDPOINT
 const permissions = {
-    oneOfRoles: ["superadmin"],
-    mode: "absolute",
+    oneOfRoles: ["administrátor", "personalista"],
+    mode: "item",
 }
 
 export const CreateLink = ({

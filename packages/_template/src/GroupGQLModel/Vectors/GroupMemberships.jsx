@@ -6,7 +6,7 @@ import { Link as BaseLink } from "../../../../_template/src/Base/Components/Link
 import { useNavigate } from "react-router"
 import { UpdateLink } from "../Mutations/Update"
 import { LinkURI } from "../Components"
-import { label } from "happy-dom/lib/PropertySymbol"
+
 import { Attribute } from "../../../../_template/src/Base/Components/Attribute"
 import { SimpleCardCapsuleRightCorner } from "../../../../_template/src/Base/Components"
 import { CreateGroupInserMembershipButton } from "../Mutations/AddMembership"

@@ -90,6 +90,7 @@ export const GeneralButton = ({
                 rbacitem={rbacitem}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                title={JSON.stringify(oneOfRoles)}
                 {...props}
             />
         </PermissionGate>
@@ -233,8 +234,9 @@ export const GeneralButtonBody = ({
             </>
         )    
     } else {
+        const {title, onClick, ...others} = props
         return (
-            <button {...props} disabled><Lock /> {children || "Vytvořit nový"}</button>
+            <button {...others} title={title} style={{ opacity: 0.5, pointerEvents: "auto" }}><Lock /> {children || "Vytvořit nový"}</button>
         )
 
     }

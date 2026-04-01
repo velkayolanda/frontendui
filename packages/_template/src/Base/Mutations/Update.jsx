@@ -11,6 +11,11 @@ import { GeneralButton, GeneralDialog, GeneralLink } from "./General"
 
 export const UpdateURI = makeMutationURI(LinkURI, "edit", { withId: true });
 
+// naviguje na stranku, kde se da udelat update
+// testuje opravneni 
+// - oneOfRoles = ["superadmin"],
+// - mode = "absolute",
+// item musi obsahovat rbacobject s rolemi aktualniho uzivatele
 export const UpdateLink = ({
     item,
     oneOfRoles = ["superadmin"],

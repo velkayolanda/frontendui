@@ -1,23 +1,28 @@
 // import { URIRoot } from "../../uriroot";
 import { ProxyLink } from "./ProxyLink";
 
-const RegisterofLinks = {};
-export const registerLink = (__typename, Link) => {
-    const registeredLink = RegisterofLinks[__typename];
-    if (!registeredLink) {
-        RegisterofLinks[__typename] = Link;
+const RegisterOfLinks = {};
+export const registerLink = (__typename, Link, overrideLinkURI) => {
+
+    const Link_ = overrideLinkURI
+        ? ({ ...props }) => <Link {...props} LinkURI={overrideLinkURI} />
+        : Link;
+
+    const registeredLink = RegisterOfLinks[__typename];
+
+    if (!registeredLink || overrideLinkURI) {
+        RegisterOfLinks[__typename] = Link_;
     } else {
-        // throw new Error(`Link for typename ${__typename} is already registered.`);
         console.warn(`Link for typename ${__typename} is already registered.`);
     }
-}
+};
 
 export const GenericURIRoot = "/generic";
 export const LinkURI = GenericURIRoot + "/view/";
 export const VectorItemsURI = GenericURIRoot + "/list/";
 
 export const Link = ({ item, action="view", children, ...others }) => {
-    const SpecificLink = item?.__typename ? RegisterofLinks[item.__typename] : null;
+    const SpecificLink = item?.__typename ? RegisterOfLinks[item.__typename] : null;
     if (SpecificLink && SpecificLink !== Link) {
         // console.log('Using specific link for typename:', item.__typename);
         return <SpecificLink item={item} action={action} {...others}>{children}</SpecificLink>;

@@ -47,7 +47,20 @@ fragment Medium on GroupGQLModel {
 const LargeFragmentStr = `
 fragment Large on GroupGQLModel {
   ...Medium
-  subgroups {
+  subgroups(where: {
+      grouptype: {
+        id: {
+          _in: [
+            "cd49e152-610c-11ed-9f29-001a7dda7110", 
+            "cd49e153-610c-11ed-bf19-001a7dda7110",
+            "cd49e154-610c-11ed-bdbf-001a7dda7110",
+            "cd49e155-610c-11ed-bdbf-001a7dda7110",
+            "cd49e155-610c-11ed-844e-001a7dda7110",
+            "cd49e156-610c-11ed-87ef-001a7dda7110"
+          ]
+        }
+      }
+    }) {
     __typename
     id
     name
@@ -55,6 +68,9 @@ fragment Large on GroupGQLModel {
       __typename
       id
       name
+    }
+      rbacobject {
+        ...RBRoles
     }
   }
   rolesOn {

@@ -79,7 +79,7 @@ export const WeekGrid = ({ children }) => {
  *   <ClickableBox ... />
  * </WeekGridItem>
  */
-export const WeekGridItem = ({ children, title, minWidth = 34, height = 69 }) => {
+export const WeekGridItem = ({ children, title, minWidth = 40, height = 69 }) => {
     return (
         <div
             className="position-relative border rounded overflow-hidden user-select-none"
@@ -321,6 +321,7 @@ const enrichEvent = (event) => {
         }
     }
 }
+
 export const FlexRow = ({ children }) => {
     return (
         <div
@@ -431,6 +432,7 @@ export const PlanRow = ({ item, academicYear = academicYear_ }) => {
                     />
                 ))}
             </FlexRow>
+
         </FlexContainer>
 
         <pre>

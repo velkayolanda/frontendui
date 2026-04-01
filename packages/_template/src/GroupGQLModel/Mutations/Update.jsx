@@ -11,16 +11,16 @@ import { UpdateAsyncAction } from "../Queries";
 const DefaultContent = MediumEditableContent
 const mutationAsyncAction = UpdateAsyncAction
 
-const permissions = {
-    oneOfRoles: ["superadmin"],
-    mode: "absolute",
-}
+// const permissions = {
+//     oneOfRoles: ["superadmin"],
+//     mode: "absolute",
+// }
 
 // ALTERNATIVE, CHECK GQLENDPOINT
-// const permissions = {
-//     oneOfRoles: ["administrátor", "personalista"],
-//     mode: "item",
-// }
+const permissions = {
+    oneOfRoles: ["administrátor", "personalista"],
+    mode: "item",
+}
 
 
 export const UpdateLink = ({

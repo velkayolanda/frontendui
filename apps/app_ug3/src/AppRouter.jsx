@@ -23,17 +23,21 @@ const AppLayout = () => (
     </NavigationHistoryProvider>
 );
 
+const ChildRoutes = [
+    ...BaseRouterSegments,
+    ...GroupRouterSegments,
+    ...RoleTypeRouterSegments,
+    ...UserRouterSegments,
+    ...GroupTypeRouterSegments,
+    ...RoleRouterSegments,
+]
+
 const Routes = [
     {
         path: "/",          // root
         element: <AppLayout />,
         children: [
-            ...BaseRouterSegments,
-            ...GroupRouterSegments,
-            ...RoleTypeRouterSegments,
-            ...UserRouterSegments,
-            ...GroupTypeRouterSegments,
-            ...RoleRouterSegments,
+            ...ChildRoutes
         ],
     },
 ];

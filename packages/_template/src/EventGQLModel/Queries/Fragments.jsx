@@ -106,10 +106,18 @@ fragment RBRoles on RBACObjectGQLModel {
   }
 }`
 
+const SubEventsFragmentStr = `
+fragment SubEvents on EventGQLModel {
+  ...Medium
+  subevents(limit: $limit, skip: $skip, where: $where, orderby: $orderby) { ...Link }
+}
+`
+
 export const RoleFragment = createQueryStrLazy(`${RoleFragmentStr}`)
 export const RBACFragment = createQueryStrLazy(`${RBACFragmentStr}`)
 
 export const LinkFragment = createQueryStrLazy(`${LinkFragmentStr}`)
 export const MediumFragment = createQueryStrLazy(`${MediumFragmentStr}`, LinkFragment, RBACFragment)
 export const LargeFragment = createQueryStrLazy(`${LargeFragmentStr}`, MediumFragment)
+export const SubEventsFragment = createQueryStrLazy(`${SubEventsFragmentStr}`, MediumFragment)
   

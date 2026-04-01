@@ -7,6 +7,7 @@ import { MediumContent as MediumContent_ } from "./MediumContent"
 import { InteractiveMutations } from '../Mutations/InteractiveMutations'
 import { LeftColumn, MiddleColumn } from "../../../../_template/src/Base/Components/Col"
 import { PlanRow } from "./Plan/PlanRow"
+import { A4Plan } from "./A4Plan"
 /**
  * A large card component for displaying detailed content and layout for an template entity.
  *
@@ -44,6 +45,7 @@ export const LargeCard = ({ item, children, CardCapsule=CardCapsule_, MediumCont
                 </LeftColumn>
                 <MiddleColumn>
                     <PlanRow item={item}/>
+                    <A4Plan item={item} startdate={"2023-09-01"} enddate={"2024-03-31"}/>
                     {children}
                 </MiddleColumn>
             </Row>

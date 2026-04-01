@@ -7,6 +7,7 @@ import { PagePlan } from "./PagePlan"
 
 import { DeleteItemURI, UpdateItemURI } from "../Components"
 import { CreateURI, ReadItemURI, VectorItemsURI, PlanItemURI } from "../Components"
+import { PageSubevents, SubEventsURI } from "./PageSubevents"
 
 /**
  * Definice segmentů rout pro Event stránky.
@@ -62,6 +63,10 @@ export const EventRouterSegments = [
         path: DeleteItemURI,
         element: (<PageDeleteItem />),
     },   
+    {
+        path: SubEventsURI,
+        element: (<PageSubevents />),
+    },
     // {
     //     path: "sad",
     //     element: (<PageReadItemRolesOn />)
