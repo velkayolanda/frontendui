@@ -6,7 +6,7 @@ import {
 import { NavigationHistoryLinks, NavigationHistoryProvider } from '../../../packages/_template/src/Base/Helpers/NavigationHistoryProvider';
 
 import { BaseRouterSegments } from "../../../packages/_template/src/Base/Pages/RouterSegment";
-
+import {SubjectGQLModelRouterSegments} from '../../../packages/subjects/src/SubjectGQLModel/Pages/RouterSegment';
 // import { GroupRouterSegments } from "../../../packages/_template/src/GroupGQLModel/Pages/RouterSegment";
 // import { RoleTypeRouterSegments } from "../../../packages/_template/src/RoleTypeGQLModel/Pages";
 // import { UserRouterSegments } from "../../../packages/_template/src/UserGQLModel/Pages/RouterSegment";
@@ -29,6 +29,7 @@ const Routes = [
         path: "/",          // root
         element: <AppLayout />,
         children: [
+            ...SubjectGQLModelRouterSegments,
             ...BaseRouterSegments,
             // ...GroupRouterSegments,
             // ...RoleTypeRouterSegments,
