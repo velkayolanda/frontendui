@@ -93,7 +93,7 @@ import { Link } from "./Link"
 //     )
 // }
 import { MediumContent as MediumContent_} from "../../../../_template/src/Base/Components/MediumContent"
-import { Attribute } from "../../../../_template/src/Base/Components"
+import {Attribute, formatDateTime} from "../../../../_template/src/Base/Components"
 
 //export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
 
@@ -110,7 +110,7 @@ export const MediumContent = ({ item, children}) => {
             </Attribute>
             <hr/>
             <Attribute label="Zmeneno">
-                {item?.lastchange}
+                {formatDateTime(item?.lastchange)}
                 {item?.changeby?.fullname}
             </Attribute>
             <hr/>
