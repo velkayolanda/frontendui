@@ -92,5 +92,34 @@ import { Link } from "./Link"
 //         </>
 //     )
 // }
+import { MediumContent as MediumContent_} from "../../../../_template/src/Base/Components/MediumContent"
+import { Attribute } from "../../../../_template/src/Base/Components"
 
-export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
+//export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
+
+export const MediumContent = ({ item, children}) => {
+    return (
+        <>
+            <Attribute label="Id">
+                <Link item={item}/>
+            </Attribute>
+            <Attribute label="Order">
+                <Link item={item}>
+                    {item?.order || item?.id || "Data Error"}
+                </Link>
+            </Attribute>
+            <hr/>
+            <Attribute label="Zmeneno">
+                {item?.lastchange}
+                {item?.changeby?.fullname}
+            </Attribute>
+            <hr/>
+            {item?.id}{" "}
+            {item?.order}
+            <hr/>
+        <MediumContent_ item={item}>
+            {children}
+        </MediumContent_>
+</>
+)
+}
