@@ -15,6 +15,11 @@
 npm run dev -w @hrbolek/app_dynamic
 ```
 
+# Jak spustit projekt app
+```cmd
+npm run dev -w @velkayolanda/app_subjects    
+```
+
 # Jak sestavit konrétní app
 
 ```cmd
