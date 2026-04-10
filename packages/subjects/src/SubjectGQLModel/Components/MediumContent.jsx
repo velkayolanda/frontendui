@@ -98,6 +98,7 @@ import {Attribute, formatDateTime} from "../../../../_template/src/Base/Componen
 //export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
 
 export const MediumContent = ({ item, children}) => {
+    console.log("item", item)
     return (
         <>
             <Attribute label="Název">
@@ -112,6 +113,15 @@ export const MediumContent = ({ item, children}) => {
             <Attribute label="Program">
                 {item?.program?.name || item?.program?.id}
             </Attribute>
+            {item?.rbacobject?.currentUserRoles?.length > 0 && (
+                <Attribute label="Moje role">
+                    {item.rbacobject.currentUserRoles.map(role => (
+                        <span key={role.id} className="badge bg-secondary me-1">
+                {role.roletype?.name}
+            </span>
+                    ))}
+                </Attribute>
+            )}
             <hr />
             <Attribute label="Změněno">
                 {formatDateTime(item?.lastchange)}
