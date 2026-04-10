@@ -1,1 +1,1 @@
- export * from './TemplateScalarAttribute'
+ export * from './ScalarAttribute'

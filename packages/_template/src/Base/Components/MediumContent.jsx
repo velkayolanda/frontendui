@@ -50,7 +50,7 @@ export const NonPriorityAttributeValue = ({ datarow = {}, name }) => {
 export const MediumContent = ({ item, children }) => {
     return (
         <>
-            prid mi to rict na ubytovne
+            {/*prid mi to rict na ubytovne*/}
             {Object.entries(item).map(([attribute_name, attribute_value]) => {
                 // if (attribute_name !== "id") return null
                 if (Array.isArray(attribute_value)) return null

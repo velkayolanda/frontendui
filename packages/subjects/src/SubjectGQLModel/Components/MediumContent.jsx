@@ -100,26 +100,26 @@ import {Attribute, formatDateTime} from "../../../../_template/src/Base/Componen
 export const MediumContent = ({ item, children}) => {
     return (
         <>
-            <Attribute label="Id">
-                <Link item={item}/>
+            <Attribute label="Název">
+                <Link item={item} />
             </Attribute>
-            <Attribute label="Order">
-                <Link item={item}>
-                    {item?.order || item?.id || "Data Error"}
-                </Link>
+            <Attribute label="Anglický název">
+                {item?.nameEn}
             </Attribute>
-            <hr/>
-            <Attribute label="Zmeneno">
+            <Attribute label="Popis">
+                {item?.description}
+            </Attribute>
+            <Attribute label="Program">
+                {item?.program?.name || item?.program?.id}
+            </Attribute>
+            <hr />
+            <Attribute label="Změněno">
                 {formatDateTime(item?.lastchange)}
-                {item?.changeby?.fullname}
             </Attribute>
-            <hr/>
-            {item?.id}{" "}
-            {item?.order}
-            <hr/>
-        <MediumContent_ item={item}>
+            <Attribute label="Změnil">
+                {item?.changedby?.fullname}
+            </Attribute>
             {children}
-        </MediumContent_>
-</>
-)
+        </>
+    )
 }

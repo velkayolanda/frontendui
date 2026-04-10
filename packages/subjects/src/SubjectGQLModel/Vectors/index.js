@@ -1,1 +1,1 @@
-export * from './TemplateVectorsAttribute'
+export * from './VectorAttribute'
