@@ -23,9 +23,24 @@ export const SubjectSubPage = ({ item }) => {
                 </Attribute>
             </CardCapsule>
 
-            <CardCapsule item={item} title="Semestry">
-                <Table data={item?.semesters || []} />
-            </CardCapsule>
+            <table className="table table-sm">
+                <thead>
+                <tr>
+                    <th>Pořadí</th>
+                    <th>ID</th>
+                    <th>Last change</th>
+                </tr>
+                </thead>
+                <tbody>
+                {(item?.semesters || []).map(semester => (
+                    <tr key={semester.id}>
+                        <td>{semester.order}</td>
+                        <td>{semester.id}</td>
+                        <td>{item.lastchange}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
         </>
     )
 }

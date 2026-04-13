@@ -41,6 +41,9 @@ fragment Large on SubjectGQLModel {
   ...Medium
   semesters {
     __typename id
+    id
+    order
+    lastchange
   }
   guarantors {
     __typename id
