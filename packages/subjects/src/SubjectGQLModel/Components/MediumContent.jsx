@@ -101,34 +101,56 @@ export const MediumContent = ({ item, children}) => {
     console.log("item", item)
     return (
         <>
-            <Attribute label="Název">
-                <Link item={item} />
-            </Attribute>
-            <Attribute label="Anglický název">
-                {item?.nameEn}
-            </Attribute>
-            <Attribute label="Popis">
-                {item?.description}
-            </Attribute>
-            <Attribute label="Program">
-                {item?.program?.name || item?.program?.id}
-            </Attribute>
+            {item?.name && (
+                <Attribute label="Název">
+                    <Link item={item} />
+                </Attribute>
+            )}
+            {item?.nameEn && (
+                <Attribute label="Anglický název">
+                    {item.nameEn}
+                </Attribute>
+            )}
+            {item?.description && (
+                <Attribute label="Popis">
+                    {item.description}
+                </Attribute>
+            )}
+            {(item?.program?.name || item?.program?.id) && (
+                <Attribute label="Program">
+                    {item.program.name || item.program.id}
+                </Attribute>
+            )}
             {item?.rbacobject?.currentUserRoles?.length > 0 && (
                 <Attribute label="Moje role">
                     {item.rbacobject.currentUserRoles.map(role => (
                         <span key={role.id} className="badge bg-secondary me-1">
-                {role.roletype?.name}
-            </span>
+                    {role.roletype?.name}
+                </span>
                     ))}
                 </Attribute>
             )}
             <hr />
-            <Attribute label="Změněno">
-                {formatDateTime(item?.lastchange)}
-            </Attribute>
-            <Attribute label="Změnil">
-                {item?.changedby?.fullname}
-            </Attribute>
+            {item?.createdby?.fullname && (
+                <Attribute label="Vytvořil">
+                    {item.createdby.fullname}
+                </Attribute>
+            )}
+            {item?.created && (
+                <Attribute label="Vytvořeno">
+                    {formatDateTime(item.created)}
+                </Attribute>
+            )}
+            {item?.lastchange && (
+                <Attribute label="Změněno">
+                    {formatDateTime(item.lastchange)}
+                </Attribute>
+            )}
+            {item?.changedby?.fullname && (
+                <Attribute label="Změnil">
+                    {item.changedby.fullname}
+                </Attribute>
+            )}
             {children}
         </>
     )
