@@ -1,8 +1,12 @@
 {
   "name": "@hrbolek/app_ug3",
   "private": false,
-  "version": "0.6.0",
+  "version": "0.6.1",
   "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
