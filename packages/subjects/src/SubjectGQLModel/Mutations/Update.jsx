@@ -12,7 +12,7 @@ const DefaultContent = (props) => <MediumEditableContent {...props} />
 const mutationAsyncAction = UpdateAsyncAction
 
 const permissions = {
-    oneOfRoles: ["superadmin"],
+    oneOfRoles: [], // unlock edit permissions potreba nechat prazdnu zatvorku, originalne tam napisane superadmin
     mode: "absolute",
 }
 
