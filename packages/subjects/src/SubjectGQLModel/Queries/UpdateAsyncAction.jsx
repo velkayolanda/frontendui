@@ -10,6 +10,7 @@ mutation subjectUpdate(
     $name: String
     $nameEn: String
     $description: String
+    $descriptionEn: String
 ) {
   subjectUpdate(
     subject: {
@@ -18,6 +19,7 @@ mutation subjectUpdate(
       name: $name
       nameEn: $nameEn
       description: $description
+      descriptionEn: $descriptionEn
     }
   ) {
     ... on SubjectGQLModel { ...Large }

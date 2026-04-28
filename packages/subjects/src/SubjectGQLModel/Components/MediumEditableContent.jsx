@@ -32,6 +32,8 @@ export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>nu
                    value={item?.nameEn || ""} onChange={onChange} onBlur={onBlur} />
             <Input id="description" label="Popis" className="form-control"
                    value={item?.description || ""} onChange={onChange} onBlur={onBlur} />
+            <Input id="descriptionEn" label="Anglický popis" className="form-control"
+                   value={item?.descriptionEn || ""} onChange={onChange} onBlur={onBlur} />
             {children}
         </>
     )
