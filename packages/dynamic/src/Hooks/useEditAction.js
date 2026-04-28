@@ -52,14 +52,22 @@ export const useEditAction = (
     // baseline = poslední "uložený" stav (primárně z entity)
     const [baseline, setBaseline] = useState(item || {});
     const [draft, setDraft] = useState(item || {});
+    const [saved, setSaved] = useState(false);
+    const savedTimerRef = useRef(null);
+    const draftRef = useRef(draft);
+
+    // Keep ref in sync with state
+    useEffect(() => {
+        draftRef.current = draft;
+    }, [draft]);
     
 
-    // reset lokálního stavu při změně entity (jiné id / refetch / update ze store)
+    // reset lokálního stavu při změně item prop (nový item z rodiče)
     useEffect(() => {
         const next = item || {};
         setBaseline(next);
         setDraft(next);
-    }, [entity]);
+    }, [item?.id, item?.lastchange]);
 
     const dirty = useMemo(() => !shallowEqual(draft, baseline), [draft, baseline]);
 
@@ -72,7 +80,10 @@ export const useEditAction = (
         }
     };
 
-    useEffect(() => () => clearTimer(), []);
+    useEffect(() => () => {
+        clearTimer();
+        if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    }, []);
 
     const toVars = useCallback(
         (d) => {
@@ -91,9 +102,20 @@ export const useEditAction = (
             // posíláme přes run() -> thunk -> gqlClient.request(...)
             const result = await run(toVars(nextDraft));
             // po úspěchu nastav baseline; entity se stejně typicky aktualizuje přes middleware do store
-            // setBaseline(nextDraft);
             onCommit(nextDraft, result);
-            // setDraft(nextDraft)
+
+            // Show saved indicator briefly and update draft/baseline with server response
+            if (result && !result.failed) {
+                // Update draft and baseline with server response (especially lastchange)
+                const updatedData = { ...nextDraft, ...result };
+                setDraft(updatedData);
+                setBaseline(updatedData);
+
+                setSaved(true);
+                if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+                savedTimerRef.current = setTimeout(() => setSaved(false), 2000);
+            }
+
             return result;
         },
         [run, toVars]
@@ -118,22 +140,30 @@ export const useEditAction = (
             const fieldId = e?.target?.id;
             const value = e?.target?.value;
 
-            let nextDraft;
-            if (fieldId) {
-                nextDraft = { ...(draft || {}), [fieldId]: value };
-            } else if (value && typeof value === "object") {
-                nextDraft = value;
-            } else {
-                nextDraft = draft;
-            }
+            console.log("useEditAction onChange", fieldId, value);
 
-            setDraft(nextDraft);
+            // Use functional update to always get latest draft
+            setDraft(currentDraft => {
+                let nextDraft;
+                if (fieldId) {
+                    nextDraft = { ...(currentDraft || {}), [fieldId]: value };
+                } else if (value && typeof value === "object") {
+                    nextDraft = value;
+                } else {
+                    nextDraft = currentDraft;
+                }
 
-            if (mode === "live") {
-                scheduleCommit(nextDraft);
-            }
+                console.log("useEditAction nextDraft", nextDraft);
+                draftRef.current = nextDraft;
+
+                if (mode === "live") {
+                    scheduleCommit(nextDraft);
+                }
+
+                return nextDraft;
+            });
         },
-        [draft, mode, scheduleCommit]
+        [mode, scheduleCommit]
     );
 
     const onBlur = useCallback(async () => {
@@ -150,9 +180,12 @@ export const useEditAction = (
 
     const onConfirm = useCallback(async () => {
         clearTimer();
-        if (!dirty) return null;
-        return commitNow(draft);
-    }, [dirty, draft, commitNow]);
+        const currentDraft = draftRef.current;
+        const isDirty = !shallowEqual(currentDraft, baseline);
+        console.log("useEditAction onConfirm dirty:", isDirty, "draft:", currentDraft);
+        if (!isDirty) return null;
+        return commitNow(currentDraft);
+    }, [baseline, commitNow]);
 
     return {
         // data
@@ -166,6 +199,7 @@ export const useEditAction = (
         loading,
         error,
         data,
+        saved, // true briefly after successful save
 
         // handlers
         onChange,

@@ -5,8 +5,9 @@ import {
     UpdateLink as BaseUpdateLink
 } from "../../../../_template/src/Base/Mutations/Update";
 
-import { MediumEditableContent, UpdateItemURI } from "../Components";
+import { MediumEditableContent, UpdateItemURI, SubjectEditForm } from "../Components";
 import { UpdateAsyncAction } from "../Queries";
+import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
 
 const DefaultContent = (props) => <MediumEditableContent {...props} />
 const mutationAsyncAction = UpdateAsyncAction
@@ -115,33 +116,17 @@ export const UpdateButton = ({
 };
 
 /**
- * “Page-level” update workflow (inline edit / celá stránka editace).
- *
- * Wrapper nad `BaseUpdateBody`. Typicky vykreslí editovatelný obsah (`DefaultContent`)
- * a zajistí uložení přes `mutationAsyncAction` (dle Base/General implementace).
- * Aplikuje RBAC přes `permissions`.
- *
- * @param {Object} params
- * @param {React.ComponentType<Object>} [params.DefaultContent=DefaultContent]
- *   Komponenta editovatelného obsahu (typicky MediumEditableContent).
- * @param {Function} [params.mutationAsyncAction=mutationAsyncAction]
- *   Async action (thunk) pro uložení změn (např. UpdateAsyncAction).
- * @param {Object} params.props
- *   Další props přeposílané do `BaseUpdateBody` (např. `title`, `oklabel`, `cancellabel`,
- *   `item`, `onOk`, `onCancel`, `className`, atd.).
- * @returns {JSX.Element}
+ * "Page-level" update workflow (inline edit / celá stránka editace).
+ * Uses SubjectEditForm for direct, simple editing of all fields.
  */
-export const UpdateBody = ({
-    DefaultContent: DefaultContent_ = DefaultContent,
-    mutationAsyncAction: mutationAsyncAction_ = mutationAsyncAction,
-    ...props
-}) => {
+export const UpdateBody = ({ children }) => {
+    const { item } = useGQLEntityContext();
+
+    if (!item) return <>Načítání...</>;
+
     return (
-        <BaseUpdateBody
-            {...props}
-            DefaultContent={DefaultContent_}
-            mutationAsyncAction={mutationAsyncAction_}
-            {...permissions}
-        />
+        <SubjectEditForm item={item}>
+            {children}
+        </SubjectEditForm>
     );
 };

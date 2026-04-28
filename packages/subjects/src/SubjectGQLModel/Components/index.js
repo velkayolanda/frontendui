@@ -9,5 +9,5 @@ export * from './MediumCard'
 export * from './MediumEditableContent'
 export * from './LiveEdit'
 
-
 export * from './ConfirmEdit'
+export * from './SubjectEditForm'

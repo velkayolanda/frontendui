@@ -34,11 +34,11 @@ export const ConfirmEdit = ({ item, children }) => {
             await contextOnChange(event);
         }
         return result;
-    }, [onConfirm, contextOnChange]);
+    }, [onConfirm, contextOnChange, draft]);
 
 
     return (
-        <MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
+        <MediumEditableContent item={draft} onChange={onChange} onBlur={onBlur} >
             {children}
             <hr />
             {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}

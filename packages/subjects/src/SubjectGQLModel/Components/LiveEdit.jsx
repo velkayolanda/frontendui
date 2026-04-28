@@ -86,26 +86,44 @@ const LiveEditWrapper = ({ item, children }) => {
 
 
 export const LiveEdit = ({ item, children, asyncMutationAction=UpdateAsyncAction }) => {
-    // const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
     const {
         draft,
         dirty,
         loading: saving,
-        onChange, 
+        saved,
+        error,
+        onChange,
         onBlur,
         onCancel,
         onConfirm,
     } = useEditAction(asyncMutationAction, item, {
-        mode: "live", 
-        // onCommit: contextOnChange
+        mode: "confirm",
     })
 
     return (
-        
-        <MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
+
+        <MediumEditableContent item={draft} onChange={onChange} onBlur={onBlur} >
             {saving && <LoadingSpinner/>}
+            {saved && <div className="alert alert-success py-1 mt-2">Uloženo</div>}
+            {error && <div className="alert alert-danger py-1 mt-2">Chyba při ukládání</div>}
+            <div className="d-flex gap-2 mt-2">
+                <button
+                    className="btn btn-outline-secondary flex-grow-1"
+                    onClick={onCancel}
+                    disabled={!dirty || saving}
+                >
+                    Zrušit
+                </button>
+                <button
+                    className="btn btn-primary flex-grow-1"
+                    onClick={onConfirm}
+                    disabled={!dirty || saving}
+                >
+                    Uložit
+                </button>
+            </div>
             {children}
         </MediumEditableContent>
-        
+
     )
 }
