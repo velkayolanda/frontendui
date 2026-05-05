@@ -5,9 +5,6 @@ import { gqlClient } from "../../../../dynamic/src/Core/gqlClient2";
 /**
  * Simple direct edit form for Subject entity.
  * Manages its own state and directly calls the mutation.
- *
- * NOTE: description and descriptionEn fields are NOT supported by the backend
- * subjectUpdate mutation - they will be displayed as read-only.
  */
 const UpdateMutationQuery = `
 mutation subjectUpdate(
@@ -15,6 +12,8 @@ mutation subjectUpdate(
     $lastchange: DateTime!
     $name: String
     $nameEn: String
+    $description: String
+    $descriptionEn: String
 ) {
   subjectUpdate(
     subject: {
@@ -22,6 +21,8 @@ mutation subjectUpdate(
       lastchange: $lastchange
       name: $name
       nameEn: $nameEn
+      description: $description
+      descriptionEn: $descriptionEn
     }
   ) {
     ... on SubjectGQLModel {
@@ -47,15 +48,19 @@ export const SubjectEditForm = ({ item, children }) => {
     // Local state for editable fields
     const [name, setName] = useState(item?.name || "");
     const [nameEn, setNameEn] = useState(item?.nameEn || "");
+    const [description, setDescription] = useState(item?.description || "");
+    const [descriptionEn, setDescriptionEn] = useState(item?.descriptionEn || "");
 
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [saved, setSaved] = useState(false);
 
-    // Check if anything changed (only for editable fields)
+    // Check if anything changed
     const isDirty =
         name !== (item?.name || "") ||
-        nameEn !== (item?.nameEn || "");
+        nameEn !== (item?.nameEn || "") ||
+        description !== (item?.description || "") ||
+        descriptionEn !== (item?.descriptionEn || "");
 
     const handleSave = useCallback(async () => {
         if (!isDirty) return;
@@ -70,6 +75,8 @@ export const SubjectEditForm = ({ item, children }) => {
                 lastchange: item.lastchange,
                 name,
                 nameEn,
+                description,
+                descriptionEn,
             };
 
             console.log("SubjectEditForm saving variables:", JSON.stringify(variables, null, 2));
@@ -102,11 +109,13 @@ export const SubjectEditForm = ({ item, children }) => {
         } finally {
             setSaving(false);
         }
-    }, [item, name, nameEn, isDirty]);
+    }, [item, name, nameEn, description, descriptionEn, isDirty]);
 
     const handleCancel = useCallback(() => {
         setName(item?.name || "");
         setNameEn(item?.nameEn || "");
+        setDescription(item?.description || "");
+        setDescriptionEn(item?.descriptionEn || "");
         setError(null);
         setSaved(false);
     }, [item]);
@@ -136,30 +145,24 @@ export const SubjectEditForm = ({ item, children }) => {
             </div>
 
             <div className="mb-3">
-                <label htmlFor="description" className="form-label">
-                    Popis <small className="text-muted">(pouze pro čtení - backend nepodporuje editaci)</small>
-                </label>
+                <label htmlFor="description" className="form-label">Popis</label>
                 <textarea
                     id="description"
-                    className="form-control bg-light"
+                    className="form-control"
                     rows={3}
-                    value={item?.description || ""}
-                    disabled
-                    readOnly
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
 
             <div className="mb-3">
-                <label htmlFor="descriptionEn" className="form-label">
-                    Anglický popis <small className="text-muted">(pouze pro čtení - backend nepodporuje editaci)</small>
-                </label>
+                <label htmlFor="descriptionEn" className="form-label">Anglický popis</label>
                 <textarea
                     id="descriptionEn"
-                    className="form-control bg-light"
+                    className="form-control"
                     rows={3}
-                    value={item?.descriptionEn || ""}
-                    disabled
-                    readOnly
+                    value={descriptionEn}
+                    onChange={(e) => setDescriptionEn(e.target.value)}
                 />
             </div>
 

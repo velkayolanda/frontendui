@@ -18,11 +18,15 @@ export const PageLink = ({ children, preserveHash = true, preserveSearch = true,
 };
 
 export const InteractiveMutations = ({ item }) => {
+    const handleUpdateOk = () => {
+        setTimeout(() => window.location.reload(), 500);
+    };
+
     return (
         <CardCapsule item={item} title="Nástroje">
             <PageLink className="btn btn-outline-success">Stránka</PageLink>
             <UpdateLink className="btn btn-outline-success" item={item}>Upravit</UpdateLink>
-            <UpdateButton className="btn btn-outline-success" item={item}>Upravit Dialog</UpdateButton>
+            <UpdateButton className="btn btn-outline-success" item={item} onOk={handleUpdateOk}>Upravit Dialog</UpdateButton>
             <CreateButton className="btn btn-outline-success" rbacitem={{}}>Vytvořit nový</CreateButton>
             <DeleteButton className="btn btn-outline-danger" item={item}>Odstranit</DeleteButton>
         </CardCapsule>
