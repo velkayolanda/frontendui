@@ -1,10 +1,11 @@
 import { useCallback } from "react";
+import { useMemo } from "react";
 
 import { UpdateAsyncAction } from "../Queries";
 import { MediumEditableContent } from "./MediumEditableContent";
 import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
+import { LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
 import { AsyncStateIndicator } from "../Helpers/AsyncStateIndicator";
-import { useGQLEntityContext } from "../Helpers/GQLEntityProvider";
 
 /**
  * TemplateLiveEdit Component
@@ -36,60 +37,26 @@ import { useGQLEntityContext } from "../Helpers/GQLEntityProvider";
  *   Interaktivní komponenta pro live editaci šablony, včetně spinneru a error handleru.
  */
 export const LiveEdit = ({
-    item,
-    children,
-    mutationAsyncAction=UpdateAsyncAction,
-    DefaultContent=MediumEditableContent
-}) => {
-    const { onChange: contextOnChange } = useGQLEntityContext()
-
+                             item,
+                             children,
+                             mutationAsyncAction=UpdateAsyncAction,
+                             DefaultContent=MediumEditableContent
+                         }) => {
+    // const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
     const {
-        draft,
-        dirty,
         loading: saving,
-        saved,
         error,
         onChange,
         onBlur,
-        onCancel,
-        onConfirm,
     } = useEditAction(mutationAsyncAction, item, {
-        mode: "confirm",
+        mode: "live",
+        // onCommit: contextOnChange
     })
-
-    const handleConfirm = useCallback(async () => {
-        const result = await onConfirm()
-        if (result && !result.failed) {
-            // Notify context about the updated entity (with new lastchange)
-            const event = { target: { value: result } }
-            await contextOnChange?.(event)
-            // Reload page to show updated data
-            window.location.reload()
-        }
-        return result
-    }, [onConfirm, contextOnChange])
 
     return (
 
-        <DefaultContent item={draft} onChange={onChange} onBlur={onBlur} >
+        <DefaultContent item={item} onChange={onChange} onBlur={onBlur} >
             <AsyncStateIndicator loading={saving} error={error} text={"Ukládám"} />
-            {saved && <div className="alert alert-success py-1 mt-2">Uloženo</div>}
-            <div className="d-flex gap-2 mt-2">
-                <button
-                    className="btn btn-outline-secondary flex-grow-1"
-                    onClick={onCancel}
-                    disabled={!dirty || saving}
-                >
-                    Zrušit
-                </button>
-                <button
-                    className="btn btn-primary flex-grow-1"
-                    onClick={handleConfirm}
-                    disabled={!dirty || saving}
-                >
-                    Uložit
-                </button>
-            </div>
             {children}
         </DefaultContent>
 
