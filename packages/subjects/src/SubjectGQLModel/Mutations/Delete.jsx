@@ -11,7 +11,7 @@ const DefaultContent = MediumContent
 const MutationAsyncAction = DeleteAsyncAction
 
 const permissions = {
-    oneOfRoles: ["superadmin"],
+    oneOfRoles: ["administrátor"], // odemčeno pro všechny uživatele
     mode: "absolute",
 }
 

@@ -2,37 +2,36 @@ import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared";
 import { LargeFragment } from "./Fragments";
 import { createAsyncGraphQLAction2 } from "../../../../dynamic/src/Core/createAsyncGraphQLAction2";
 
-
 const InsertMutationStr = `
-mutation roleTypeInsert(
-	$mastertypeId: UUID # null, 
-	$id: UUID # null, 
-	$name: String # null, 
-	$nameEn: String # null, 
-	$subtypes: [RoleTypeInsertGQLModel!] # null
+mutation subjectInsert(
+    $programId: UUID!
+    $id: UUID
+    $name: String
+    $nameEn: String
+    $description: String
+    $descriptionEn: String
+    $groupId: UUID
 ) {
-  roleTypeInsert(
-	roleType: {
-	mastertypeId: $mastertypeId, 
-	id: $id, 
-	name: $name, 
-	nameEn: $nameEn, 
-	subtypes: $subtypes}
+  subjectInsert(
+    subject: {
+      programId: $programId
+      id: $id
+      name: $name
+      nameEn: $nameEn
+      description: $description
+      descriptionEn: $descriptionEn
+      groupId: $groupId
+    }
   ) {
-    ... on InsertError { ...InsertError }
-    ... on RoleTypeGQLModel { ...Large }
+    ... on InsertError { ...InsertErrorFragment }
+    ... on SubjectGQLModel { ...Large }
   }
 }
 
-
-fragment InsertError on InsertError {
+fragment InsertErrorFragment on InsertError {
   __typename
   msg
   failed
-  code
-  location
-  input
-
 }
 `
 

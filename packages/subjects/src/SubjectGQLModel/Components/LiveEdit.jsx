@@ -38,8 +38,8 @@ import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
 export const LiveEdit_ = ({ children, asyncAction=UpdateAsyncAction}) => {
     const { onChange, onBlur, item } = useGQLEntityContext()
     return (
-        <AsyncActionProvider 
-            item={item} 
+        <AsyncActionProvider
+            item={item}
             queryAsyncAction={asyncAction}
             options={{deferred: true, network: true}}
             onChange={onChange}
@@ -56,10 +56,10 @@ export const LiveEdit_ = ({ children, asyncAction=UpdateAsyncAction}) => {
 
 const LiveEditWrapper = ({ item, children }) => {
     const { run , error, loading, entity, data, onChange, onBlur } = useGQLEntityContext()
-    
+
     const handleEvent = useCallback((handler) => async (e) => {
         const {id, value} = e?.target || {}
-        if (id === undefined || value === undefined) return 
+        if (id === undefined || value === undefined) return
         if (item?.[id] === value) {
             return;
         }
@@ -86,42 +86,24 @@ const LiveEditWrapper = ({ item, children }) => {
 
 
 export const LiveEdit = ({ item, children, asyncMutationAction=UpdateAsyncAction }) => {
+    // const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
     const {
         draft,
         dirty,
         loading: saving,
-        saved,
-        error,
         onChange,
         onBlur,
         onCancel,
         onConfirm,
     } = useEditAction(asyncMutationAction, item, {
-        mode: "confirm",
+        mode: "live",
+        // onCommit: contextOnChange
     })
 
     return (
 
-        <MediumEditableContent item={draft} onChange={onChange} onBlur={onBlur} >
+        <MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
             {saving && <LoadingSpinner/>}
-            {saved && <div className="alert alert-success py-1 mt-2">Uloženo</div>}
-            {error && <div className="alert alert-danger py-1 mt-2">Chyba při ukládání</div>}
-            <div className="d-flex gap-2 mt-2">
-                <button
-                    className="btn btn-outline-secondary flex-grow-1"
-                    onClick={onCancel}
-                    disabled={!dirty || saving}
-                >
-                    Zrušit
-                </button>
-                <button
-                    className="btn btn-primary flex-grow-1"
-                    onClick={onConfirm}
-                    disabled={!dirty || saving}
-                >
-                    Uložit
-                </button>
-            </div>
             {children}
         </MediumEditableContent>
 

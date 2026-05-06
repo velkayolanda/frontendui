@@ -7,11 +7,11 @@ import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLE
 
 export const ConfirmEdit = ({ item, children }) => {
     const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
-    
+
     const localOnMutationEvent = useCallback((mutationHandler, notifyHandler) => async (e) => {
         const newItem = { ...item, [e.target.id]: e.target.value }
         const newEvent = { target: { value: newItem } }
-        
+
         await notifyHandler(newEvent)
         return await mutationHandler(e)
     })
@@ -19,7 +19,7 @@ export const ConfirmEdit = ({ item, children }) => {
     const {
         draft,
         dirty,
-        onChange, 
+        onChange,
         onBlur,
         onCancel,
         onConfirm,
@@ -34,23 +34,23 @@ export const ConfirmEdit = ({ item, children }) => {
             await contextOnChange(event);
         }
         return result;
-    }, [onConfirm, contextOnChange, draft]);
+    }, [onConfirm, contextOnChange]);
 
 
     return (
-        <MediumEditableContent item={draft} onChange={onChange} onBlur={onBlur} >
+        <MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
             {children}
             <hr />
             {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
-            <button 
-                className="btn btn-warning form-control" 
+            <button
+                className="btn btn-warning form-control"
                 onClick={onCancel}
                 disabled={!dirty || loading}
             >
                 Zrušit změny
             </button>
-            <button 
-                className="btn btn-primary form-control" 
+            <button
+                className="btn btn-primary form-control"
                 onClick={handleConfirm}
                 disabled={!dirty || loading}
             >

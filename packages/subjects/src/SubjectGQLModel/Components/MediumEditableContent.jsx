@@ -1,31 +1,34 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { ProgramSelect } from "./ProgramSelect"
 
 /**
- * A component that displays medium-level content for an template entity.
- *
- * This component renders a label "TemplateMediumContent" followed by a serialized representation of the `template` object
- * and any additional child content. It is designed to handle and display information about an template entity object.
+ * A component that displays medium-level editable content for a Subject entity.
  *
  * @component
- * @param {Object} props - The properties for the TemplateMediumContent component.
- * @param {Object} props.template - The object representing the template entity.
- * @param {string|number} props.template.id - The unique identifier for the template entity.
- * @param {string} props.template.name - The name or label of the template entity.
- * @param {React.ReactNode} [props.children=null] - Additional content to render after the serialized `template` object.
+ * @param {Object} props - The properties for the MediumEditableContent component.
+ * @param {Object} props.item - The object representing the subject entity.
+ * @param {Function} props.onChange - Callback when field changes
+ * @param {Function} props.onBlur - Callback when field loses focus
+ * @param {React.ReactNode} [props.children=null] - Additional content to render.
  *
- * @returns {JSX.Element} A JSX element displaying the entity's details and optional content.
- *
- * @example
- * // Example usage:
- * const templateEntity = { id: 123, name: "Sample Entity" };
- * 
- * <TemplateMediumContent template={templateEntity}>
- *   <p>Additional information about the entity.</p>
- * </TemplateMediumContent>
+ * @returns {JSX.Element} A JSX element displaying editable fields.
  */
 export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children }) => {
+    const handleProgramChange = (programId) => {
+        // Simulate onChange event for programId
+        onChange({ target: { id: 'programId', value: programId } })
+    }
+
     return (
         <>
+            <div className="mb-3">
+                <label htmlFor="programId" className="form-label">Program</label>
+                <ProgramSelect
+                    id="programId"
+                    value={item?.programId || ""}
+                    onChange={handleProgramChange}
+                />
+            </div>
             <Input id="name" label="Název" className="form-control"
                    value={item?.name || ""} onChange={onChange} onBlur={onBlur} />
             <Input id="nameEn" label="Anglický název" className="form-control"
