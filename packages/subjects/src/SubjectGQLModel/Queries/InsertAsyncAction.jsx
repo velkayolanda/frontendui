@@ -23,15 +23,14 @@ mutation subjectInsert(
       groupId: $groupId
     }
   ) {
-    ... on InsertError { ...InsertErrorFragment }
     ... on SubjectGQLModel { ...Large }
+    ... on SubjectGQLModelInsertError {
+      __typename
+      Entity { ...Large }
+      msg
+      failed
+    }
   }
-}
-
-fragment InsertErrorFragment on InsertError {
-  __typename
-  msg
-  failed
 }
 `
 
