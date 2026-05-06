@@ -117,7 +117,7 @@ export const UpdateButton = ({
 
 /**
  * "Page-level" update workflow (inline edit / celá stránka editace).
- * Uses SubjectEditForm for direct, simple editing of all fields.
+ * Uses SubjectEditForm for direct editing with save button that triggers autosave.
  */
 export const UpdateBody = ({ children }) => {
     const { item } = useGQLEntityContext();
@@ -125,7 +125,7 @@ export const UpdateBody = ({ children }) => {
     if (!item) return <>Načítání...</>;
 
     return (
-        <SubjectEditForm item={item}>
+        <SubjectEditForm>
             {children}
         </SubjectEditForm>
     );

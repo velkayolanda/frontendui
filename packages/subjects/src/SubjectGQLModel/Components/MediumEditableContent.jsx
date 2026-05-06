@@ -1,4 +1,5 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { Label } from "../../../../_template/src/Base/FormControls/Label"
 import { ProgramSelect } from "./ProgramSelect"
 
 /**
@@ -33,10 +34,29 @@ export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>nu
                    value={item?.name || ""} onChange={onChange} onBlur={onBlur} />
             <Input id="nameEn" label="Anglický název" className="form-control"
                    value={item?.nameEn || ""} onChange={onChange} onBlur={onBlur} />
-            <Input id="description" label="Popis" className="form-control"
-                   value={item?.description || ""} onChange={onChange} onBlur={onBlur} />
-            <Input id="descriptionEn" label="Anglický popis" className="form-control"
-                   value={item?.descriptionEn || ""} onChange={onChange} onBlur={onBlur} />
+
+            <Label id="description" title="Popis">
+                <textarea
+                    id="description"
+                    className="form-control"
+                    rows={4}
+                    value={item?.description || ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </Label>
+
+            <Label id="descriptionEn" title="Anglický popis">
+                <textarea
+                    id="descriptionEn"
+                    className="form-control"
+                    rows={4}
+                    value={item?.descriptionEn || ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            </Label>
+
             {children}
         </>
     )

@@ -116,6 +116,11 @@ export const MediumContent = ({ item, children}) => {
                     {item.description}
                 </Attribute>
             )}
+            {item?.descriptionEn && (
+                <Attribute label="Anglický popis">
+                    {item.descriptionEn}
+                </Attribute>
+            )}
             {(item?.program?.name || item?.program?.id) && (
                 <Attribute label="Program">
                     {item.program.name || item.program.id}
