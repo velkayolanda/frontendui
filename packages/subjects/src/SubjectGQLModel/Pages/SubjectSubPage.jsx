@@ -22,7 +22,7 @@ export const SubjectSubPage = ({ item }) => {
                     {item?.program?.id}
                 </Attribute>
             </CardCapsule>
-
+            <CardCapsule title="Semestry">
             <table className="table table-sm">
                 <thead>
                 <tr>
@@ -41,6 +41,7 @@ export const SubjectSubPage = ({ item }) => {
                 ))}
                 </tbody>
             </table>
+            </CardCapsule>
         </>
     )
 }
