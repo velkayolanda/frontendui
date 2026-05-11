@@ -1,5 +1,24 @@
 # Změny
 
+## 11.5.2026
+
+- Přidání správy semestrů předmětu (SemestersManager) - nová funkcionalita pro:
+  - Přidávání existujících semestrů k předmětu z dropdownu
+  - Odebírání semestrů z předmětu (bez smazání semestru)
+  - Změna pořadí semestrů pomocí tlačítek nahoru/dolů
+  - Nové semestry se přidávají na konec (nejvyšší order + 1)
+- Nové soubory v `packages/subjects/src/SubjectGQLModel/`:
+  - `Components/SemestersManager.jsx` - UI komponenta pro správu semestrů
+  - `Queries/SemesterUpdateAsyncAction.jsx` - GraphQL mutace pro aktualizaci semestru
+  - `Queries/SemesterInsertAsyncAction.jsx` - GraphQL mutace pro vytvoření semestru
+  - `Queries/SemesterDeleteAsyncAction.jsx` - GraphQL mutace pro smazání semestru
+- Upravené soubory:
+  - `Components/SubjectEditForm.jsx` - přidána logika pro ukládání změn semestrů
+  - `Components/MediumEditableContent.jsx` - integrace SemestersManager komponenty
+  - `Components/index.js` - export SemestersManager
+  - `Queries/index.js` - exporty nových GraphQL akcí
+- Architektura: draft/commit pattern - změny se neukládají okamžitě, ale až po kliknutí na "Uložit"
+
 ## 7.5.2026
 
 - Přidání CardCapsule pro sekci Semestry v SubjectSubPage (`SubjectSubPage.jsx`)

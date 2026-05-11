@@ -1,34 +1,64 @@
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
 import { Label } from "../../../../_template/src/Base/FormControls/Label"
 import { ProgramSelect } from "./ProgramSelect"
+import { SemestersManager } from "./SemestersManager"
 
 /**
- * Komponenta pro zobrazení editovatelného obsahu entity Subject.
+ * MediumEditableContent - Komponenta pro zobrazení editovatelného obsahu entity Subject.
  *
- * Zobrazuje formulář s poli:
- * - Program (select s výběrem z dostupných programů)
- * - Název (textové pole)
- * - Anglický název (textové pole)
- * - Popis (textarea)
- * - Anglický popis (textarea)
+ * Tato komponenta je "prezentační" vrstva editačního formuláře.
+ * Zobrazuje všechna editovatelná pole předmětu a předává události změn
+ * nadřazené komponentě, která řeší ukládání.
  *
- * Komponenta sama neřeší ukládání - pouze předává události onChange/onBlur
- * nadřazené komponentě (např. ConfirmEdit, LiveEdit, SubjectEditForm).
+ * Zobrazená pole:
+ * - Program (ProgramSelect - dropdown s výběrem z dostupných programů)
+ * - Název (Input - textové pole pro český název)
+ * - Anglický název (Input - textové pole pro anglický název)
+ * - Popis (textarea - víceřádkový český popis)
+ * - Anglický popis (textarea - víceřádkový anglický popis)
+ * - Semestry (SemestersManager - správa semestrů předmětu)
+ *
+ * Architektura:
+ * - Komponenta NEŘEŠÍ ukládání dat na server
+ * - Pouze předává události onChange/onBlur/onSemestersChange nadřazené komponentě
+ * - Nadřazená komponenta (SubjectEditForm) řeší:
+ *   - Udržování draft stavu
+ *   - Detekci změn (dirty)
+ *   - Uložení na server po kliknutí na tlačítko
+ *
+ * Použití s různými strategiemi ukládání:
+ * - SubjectEditForm: Explicitní ukládání tlačítkem "Uložit"
+ * - ConfirmEdit: Ukládání s potvrzovacím dialogem
+ * - LiveEdit: Automatické ukládání při změně (onBlur)
  *
  * @component
  * @param {Object} props
- * @param {Object} props.item - Objekt entity Subject s vlastnostmi name, nameEn, description, descriptionEn, programId
- * @param {Function} [props.onChange] - Callback volaný při změně hodnoty pole (event s target.id a target.value)
+ * @param {Object} props.item - Objekt entity Subject s vlastnostmi:
+ *   - id: ID předmětu
+ *   - name: Český název
+ *   - nameEn: Anglický název
+ *   - description: Český popis
+ *   - descriptionEn: Anglický popis
+ *   - programId: ID přiřazeného programu
+ *   - semesters: Pole semestrů [{id, order, ...}, ...]
+ * @param {Function} [props.onChange] - Callback volaný při změně hodnoty pole
+ *   Parametr: event s target.id (název pole) a target.value (nová hodnota)
  * @param {Function} [props.onBlur] - Callback volaný při opuštění pole
+ * @param {Function} [props.onSemestersChange] - Callback volaný při změně seznamu semestrů
+ *   Parametr: nové pole semestrů
  * @param {React.ReactNode} [props.children] - Další obsah zobrazený pod formulářem
+ *   (typicky tlačítka Uložit/Zrušit a zprávy o stavu)
  *
  * @example
  * <MediumEditableContent
  *   item={subject}
- *   onChange={(e) => console.log(e.target.id, e.target.value)}
- * />
+ *   onChange={(e) => setDraft({...draft, [e.target.id]: e.target.value})}
+ *   onSemestersChange={(semesters) => setDraft({...draft, semesters})}
+ * >
+ *   <button onClick={onSave}>Uložit</button>
+ * </MediumEditableContent>
  */
-export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children }) => {
+export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, onSemestersChange=(s)=>null, children }) => {
     /**
      * Speciální handler pro ProgramSelect, který transformuje hodnotu
      * na standardní event objekt očekávaný onChange.
@@ -73,6 +103,12 @@ export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>nu
                     onBlur={onBlur}
                 />
             </Label>
+
+            <SemestersManager
+                semesters={item?.semesters}
+                subjectId={item?.id}
+                onSemestersChange={onSemestersChange}
+            />
 
             {children}
         </>
