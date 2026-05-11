@@ -1,5 +1,37 @@
 # Změny
 
+## 7.5.2026
+
+- Přidání CardCapsule pro sekci Semestry v SubjectSubPage (`SubjectSubPage.jsx`)
+
+## 6.5.2026
+
+- Refaktoring SubjectEditForm pro použití useEditAction s explicitním uložením (`SubjectEditForm.jsx`, `ConfirmEdit.jsx`, `LiveEdit.jsx`, `MediumEditableContent.jsx`)
+- Přidání komponenty ProgramSelect pro výběr programu (`ProgramSelect.jsx`)
+- Přidání ProgramPageAsyncAction dotazu (`ProgramPageAsyncAction.jsx`)
+- Úpravy v Delete a Insert async akcích (`DeleteAsyncAction.jsx`, `InsertAsyncAction.jsx`)
+- Úpravy InteractiveMutations (`InteractiveMutations.jsx`)
+
+## 5.5.2026
+
+- Rozšíření SubjectEditForm o podporu polí pro popis (`SubjectEditForm.jsx`)
+- Aktualizace InteractiveMutations pro reload při aktualizaci dialogu (`InteractiveMutations.jsx`)
+
+## 28.4.2026
+
+- Aktualizace submodulu _uois
+- Úprava editačních polí (`MediumEditableContent.jsx`, `UpdateAsyncAction.jsx`)
+
+## 20.4.2026
+
+- Aktualizace stránky start (`MediumEditableContent.jsx`, `Update.jsx`, `UpdateAsyncAction.jsx`)
+
+## 14.4.2026
+
+- Aktualizace verze do budoucnosti (`package.json`)
+- Změna package pro publish (`package.json`, `package-lock.json`)
+- Merge s vzdálenou větví monorepo
+
 ## 13.4.2026
 
 - Skrytí prázdného atributu name u medium content (`MediumContent.jsx`)

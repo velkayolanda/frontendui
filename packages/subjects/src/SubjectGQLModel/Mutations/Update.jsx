@@ -13,7 +13,7 @@ const DefaultContent = (props) => <MediumEditableContent {...props} />
 const mutationAsyncAction = UpdateAsyncAction
 
 const permissions = {
-    oneOfRoles: [], // unlock edit permissions potreba nechat prazdnu zatvorku, originalne tam napisane superadmin
+    oneOfRoles: ["administrátor"], // unlock edit permissions potreba nechat prazdnu zatvorku, originalne tam napisane superadmin
     mode: "absolute",
 }
 
@@ -116,12 +116,30 @@ export const UpdateButton = ({
 };
 
 /**
- * "Page-level" update workflow (inline edit / celá stránka editace).
- * Uses SubjectEditForm for direct editing with save button that triggers autosave.
+ * "Page-level" update workflow - celostránková editace entity Subject.
+ *
+ * Používá SubjectEditForm pro přímou editaci s explicitním tlačítkem
+ * pro uložení. Na rozdíl od dialogu (UpdateDialog) se zobrazuje
+ * přímo na stránce, ne v modálním okně.
+ *
+ * Komponenta čeká na načtení entity z kontextu - pokud item není
+ * k dispozici, zobrazí text "Načítání...".
+ *
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený ve formuláři
+ *
+ * @example
+ * // Použití na edit stránce
+ * <UpdateBody>
+ *   <InteractiveMutations item={item} />
+ * </UpdateBody>
  */
 export const UpdateBody = ({ children }) => {
+    // Získání entity z kontextu (poskytuje GQLEntityProvider)
     const { item } = useGQLEntityContext();
 
+    // Čekání na načtení entity
     if (!item) return <>Načítání...</>;
 
     return (

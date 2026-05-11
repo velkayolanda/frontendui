@@ -7,30 +7,54 @@ import { UpdateAsyncAction } from "../Queries";
 import { MediumEditableContent } from "./MediumEditableContent";
 
 /**
- * Direct edit form for Subject entity.
+ * Formulář pro přímou editaci entity Subject s explicitním tlačítkem uložení.
  *
- * Uses dispatch with UpdateAsyncAction. Saving is triggered explicitly
- * by the Uložit button which dispatches the update action with GraphQL client.
- * After save, updates the context to refresh all components on the page.
+ * Na rozdíl od LiveEdit a ConfirmEdit tato komponenta přímo používá
+ * dispatch a UpdateAsyncAction pro uložení změn. Nepoužívá hook useEditAction.
+ *
+ * Funkce:
+ * - Udržuje lokální draft stav, který se synchronizuje s kontextem
+ * - Detekuje změny (dirty) porovnáním draftu s původním itemem
+ * - Zobrazuje indikátor načítání během ukládání
+ * - Zobrazuje zprávu o úspěšném uložení nebo chybu
+ * - Po úspěšném uložení aktualizuje kontext pro překreslení stránky
+ *
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený pod formulářem
+ *
+ * @example
+ * <SubjectEditForm>
+ *   <p>Dodatečné informace</p>
+ * </SubjectEditForm>
  */
 export const SubjectEditForm = ({ children }) => {
     const dispatch = useDispatch();
     const gqlClient = useGQLClient();
+    // Získání aktuálního itemu a funkce pro aktualizaci kontextu
     const { item, onChange: contextOnChange } = useGQLEntityContext();
 
-    const [draft, setDraft] = useState(item);
-    const [saved, setSaved] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // Lokální stav formuláře
+    const [draft, setDraft] = useState(item);      // Pracovní kopie entity
+    const [saved, setSaved] = useState(false);     // Indikátor úspěšného uložení
+    const [loading, setLoading] = useState(false); // Indikátor probíhajícího ukládání
+    const [error, setError] = useState(null);      // Případná chyba při ukládání
 
-    // Synchronize draft with context item changes
+    /**
+     * Synchronizace draftu s kontextem.
+     * Když se změní item v kontextu (např. po uložení), aktualizuje draft.
+     */
     useEffect(() => {
         setDraft(item);
     }, [item]);
 
-    // Track if form is dirty (has changes)
+    // Detekce změn - porovnání aktuálního draftu s původním itemem
     const dirty = JSON.stringify(item) !== JSON.stringify(draft);
 
+    /**
+     * Handler pro změnu hodnoty pole.
+     * Aktualizuje draft a resetuje indikátor uložení.
+     */
     const onChange = useCallback((e) => {
         const { id, value } = e?.target || {};
         if (id === undefined || value === undefined) return;
@@ -42,15 +66,27 @@ export const SubjectEditForm = ({ children }) => {
         setSaved(false);
     }, []);
 
+    /**
+     * Handler pro opuštění pole.
+     * Může být použit pro validaci (momentálně prázdný).
+     */
     const onBlur = useCallback(() => {
-        // Optional: can be used for validation
     }, []);
 
+    /**
+     * Handler pro zrušení změn.
+     * Vrátí draft na původní hodnoty z kontextu.
+     */
     const onCancel = useCallback(() => {
         setDraft(item);
         setSaved(false);
     }, [item]);
 
+    /**
+     * Handler pro uložení změn.
+     * Odesílá mutaci na backend pomocí dispatch a UpdateAsyncAction.
+     * Po úspěšném uložení aktualizuje kontext, což způsobí překreslení stránky.
+     */
     const onSave = useCallback(async () => {
         try {
             setSaved(false);

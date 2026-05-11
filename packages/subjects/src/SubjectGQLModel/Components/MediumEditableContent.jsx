@@ -3,26 +3,43 @@ import { Label } from "../../../../_template/src/Base/FormControls/Label"
 import { ProgramSelect } from "./ProgramSelect"
 
 /**
- * A component that displays medium-level editable content for a Subject entity.
+ * Komponenta pro zobrazení editovatelného obsahu entity Subject.
+ *
+ * Zobrazuje formulář s poli:
+ * - Program (select s výběrem z dostupných programů)
+ * - Název (textové pole)
+ * - Anglický název (textové pole)
+ * - Popis (textarea)
+ * - Anglický popis (textarea)
+ *
+ * Komponenta sama neřeší ukládání - pouze předává události onChange/onBlur
+ * nadřazené komponentě (např. ConfirmEdit, LiveEdit, SubjectEditForm).
  *
  * @component
- * @param {Object} props - The properties for the MediumEditableContent component.
- * @param {Object} props.item - The object representing the subject entity.
- * @param {Function} props.onChange - Callback when field changes
- * @param {Function} props.onBlur - Callback when field loses focus
- * @param {React.ReactNode} [props.children=null] - Additional content to render.
+ * @param {Object} props
+ * @param {Object} props.item - Objekt entity Subject s vlastnostmi name, nameEn, description, descriptionEn, programId
+ * @param {Function} [props.onChange] - Callback volaný při změně hodnoty pole (event s target.id a target.value)
+ * @param {Function} [props.onBlur] - Callback volaný při opuštění pole
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený pod formulářem
  *
- * @returns {JSX.Element} A JSX element displaying editable fields.
+ * @example
+ * <MediumEditableContent
+ *   item={subject}
+ *   onChange={(e) => console.log(e.target.id, e.target.value)}
+ * />
  */
 export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, children }) => {
+    /**
+     * Speciální handler pro ProgramSelect, který transformuje hodnotu
+     * na standardní event objekt očekávaný onChange.
+     */
     const handleProgramChange = (programId) => {
-        // Simulate onChange event for programId
         onChange({ target: { id: 'programId', value: programId } })
     }
 
     return (
         <>
-            <div className="mb-3">
+            <div className="mb-3" label ="Program">
                 <label htmlFor="programId" className="form-label">Program</label>
                 <ProgramSelect
                     id="programId"

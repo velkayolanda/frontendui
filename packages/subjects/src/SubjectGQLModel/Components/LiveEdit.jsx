@@ -54,9 +54,24 @@ export const LiveEdit_ = ({ children, asyncAction=UpdateAsyncAction}) => {
     )
 }
 
+/**
+ * Interní wrapper komponenta pro LiveEdit.
+ * Transformuje události ze vstupních polí na formát očekávaný kontextem.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Aktuální stav entity
+ * @param {React.ReactNode} props.children - Obsah formuláře
+ */
 const LiveEditWrapper = ({ item, children }) => {
+    // Získání funkcí z kontextu pro změnu a blur události
     const { run , error, loading, entity, data, onChange, onBlur } = useGQLEntityContext()
 
+    /**
+     * Vytvoří handler, který transformuje event z jednotlivého pole
+     * na event s celým objektem (newItem) pro kontext.
+     * Ignoruje události bez změny hodnoty (optimalizace).
+     */
     const handleEvent = useCallback((handler) => async (e) => {
         const {id, value} = e?.target || {}
         if (id === undefined || value === undefined) return
@@ -72,6 +87,7 @@ const LiveEditWrapper = ({ item, children }) => {
         return result
     }, [item])
 
+    // Memoizace handlerů pro zabránění zbytečným renderům
     const bindedOnChange = useMemo(() => handleEvent(onChange), [onChange, handleEvent])
     const bindedOnBlur = useMemo(() => handleEvent(onBlur), [onBlur, handleEvent])
 
@@ -85,8 +101,30 @@ const LiveEditWrapper = ({ item, children }) => {
 }
 
 
+/**
+ * LiveEdit komponenta pro automatické ukládání změn entity Subject.
+ *
+ * Používá hook `useEditAction` v režimu "live" - změny se automaticky
+ * ukládají na backend po každé změně pole (s debounce).
+ * Nevyžaduje explicitní tlačítko pro uložení.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Entita Subject k editaci
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený ve formuláři
+ * @param {Function} [props.asyncMutationAction=UpdateAsyncAction] - Akce pro uložení změn
+ *
+ * @example
+ * <LiveEdit item={subjectEntity}>
+ *   <p>Změny se ukládají automaticky</p>
+ * </LiveEdit>
+ */
 export const LiveEdit = ({ item, children, asyncMutationAction=UpdateAsyncAction }) => {
-    // const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
+    /**
+     * Hook useEditAction v režimu "live":
+     * - Změny se automaticky odesílají na backend
+     * - saving: indikátor probíhajícího ukládání
+     */
     const {
         draft,
         dirty,
