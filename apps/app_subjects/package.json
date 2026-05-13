@@ -1,7 +1,7 @@
 {
   "name": "@velkayolanda/app_subjects",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "files": [
     "dist",
@@ -28,7 +28,8 @@
     "@hrbolek/uoisfrontend-gql-shared": "*",
     "@hrbolek/uoisfrontend-ug": "*",
     "@hrbolek/uoisfrontend-requests": "*",
-    "@hrbolek/uoisfrontend-zp": "*"
+    "@hrbolek/uoisfrontend-zp": "*",
+    "@velkayolanda/package-subjects": "*"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
