@@ -18,11 +18,12 @@ const shallowEqual = (a, b) => {
  * @param {Function} AsyncAction - thunk z createAsyncGraphQLAction2(...) (mutation/query)
  * @param {object} vars          - typicky {id} nebo cokoliv, co potřebuje useAsyncThunkAction k entity
  * @param {object} options
- *  - mode: "live" | "confirm"
+ *  - mode: "live" | "confirm" (default "live")
  *  - delayMs: number (jen pro live)
  *  - deferred, network: předáno do useAsyncThunkAction
  *  - mapDraftToVars: (draft, ctx) => object   // jak převést draft na vars pro run()
  *  - commitOnBlur: boolean (jen pro live; default true)
+ *  - defaultAutoSave: boolean (default true) - výchozí stav přepínače autosave
  */
 export const useEditAction = (
     AsyncAction,
@@ -30,18 +31,22 @@ export const useEditAction = (
     options = {}
 ) => {
     const {
-        mode = "confirm",
+        mode = "live",
         delayMs = 600,
         // deferred = true,
         // network = true,
         mapDraftToVars,
         commitOnBlur = true,
-        onCommit=()=>null,
+        onCommit = (nextDraft, result) => null,
+        defaultAutoSave = true,
     } = options;
 
     if (typeof AsyncAction !== "function") {
         throw new Error("useEditAction: AsyncAction musí být funkce (thunk factory)");
     }
+
+    // Stav pro přepínač autosave
+    const [autoSaveEnabled, setAutoSaveEnabled] = useState(defaultAutoSave);
 
     const { entity, run, loading, error, data } = useAsyncThunkAction(
         AsyncAction,
@@ -53,26 +58,14 @@ export const useEditAction = (
     const [baseline, setBaseline] = useState(item || {});
     const [draft, setDraft] = useState(item || {});
 
-
     // reset lokálního stavu při změně entity (jiné id / refetch / update ze store)
     useEffect(() => {
         const next = item || {};
         setBaseline(next);
         setDraft(next);
-    }, [entity]);
+    }, [entity, item]);
 
     const dirty = useMemo(() => !shallowEqual(draft, baseline), [draft, baseline]);
-
-    // debouncing pro live
-    const timerRef = useRef(null);
-    const clearTimer = () => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-            timerRef.current = null;
-        }
-    };
-
-    useEffect(() => () => clearTimer(), []);
 
     const toVars = useCallback(
         (d) => {
@@ -85,19 +78,96 @@ export const useEditAction = (
         [mapDraftToVars, entity, item]
     );
 
-    const commitNow = useCallback(
-        async (nextDraft) => {
-            console.log("useEditAction commitNow", dirty, nextDraft);
-            // posíláme přes run() -> thunk -> gqlClient.request(...)
-            const result = await run(toVars(nextDraft));
-            // po úspěchu nastav baseline; entity se stejně typicky aktualizuje přes middleware do store
-            // setBaseline(nextDraft);
-            onCommit(nextDraft, result);
-            // setDraft(nextDraft)
+    const inFlightPromiseRef = useRef(null);
+    const queuedDraftRef = useRef(null);
+    const id = useRef(crypto.randomUUID());
+
+    const latestLastchangeRef = useRef(item?.lastchange ?? null);
+
+    const prepareDraft = useCallback((draft) => {
+        return {
+            ...draft,
+            lastchange: latestLastchangeRef.current ?? draft?.lastchange,
+        };
+    }, []);
+
+    const commitNow = useCallback((nextDraft) => {
+        if (inFlightPromiseRef.current) {
+            queuedDraftRef.current = nextDraft;
+            setDraft(nextDraft);
+            return inFlightPromiseRef.current;
+        }
+
+        const executeCommit = async (rawDraft) => {
+            // const draftToSend = prepareDraft(rawDraft);
+            const draftToSend = {
+                ...rawDraft,
+                lastchange: latestLastchangeRef.current ?? rawDraft?.lastchange,
+            };
+
+            console.log(
+                "executeCommit.send", id,
+                draftToSend?.lastchange,
+                draftToSend?.email
+            );
+
+            const result = await run(toVars(draftToSend));
+
+            console.log(
+                "executeCommit.receive", id,
+                result?.lastchange,
+                result?.email
+            );
+
+            const savedDraft = {
+                ...draftToSend,
+                ...result,
+                lastchange: result?.lastchange ?? draftToSend?.lastchange,
+            };
+
+            latestLastchangeRef.current = savedDraft.lastchange;
+
+            onCommit(savedDraft, result);
+            setBaseline(savedDraft);
+            setDraft(savedDraft);
+
             return result;
-        },
-        [run, toVars]
-    );
+        };
+
+        const promise = (async () => {
+            let result = await executeCommit(nextDraft);
+
+            while (queuedDraftRef.current) {
+                const queuedDraft = queuedDraftRef.current;
+                queuedDraftRef.current = null;
+
+                const nextQueuedDraft = {
+                    ...queuedDraft,
+                    lastchange: latestLastchangeRef.current,
+                };
+
+                result = await executeCommit(nextQueuedDraft);
+            }
+
+            return result;
+        })().finally(() => {
+            inFlightPromiseRef.current = null;
+        });
+
+        inFlightPromiseRef.current = promise;
+        return promise;
+    }, [run, toVars, onCommit, prepareDraft]);
+
+    // debouncing pro live
+    const timerRef = useRef(null);
+    const clearTimer = useCallback(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    }, []);
+
+    useEffect(() => clearTimer, [clearTimer]);
 
     const scheduleCommit = useCallback(
         (nextDraft) => {
@@ -109,8 +179,16 @@ export const useEditAction = (
                 });
             }, delayMs);
         },
-        [commitNow, delayMs]
+        [commitNow, delayMs, clearTimer]
     );
+
+    // Určení efektivního režimu na základě mode a autoSaveEnabled
+    const effectiveMode = useMemo(() => {
+        if (mode === "live" && autoSaveEnabled) {
+            return "live";
+        }
+        return "confirm";
+    }, [mode, autoSaveEnabled]);
 
     // onChange kompatibilní s vaším stylem (input event / nebo celý objekt v target.value)
     const onChange = useCallback(
@@ -129,30 +207,35 @@ export const useEditAction = (
 
             setDraft(nextDraft);
 
-            if (mode === "live") {
+            if (effectiveMode === "live") {
                 scheduleCommit(nextDraft);
             }
         },
-        [draft, mode, scheduleCommit]
+        [draft, effectiveMode, scheduleCommit]
     );
 
     const onBlur = useCallback(async () => {
-        if (mode !== "live" || !commitOnBlur) return null;
+        if (effectiveMode !== "live" || !commitOnBlur) return null;
         clearTimer();
         if (!dirty) return null;
         return commitNow(draft);
-    }, [mode, commitOnBlur, dirty, draft, commitNow]);
+    }, [effectiveMode, commitOnBlur, dirty, draft, commitNow, clearTimer]);
 
     const onCancel = useCallback(() => {
         clearTimer();
         setDraft(baseline || {});
-    }, [baseline]);
+    }, [baseline, clearTimer]);
 
     const onConfirm = useCallback(async () => {
         clearTimer();
         if (!dirty) return null;
         return commitNow(draft);
-    }, [dirty, draft, commitNow]);
+    }, [dirty, draft, commitNow, clearTimer]);
+
+    // Toggle funkce pro přepínač autosave
+    const toggleAutoSave = useCallback(() => {
+        setAutoSaveEnabled(prev => !prev);
+    }, []);
 
     return {
         // data
@@ -166,6 +249,12 @@ export const useEditAction = (
         loading,
         error,
         data,
+
+        // autosave control
+        autoSaveEnabled,
+        setAutoSaveEnabled,
+        toggleAutoSave,
+        effectiveMode, // "live" nebo "confirm" podle aktuálního stavu
 
         // handlers
         onChange,

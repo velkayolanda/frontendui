@@ -5,6 +5,7 @@ import { useGQLClient } from "../../../../dynamic/src/Store/RootProviders";
 import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
 import { UpdateAsyncAction, ReadAsyncAction } from "../Queries";
 import { SemesterUpdateAsyncAction } from "../Queries/SemesterUpdateAsyncAction";
+import { SemesterInsertAsyncAction } from "../Queries/SemesterInsertAsyncAction";
 import { MediumEditableContent } from "./MediumEditableContent";
 
 /**
@@ -158,8 +159,10 @@ export const SubjectEditForm = ({ children }) => {
             const originalIds = new Set(originalSemesters.map(s => s.id));
             const currentIds = new Set(currentSemesters.map(s => s.id));
 
-            // Semestry k přidání (jsou v current, ale ne v original)
-            const toAdd = currentSemesters.filter(s => !originalIds.has(s.id));
+            // Nově vytvořené semestry (mají _action: 'create')
+            const toCreate = currentSemesters.filter(s => s._action === 'create');
+            // Existující semestry k přidání (jsou v current, ale ne v original, a nemají _action: 'create')
+            const toAdd = currentSemesters.filter(s => !originalIds.has(s.id) && s._action !== 'create');
             // Semestry k odebrání (jsou v original, ale ne v current)
             const toRemove = originalSemesters.filter(s => !currentIds.has(s.id));
             // Semestry které zůstávají - kontrola změny pořadí
@@ -168,14 +171,32 @@ export const SubjectEditForm = ({ children }) => {
                 return orig && orig.order !== s.order;
             });
 
-            // Načti aktuální data pro semestry, které budeme měnit
+            // Načti aktuální data pro semestry, které budeme měnit (kromě nově vytvořených)
             const semesterIdsToFetch = [...toAdd.map(s => s.id), ...toRemove.map(s => s.id), ...toUpdate.map(s => s.id)];
             let freshSemesters = [];
             if (semesterIdsToFetch.length > 0) {
                 freshSemesters = await fetchFreshSemesterData(semesterIdsToFetch);
             }
 
-            // Přidání semestrů (nastavení subjectId)
+            // Vytvoření nových semestrů
+            for (const semester of toCreate) {
+                // Vytvoř semestr s id, subjectId a order (backend nepodporuje name)
+                const insertResult = await dispatch(SemesterInsertAsyncAction({
+                    id: semester.id,
+                    subjectId: item.id,
+                    order: semester.order
+                }, gqlClient));
+
+                console.log("Insert result:", insertResult);
+                const newSemester = insertResult?.data?.semesterInsert || insertResult;
+
+                if (newSemester?.failed || newSemester?.__typename?.includes('Error')) {
+                    console.error("Failed to create semester:", insertResult);
+                    throw new Error(newSemester?.msg || "Chyba při vytváření semestru");
+                }
+            }
+
+            // Přidání existujících semestrů (nastavení subjectId)
             for (const semester of toAdd) {
                 const fresh = freshSemesters.find(s => s.id === semester.id);
                 if (fresh) {

@@ -10,6 +10,7 @@ export * from './MediumEditableContent'
 export * from './LiveEdit'
 
 export * from './ConfirmEdit'
+export * from './EditMode'
 export * from './SubjectEditForm'
 export * from './ProgramSelect'
 export * from './SemestersManager'

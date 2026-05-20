@@ -5,7 +5,7 @@ import {
     UpdateLink as BaseUpdateLink
 } from "../../../../_template/src/Base/Mutations/Update";
 
-import { MediumEditableContent, UpdateItemURI, SubjectEditForm } from "../Components";
+import { MediumEditableContent, UpdateItemURI, EditMode } from "../Components";
 import { UpdateAsyncAction } from "../Queries";
 import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
 
@@ -118,9 +118,8 @@ export const UpdateButton = ({
 /**
  * "Page-level" update workflow - celostránková editace entity Subject.
  *
- * Používá SubjectEditForm pro přímou editaci s explicitním tlačítkem
- * pro uložení. Na rozdíl od dialogu (UpdateDialog) se zobrazuje
- * přímo na stránce, ne v modálním okně.
+ * Používá EditMode s přepínačem mezi automatickým a manuálním ukládáním.
+ * Defaultně je zapnuté automatické ukládání (live mode).
  *
  * Komponenta čeká na načtení entity z kontextu - pokud item není
  * k dispozici, zobrazí text "Načítání...".
@@ -143,8 +142,8 @@ export const UpdateBody = ({ children }) => {
     if (!item) return <>Načítání...</>;
 
     return (
-        <SubjectEditForm>
+        <EditMode item={item}>
             {children}
-        </SubjectEditForm>
+        </EditMode>
     );
 };
