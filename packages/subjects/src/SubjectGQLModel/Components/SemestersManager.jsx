@@ -124,10 +124,7 @@ export const SemestersManager = ({
      * Odebrání semestru z lokálního seznamu (po potvrzení).
      */
     const handleRemoveSemester = useCallback((semesterId) => {
-        const filtered = localSemesters
-            .filter(s => s.id !== semesterId)
-            .sort((a, b) => (parseInt(a.order, 10) || 0) - (parseInt(b.order, 10) || 0));
-        const newList = filtered.map((s, i) => ({ ...s, order: i + 1 }));
+        const newList = localSemesters.filter(s => s.id !== semesterId);
         setLocalSemesters(newList);
         onSemestersChange(newList);
         // Close confirmation dialog

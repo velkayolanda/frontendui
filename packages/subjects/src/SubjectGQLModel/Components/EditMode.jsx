@@ -110,13 +110,6 @@ export const EditMode = ({
             // Find semesters to delete (in original but not in current, excluding newly created ones)
             const toDelete = currentOriginalSemesters.filter(s => !currMap.has(s.id) && !s._action);
 
-            // Find semesters to update (order changed)
-            const toUpdate = semesters.filter(s => {
-                if (s._action === 'create') return false;
-                const orig = origMap.get(s.id);
-                return orig && orig.order !== s.order;
-            });
-
             // Execute creates
             for (const semester of toCreate) {
                 const response = await dispatch(SemesterInsertAsyncAction({
@@ -149,16 +142,26 @@ export const EditMode = ({
                 const result = response?.data?.semesterDelete || response?.semesterDelete || response;
                 // Check for error response
                 if (result?.failed === true) {
-                    // Check for foreign key violation (semester has related data)
-                    if (result?.msg?.includes('ForeignKey') || result?.msg?.includes('foreign key') || result?.msg?.includes('still referenced')) {
-                        // Add to failed list - will be restored to UI
-                        failedToDelete.push(semester);
-                        continue;
-                    }
                     failedToDelete.push(semester);
                     continue;
                 }
             }
+
+            // Build working list: strip _action, add back failed deletes, sort and compact orders
+            let workingSemesters = semesters.map(s => { const { _action, ...rest } = s; return rest; });
+            for (const failedSemester of failedToDelete) {
+                if (!workingSemesters.some(s => s.id === failedSemester.id)) {
+                    workingSemesters.push(failedSemester);
+                }
+            }
+            workingSemesters.sort((a, b) => (a.order || 0) - (b.order || 0));
+            workingSemesters = workingSemesters.map((s, i) => ({ ...s, order: i + 1 }));
+
+            // Find semesters whose order differs from original after compaction
+            const toUpdate = workingSemesters.filter(s => {
+                const orig = origMap.get(s.id);
+                return orig && orig.order !== s.order;
+            });
 
             // Execute updates - use fresh lastchange from map for each update
             for (const semester of toUpdate) {
@@ -187,24 +190,11 @@ export const EditMode = ({
                 }
             }
 
-            // Build the final semesters list
-            // Start with current semesters (what user wanted)
-            let savedSemesters = semesters.map(s => {
-                const { _action, ...rest } = s;
-                // Use updated lastchange from server if available
+            // Apply updated lastchange values to the final list
+            let savedSemesters = workingSemesters.map(s => {
                 const updatedLastchange = lastchangeMap.get(s.id);
-                return updatedLastchange ? { ...rest, lastchange: updatedLastchange } : rest;
+                return updatedLastchange ? { ...s, lastchange: updatedLastchange } : s;
             });
-
-            // Add back any semesters that failed to delete
-            for (const failedSemester of failedToDelete) {
-                if (!savedSemesters.some(s => s.id === failedSemester.id)) {
-                    savedSemesters.push(failedSemester);
-                }
-            }
-
-            // Sort by order
-            savedSemesters = savedSemesters.sort((a, b) => (a.order || 0) - (b.order || 0));
 
             setOriginalSemesters(savedSemesters);
             setCurrentSemesters(savedSemesters);

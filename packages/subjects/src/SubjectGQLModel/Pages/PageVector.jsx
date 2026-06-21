@@ -6,8 +6,7 @@ import { Table } from "../Components/Table"
 import { Filter } from "../Components/Filter"
 import { FilterButton, ResetFilterButton } from "../../../../_template/src/Base/FormControls/Filter"
 import { useSearchParams } from "react-router"
-import { useEffect } from "react"
-import { useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { AsyncStateIndicator } from "../../../../_template/src/Base/Helpers/AsyncStateIndicator"
 import { Collapsible } from "../../../../_template/src/Base/FormControls/Collapsible"
 
@@ -40,26 +39,30 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
     )
 
     useEffect(() => {
-        const params = {skip: 0, limit: 25, where: whereFromUrl} 
+        const params = {skip: 0, limit: 25, where: whereFromUrl}
         restart(params)
     }, [whereFromUrl]);
 
-    
+    const handleSortActivate = useCallback(() => {
+        restart({ skip: 0, limit: 10000, where: whereFromUrl })
+    }, [restart, whereFromUrl])
+
+
     return (
         <PageBase>
-            <Collapsible 
+            <Collapsible
                 className="form-control btn btn-outline-primary"
                 buttonLabelCollapsed="Zobrazit filtr"
                 buttonLabelExpanded="Skrýt filtr"
             >
                 <Filter>
-                    <FilterButton 
+                    <FilterButton
                         className="form-control btn btn-outline-success"
                         paramName={filterParameterName}
                     >
                         Filtrovat
                     </FilterButton>
-                    <ResetFilterButton 
+                    <ResetFilterButton
                         className="form-control btn btn-warning"
                         paramName={filterParameterName}
                     >
@@ -68,7 +71,7 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
                 </Filter>
             </Collapsible>
 
-            <Table data={items} />
+            <Table data={items} onSortActivate={handleSortActivate} />
 
             <AsyncStateIndicator error={error}  loading={loading} text="Nahrávám další..." />
 

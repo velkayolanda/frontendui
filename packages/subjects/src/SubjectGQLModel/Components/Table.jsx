@@ -198,23 +198,27 @@ const buildSubjectTableDef = (data) => {
     }
 }
 
-export const Table = ({ data }) => {
+export const Table = ({ data, onSortActivate }) => {
     const [sortConfig, setSortConfig] = useState({ column: null, direction: null })
     const tableDef = useMemo(() => buildSubjectTableDef(data), [data])
 
     const handleSort = (column) => {
-        setSortConfig(prev => {
-            if (prev.column !== column) {
-                // New column: start with ascending
-                return { column, direction: 'asc' }
+        if (sortConfig.column !== column) {
+            // New column: start with ascending
+            if (sortConfig.column === null) {
+                // Sort was off — signal to load all data before sorting
+                onSortActivate?.()
             }
-            if (prev.direction === 'asc') {
-                // Was ascending: switch to descending
-                return { column, direction: 'desc' }
-            }
-            // Was descending: remove sort
-            return { column: null, direction: null }
-        })
+            setSortConfig({ column, direction: 'asc' })
+            return
+        }
+        if (sortConfig.direction === 'asc') {
+            // Was ascending: switch to descending
+            setSortConfig({ column, direction: 'desc' })
+            return
+        }
+        // Was descending: remove sort; keep loaded items, don't restart pagination
+        setSortConfig({ column: null, direction: null })
     }
 
     const sortedData = useMemo(() => {
