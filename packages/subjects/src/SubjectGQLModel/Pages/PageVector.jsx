@@ -6,7 +6,7 @@ import { Table } from "../Components/Table"
 import { Filter } from "../Components/Filter"
 import { FilterButton, ResetFilterButton } from "../../../../_template/src/Base/FormControls/Filter"
 import { useSearchParams } from "react-router"
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { AsyncStateIndicator } from "../../../../_template/src/Base/Helpers/AsyncStateIndicator"
 import { Collapsible } from "../../../../_template/src/Base/FormControls/Collapsible"
 
@@ -22,11 +22,24 @@ function safeParseWhere(sp, paramName = "where") {
     }
 }
 
-// 
+const COLUMN_TO_DB_FIELD = {
+    name: "name",
+    nameEn: "name_en",
+    lastchange: "lastchange",
+    program: "program_id",
+}
+
+const computeOrderby = (sortConfig) => {
+    if (!sortConfig.column || !sortConfig.direction) return undefined
+    return COLUMN_TO_DB_FIELD[sortConfig.column] || undefined
+}
+
+//
 const filterParameterName = "gr_where"
 export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction }) => {
-    
+
     const [sp] = useSearchParams();
+    const [sortConfig, setSortConfig] = useState({ column: null, direction: null })
 
     const whereFromUrl = useMemo(() => safeParseWhere(sp, filterParameterName), [sp.toString()]);
 
@@ -34,19 +47,21 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
         {
             asyncAction: queryAsyncAction,
             actionParams: { skip: 0, limit: 25, where: whereFromUrl },
-            // reset: whereFromUrl
         }
     )
 
     useEffect(() => {
-        const params = {skip: 0, limit: 25, where: whereFromUrl}
+        const orderby = computeOrderby(sortConfig)
+        const params = { skip: 0, limit: 25, where: whereFromUrl, ...(orderby && { orderby }) }
         restart(params)
-    }, [whereFromUrl]);
+    }, [whereFromUrl, sortConfig]);
 
-    const handleSortActivate = useCallback(() => {
-        restart({ skip: 0, limit: 10000, where: whereFromUrl })
-    }, [restart, whereFromUrl])
-
+    const handleSort = useCallback((column) => {
+        setSortConfig(prev => {
+            if (prev.column === column && prev.direction !== null) return { column: null, direction: null }
+            return { column, direction: 'asc' }
+        })
+    }, [])
 
     return (
         <PageBase>
@@ -71,7 +86,7 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
                 </Filter>
             </Collapsible>
 
-            <Table data={items} onSortActivate={handleSortActivate} />
+            <Table data={items} sortConfig={sortConfig} onSort={handleSort} />
 
             <AsyncStateIndicator error={error}  loading={loading} text="Nahrávám další..." />
 
