@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Components/MediumEditableContent.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Components/MediumEditableContent.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Input } from "../../../../_template/src/Base/FormControls/Input"
+import { Label } from "../../../../_template/src/Base/FormControls/Label"
+import { ProgramSelect } from "./ProgramSelect"
+import { SemestersManager } from "./SemestersManager"
+
+/**
+ * MediumEditableContent - Komponenta pro zobrazení editovatelného obsahu entity Subject.
+ *
+ * Tato komponenta je "prezentační" vrstva editačního formuláře.
+ * Zobrazuje všechna editovatelná pole předmětu a předává události změn
+ * nadřazené komponentě, která řeší ukládání.
+ *
+ * Zobrazená pole:
+ * - Program (ProgramSelect - dropdown s výběrem z dostupných programů)
+ * - Název (Input - textové pole pro český název)
+ * - Anglický název (Input - textové pole pro anglický název)
+ * - Popis (textarea - víceřádkový český popis)
+ * - Anglický popis (textarea - víceřádkový anglický popis)
+ * - Semestry (SemestersManager - správa semestrů předmětu)
+ *
+ * Architektura:
+ * - Komponenta NEŘEŠÍ ukládání dat na server
+ * - Pouze předává události onChange/onBlur/onSemestersChange nadřazené komponentě
+ * - Nadřazená komponenta (EditMode) řeší:
+ *   - Udržování draft stavu
+ *   - Detekci změn (dirty)
+ *   - Uložení na server po kliknutí na tlačítko
+ *
+ * Použití s různými strategiemi ukládání:
+ * - EditMode: Live nebo confirm režim s přepínačem (aktuálně používaný)
+ * - ConfirmEdit: Ukládání s potvrzovacím dialogem
+ * - LiveEdit: Automatické ukládání při změně (onBlur)
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Objekt entity Subject s vlastnostmi:
+ *   - id: ID předmětu
+ *   - name: Český název
+ *   - nameEn: Anglický název
+ *   - description: Český popis
+ *   - descriptionEn: Anglický popis
+ *   - programId: ID přiřazeného programu
+ *   - semesters: Pole semestrů [{id, order, ...}, ...]
+ * @param {Function} [props.onChange] - Callback volaný při změně hodnoty pole
+ *   Parametr: event s target.id (název pole) a target.value (nová hodnota)
+ * @param {Function} [props.onBlur] - Callback volaný při opuštění pole
+ * @param {Function} [props.onSemestersChange] - Callback volaný při změně seznamu semestrů
+ *   Parametr: nové pole semestrů
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený pod formulářem
+ *   (typicky tlačítka Uložit/Zrušit a zprávy o stavu)
+ *
+ * @example
+ * &lt;MediumEditableContent
+ *   item={subject}
+ *   onChange={(e) => setDraft({...draft, [e.target.id]: e.target.value})}
+ *   onSemestersChange={(semesters) => setDraft({...draft, semesters})}
+ * >
+ *   &lt;button onClick={onSave}>Uložit&lt;/button>
+ * &lt;/MediumEditableContent>
+ */
+export const MediumEditableContent = ({ item, onChange=(e)=>null, onBlur=(e)=>null, onSemestersChange=(s)=>null, children }) => {
+    /**
+     * Speciální handler pro ProgramSelect, který transformuje hodnotu
+     * na standardní event objekt očekávaný onChange.
+     */
+    const handleProgramChange = (programId) => {
+        onChange({ target: { id: 'programId', value: programId } })
+    }
+
+    return (
+        &lt;>
+            &lt;div className="mb-3" label ="Program">
+                &lt;label htmlFor="programId" className="form-label">Program&lt;/label>
+                &lt;ProgramSelect
+                    id="programId"
+                    value={item?.programId || ""}
+                    onChange={handleProgramChange}
+                />
+            &lt;/div>
+            &lt;Input id="name" label="Název" className="form-control"
+                   value={item?.name || ""} onChange={onChange} onBlur={onBlur} />
+            &lt;Input id="nameEn" label="Anglický název" className="form-control"
+                   value={item?.nameEn || ""} onChange={onChange} onBlur={onBlur} />
+
+            &lt;Label id="description" title="Popis">
+                &lt;textarea
+                    id="description"
+                    className="form-control"
+                    rows={4}
+                    value={item?.description || ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            &lt;/Label>
+
+            &lt;Label id="descriptionEn" title="Anglický popis">
+                &lt;textarea
+                    id="descriptionEn"
+                    className="form-control"
+                    rows={4}
+                    value={item?.descriptionEn || ""}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
+            &lt;/Label>
+
+            &lt;SemestersManager
+                semesters={item?.semesters}
+                subjectId={item?.id}
+                onSemestersChange={onSemestersChange}
+            />
+
+            {children}
+        &lt;/>
+    )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

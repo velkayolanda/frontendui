@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Mutations/InteractiveMutations.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Mutations/InteractiveMutations.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { CardCapsule, VectorItemsURI } from "../Components"
+import { CreateButton, CreateLink } from "./Create"
+import { UpdateButton, UpdateLink } from "./Update"
+import { ProxyLink } from "../../../../_template/src/Base/Components/ProxyLink"
+import { DeleteButton } from "./Delete"
+
+/**
+ * Link na stránku se seznamem entit (vector page).
+ * Zachovává hash a search parametry z URL.
+ *
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Obsah linku
+ * @param {boolean} [props.preserveHash=true] - Zachovat hash z URL
+ * @param {boolean} [props.preserveSearch=true] - Zachovat search parametry z URL
+ */
+export const PageLink = ({ children, preserveHash = true, preserveSearch = true, ...props }) => {
+    return (
+        &lt;ProxyLink
+            to={VectorItemsURI}
+            preserveHash={preserveHash}
+            preserveSearch={preserveSearch}
+            {...props}
+        >
+            {children}
+        &lt;/ProxyLink>
+    );
+};
+
+/**
+ * Komponenta zobrazující panel nástrojů pro práci s entitou Subject.
+ *
+ * Obsahuje tlačítka:
+ * - Stránka: odkaz na seznam entit
+ * - Upravit: odkaz na edit stránku
+ * - Upravit Dialog: otevře editační dialog
+ * - Vytvořit nový: otevře dialog pro vytvoření nové entity
+ * - Odstranit: otevře potvrzovací dialog pro smazání
+ *
+ * Všechna tlačítka respektují RBAC oprávnění definovaná v jednotlivých komponentách.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Entita Subject pro operace úpravy a mazání
+ *
+ * @example
+ * &lt;InteractiveMutations item={subjectEntity} />
+ */
+export const InteractiveMutations = ({ item }) => {
+    return (
+        &lt;CardCapsule item={item} title="Nástroje">
+            &lt;PageLink className="btn btn-outline-success">Stránka&lt;/PageLink>
+            &lt;UpdateLink className="btn btn-outline-success" item={item}>Upravit&lt;/UpdateLink>
+            &lt;UpdateButton className="btn btn-outline-success" item={item}>Upravit Dialog&lt;/UpdateButton>
+            &lt;CreateButton className="btn btn-outline-success" rbacitem={{}}>Vytvořit nový&lt;/CreateButton>
+            &lt;DeleteButton className="btn btn-outline-danger" item={item}>Odstranit&lt;/DeleteButton>
+        &lt;/CardCapsule>
+    )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Mutations/Update.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Mutations/Update.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {
+    UpdateBody as BaseUpdateBody,
+    UpdateButton as BaseUpdateButton,
+    UpdateDialog as BaseUpdateDialog,
+    UpdateLink as BaseUpdateLink
+} from "../../../../_template/src/Base/Mutations/Update";
+
+import { MediumEditableContent, UpdateItemURI, EditMode } from "../Components";
+import { UpdateAsyncAction } from "../Queries";
+import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
+
+const DefaultContent = (props) => &lt;MediumEditableContent {...props} />
+const mutationAsyncAction = UpdateAsyncAction
+
+const permissions = {
+    oneOfRoles: ["administrátor"], // unlock edit permissions potreba nechat prazdnu zatvorku, originalne tam napisane superadmin
+    mode: "absolute",
+}
+
+// ALTERNATIVE, CHECK GQLENDPOINT
+// const permissions = {
+//     oneOfRoles: ["administrátor", "personalista"],
+//     mode: "item",
+// }
+
+/**
+ * Link na update stránku / update route pro konkrétní entitu.
+ *
+ * Wrapper nad `BaseUpdateLink`. Nastavuje výchozí `uriPattern` a aplikuje RBAC
+ * přes `permissions`. Vše ostatní přeposílá do Base komponenty.
+ *
+ * @param {Object} params
+ * @param {string} [params.uriPattern=UpdateItemURI]
+ *   URI pattern pro update route (typicky obsahuje `:id` nebo je již konkrétní URL dle routování).
+ * @param {Object} params.props
+ *   Další props přeposílané do `BaseUpdateLink` (např. `children`, `className`,
+ *   `preserveSearch`, `preserveHash`, atd.).
+ * @returns {JSX.Element}
+ */
+export const UpdateLink = ({
+    uriPattern = UpdateItemURI,
+    ...props
+}) => {
+    return &lt;BaseUpdateLink
+        {...props}
+        uriPattern={uriPattern}
+        {...permissions}
+    />
+}
+
+/**
+ * Dialog pro editaci entity.
+ *
+ * Wrapper nad `BaseUpdateDialog`. Dodává výchozí editovatelný obsah (`DefaultContent`)
+ * a výchozí mutační akci (`mutationAsyncAction`) pro uložení změn. Aplikuje RBAC
+ * přes `permissions`.
+ *
+ * @param {Object} params
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=DefaultContent]
+ *   Komponenta, která vykreslí editovatelný obsah dialogu (typicky MediumEditableContent).
+ * @param {Function} [params.mutationAsyncAction=mutationAsyncAction]
+ *   Async action (thunk) pro uložení změn (např. UpdateAsyncAction). Použije se podle Base/General implementace.
+ * @param {Object} params.props
+ *   Další props přeposílané do `BaseUpdateDialog` (např. `title`, `oklabel`, `cancellabel`,
+ *   `item`, `onOk`, `onCancel`, atd.).
+ * @returns {JSX.Element}
+ */
+export const UpdateDialog = ({
+    DefaultContent: DefaultContent_ = DefaultContent,
+    mutationAsyncAction: mutationAsyncAction_ = mutationAsyncAction,
+    ...props
+}) => {
+    return (
+        &lt;BaseUpdateDialog
+            {...props}
+            DefaultContent={DefaultContent_}
+            mutationAsyncAction={mutationAsyncAction_}
+            {...permissions}
+        />
+    );
+};
+
+/**
+ * Tlačítko, které otevře update dialog a provede uložení.
+ *
+ * Wrapper nad `BaseUpdateButton`. Dodává výchozí `DefaultContent`, výchozí `Dialog`,
+ * a výchozí `mutationAsyncAction`. Aplikuje RBAC přes `permissions`.
+ *
+ * @param {Object} params
+ * @param {React.ComponentType&lt;Object>} [params.DefaultContent=DefaultContent]
+ *   Komponenta editovatelného obsahu (typicky MediumEditableContent).
+ * @param {React.ComponentType&lt;Object>} [params.Dialog=UpdateDialog]
+ *   Dialog komponenta použitá pro editaci (volá `onOk(draft)` / `onCancel()`).
+ * @param {Function} [params.mutationAsyncAction=mutationAsyncAction]
+ *   Async action (thunk) pro uložení změn (např. UpdateAsyncAction).
+ * @param {Object} params.props
+ *   Další props přeposílané do `BaseUpdateButton` (např. `children`, `className`, `title`,
+ *   `item`, `uriPattern`, `onOk`, `onCancel`, atd.).
+ * @returns {JSX.Element}
+ */
+export const UpdateButton = ({
+    DefaultContent: DefaultContent_ = DefaultContent,
+    Dialog = UpdateDialog,
+    mutationAsyncAction: mutationAsyncAction_ = mutationAsyncAction,
+    ...props
+}) => {
+    return (
+        &lt;BaseUpdateButton
+            {...props}
+            DefaultContent={DefaultContent_}
+            Dialog={Dialog}
+            mutationAsyncAction={mutationAsyncAction_}
+            {...permissions}
+        />
+    );
+};
+
+/**
+ * "Page-level" update workflow - celostránková editace entity Subject.
+ *
+ * Používá EditMode s přepínačem mezi automatickým a manuálním ukládáním.
+ * Defaultně je zapnuté automatické ukládání (live mode).
+ *
+ * Komponenta čeká na načtení entity z kontextu - pokud item není
+ * k dispozici, zobrazí text "Načítání...".
+ *
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený ve formuláři
+ *
+ * @example
+ * // Použití na edit stránce
+ * &lt;UpdateBody>
+ *   &lt;InteractiveMutations item={item} />
+ * &lt;/UpdateBody>
+ */
+export const UpdateBody = ({ children }) => {
+    // Získání entity z kontextu (poskytuje GQLEntityProvider)
+    const { item } = useGQLEntityContext();
+
+    // Čekání na načtení entity
+    if (!item) return &lt;>Načítání...&lt;/>;
+
+    return (
+        &lt;EditMode item={item}>
+            {children}
+        &lt;/EditMode>
+    );
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

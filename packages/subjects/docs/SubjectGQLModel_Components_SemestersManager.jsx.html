@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Components/SemestersManager.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Components/SemestersManager.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useCallback, useEffect } from "react";
+import { Label } from "../../../../_template/src/Base/FormControls/Label";
+
+/**
+ * Generuje název semestru podle pořadí.
+ * Lichá čísla = zimní semestr, sudá čísla = letní semestr.
+ * @param {number} order - Pořadí semestru (1, 2, 3, ...)
+ * @returns {string} Název semestru, např. "1. ročník zimní"
+ */
+const getSemesterName = (order) => {
+    const orderNum = parseInt(order, 10) || 0
+    const year = Math.ceil(orderNum / 2)
+    const isWinter = orderNum % 2 === 1
+    return `${year}. ročník ${isWinter ? "zimní" : "letní"}`
+}
+
+/**
+ * SemestersManager - Komponenta pro správu semestrů předmětu (Subject).
+ *
+ * Tato komponenta umožňuje:
+ * - Zobrazit seznam aktuálních semestrů přiřazených k předmětu
+ * - Vytvořit nový semestr s názvem a automaticky generovaným ID
+ * - Odebrat semestr z předmětu
+ * - Změnit pořadí semestrů pomocí tlačítek nahoru/dolů
+ *
+ * DŮLEŽITÉ: Změny se neukládají okamžitě na server!
+ * Komponenta pouze upravuje lokální stav a volá callback `onSemestersChange`
+ * s novým seznamem semestrů. Skutečné uložení na server provádí nadřazená
+ * komponenta (EditMode) po kliknutí na tlačítko "Uložit".
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array} props.semesters - Pole semestrů aktuálně přiřazených k předmětu
+ * @param {string} props.subjectId - ID předmětu, ke kterému semestry patří
+ * @param {Function} props.onSemestersChange - Callback volaný při změně seznamu semestrů
+ * @param {boolean} [props.disabled=false] - Zda je komponenta zakázána (readonly režim)
+ */
+export const SemestersManager = ({
+    semesters = [],
+    subjectId,
+    onSemestersChange = () => null,
+    disabled = false
+}) => {
+    // Lokální kopie semestrů pro editaci (synchronizovaná s props)
+    const [localSemesters, setLocalSemesters] = useState([]);
+
+    // State for delete confirmation modal
+    const [deleteConfirmation, setDeleteConfirmation] = useState({
+        show: false,
+        semesterId: null,
+        semesterOrder: null
+    });
+
+
+    /**
+     * Synchronizace lokálního stavu s props.
+     * Use JSON.stringify to detect deep changes in semesters array.
+     */
+    useEffect(() => {
+        setLocalSemesters([...(semesters || [])]);
+    }, [JSON.stringify(semesters)]);
+
+    // Seřazení semestrů podle pořadí (order) - ensure numeric comparison
+    const sortedSemesters = [...localSemesters].sort((a, b) => {
+        const orderA = parseInt(a.order, 10) || 0;
+        const orderB = parseInt(b.order, 10) || 0;
+        return orderA - orderB;
+    });
+
+    // Nejvyšší pořadí - pro určení pořadí nově přidaného semestru
+    const maxOrder = sortedSemesters.reduce((max, s) => Math.max(max, s.order || 0), 0);
+
+    /**
+     * Generování UUID pro nový semestr.
+     */
+    const generateUUID = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r &amp; 0x3 | 0x8);
+            return v.toString(16);
+        });
+    };
+
+    /**
+     * Přidání nově vytvořeného semestru.
+     */
+    const handleAddNewSemester = useCallback(() => {
+        const newSemester = {
+            id: generateUUID(),
+            order: maxOrder + 1,
+            subjectId: subjectId,
+            _action: 'create'
+        };
+
+        const newList = [...localSemesters, newSemester];
+        setLocalSemesters(newList);
+        onSemestersChange(newList);
+    }, [localSemesters, maxOrder, subjectId, onSemestersChange]);
+
+    /**
+     * Zobrazení potvrzovacího dialogu pro smazání semestru.
+     */
+    const showDeleteConfirmation = useCallback((semesterId) => {
+        const semester = localSemesters.find(s => s.id === semesterId);
+        setDeleteConfirmation({
+            show: true,
+            semesterId,
+            semesterOrder: semester?.order
+        });
+    }, [localSemesters]);
+
+    /**
+     * Zrušení potvrzovacího dialogu.
+     */
+    const cancelDeleteConfirmation = useCallback(() => {
+        setDeleteConfirmation({
+            show: false,
+            semesterId: null,
+            semesterOrder: null
+        });
+    }, []);
+
+    /**
+     * Odebrání semestru z lokálního seznamu (po potvrzení).
+     */
+    const handleRemoveSemester = useCallback((semesterId) => {
+        const newList = localSemesters.filter(s => s.id !== semesterId);
+        setLocalSemesters(newList);
+        onSemestersChange(newList);
+        // Close confirmation dialog
+        setDeleteConfirmation({
+            show: false,
+            semesterId: null,
+            semesterOrder: null
+        });
+    }, [localSemesters, onSemestersChange]);
+
+    /**
+     * Přesun semestru nahoru (swap s předchozím).
+     */
+    const handleMoveUp = useCallback((index) => {
+        if (index &lt;= 0) return;
+
+        const newSorted = [...sortedSemesters];
+        const currentOrder = newSorted[index].order;
+        const previousOrder = newSorted[index - 1].order;
+
+        newSorted[index] = { ...newSorted[index], order: previousOrder };
+        newSorted[index - 1] = { ...newSorted[index - 1], order: currentOrder };
+
+        setLocalSemesters(newSorted);
+        onSemestersChange(newSorted);
+    }, [sortedSemesters, onSemestersChange]);
+
+    /**
+     * Přesun semestru dolů (swap s následujícím).
+     */
+    const handleMoveDown = useCallback((index) => {
+        if (index >= sortedSemesters.length - 1) return;
+
+        const newSorted = [...sortedSemesters];
+        const currentOrder = newSorted[index].order;
+        const nextOrder = newSorted[index + 1].order;
+
+        newSorted[index] = { ...newSorted[index], order: nextOrder };
+        newSorted[index + 1] = { ...newSorted[index + 1], order: currentOrder };
+
+        setLocalSemesters(newSorted);
+        onSemestersChange(newSorted);
+    }, [sortedSemesters, onSemestersChange]);
+
+    return (
+        &lt;div className="mb-3">
+            &lt;Label id="semesters" title="Semestry">
+                {/* Tabulka existujících semestrů předmětu */}
+                {sortedSemesters.length > 0 ? (
+                    &lt;div className="mb-3">
+                        &lt;table className="table table-sm table-bordered">
+                            &lt;thead className="table-light">
+                                &lt;tr>
+                                    &lt;th style={{ width: '70px' }}>Pořadí&lt;/th>
+                                    &lt;th style={{ width: '140px' }}>Název&lt;/th>
+                                    &lt;th>ID&lt;/th>
+                                    &lt;th style={{ width: '120px' }}>Akce&lt;/th>
+                                &lt;/tr>
+                            &lt;/thead>
+                            &lt;tbody>
+                                {sortedSemesters.map((semester, index) => (
+                                    &lt;tr key={semester.id}>
+                                        &lt;td>{semester.order}&lt;/td>
+                                        &lt;td>{getSemesterName(semester.order)}&lt;/td>
+                                        &lt;td>&lt;small className="text-muted">{semester.id}&lt;/small>&lt;/td>
+                                        &lt;td>
+                                            &lt;div className="btn-group btn-group-sm">
+                                                &lt;button
+                                                    type="button"
+                                                    className="btn btn-outline-secondary"
+                                                    onClick={() => handleMoveUp(index)}
+                                                    disabled={disabled || index === 0}
+                                                    title="Posunout nahoru"
+                                                >
+                                                    ↑
+                                                &lt;/button>
+                                                &lt;button
+                                                    type="button"
+                                                    className="btn btn-outline-secondary"
+                                                    onClick={() => handleMoveDown(index)}
+                                                    disabled={disabled || index === sortedSemesters.length - 1}
+                                                    title="Posunout dolů"
+                                                >
+                                                    ↓
+                                                &lt;/button>
+                                                &lt;button
+                                                    type="button"
+                                                    className="btn btn-outline-danger"
+                                                    onClick={() => showDeleteConfirmation(semester.id)}
+                                                    disabled={disabled}
+                                                    title="Odebrat semestr"
+                                                >
+                                                    ✕
+                                                &lt;/button>
+                                            &lt;/div>
+                                        &lt;/td>
+                                    &lt;/tr>
+                                ))}
+                            &lt;/tbody>
+                        &lt;/table>
+                    &lt;/div>
+                ) : (
+                    &lt;div className="text-muted mb-3">Žádné semestry&lt;/div>
+                )}
+
+                {/* Tlačítko pro vytvoření nového semestru */}
+                &lt;button
+                    type="button"
+                    className="btn btn-sm btn-success"
+                    onClick={handleAddNewSemester}
+                    disabled={disabled}
+                >
+                    + Přidat nový semestr (pořadí: {maxOrder + 1})
+                &lt;/button>
+            &lt;/Label>
+
+            {/* Delete Confirmation Modal */}
+            {deleteConfirmation.show &amp;&amp; (
+                &lt;div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    &lt;div className="modal-dialog modal-dialog-centered">
+                        &lt;div className="modal-content">
+                            &lt;div className="modal-header">
+                                &lt;h5 className="modal-title">Potvrzení smazání&lt;/h5>
+                                &lt;button
+                                    type="button"
+                                    className="btn-close"
+                                    onClick={cancelDeleteConfirmation}
+                                    aria-label="Zavřít"
+                                />
+                            &lt;/div>
+                            &lt;div className="modal-body">
+                                &lt;p>
+                                    Opravdu chcete smazat semestr &lt;strong>#{deleteConfirmation.semesterOrder}&lt;/strong>?
+                                &lt;/p>
+                                &lt;div className="alert alert-warning mb-0">
+                                    &lt;strong>Upozornění:&lt;/strong> Pokud semestr obsahuje klasifikace nebo jiná data,
+                                    smazání se nepodaří a bude nutné nejprve odstranit všechna související data.
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div className="modal-footer">
+                                &lt;button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={cancelDeleteConfirmation}
+                                >
+                                    Zrušit
+                                &lt;/button>
+                                &lt;button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => handleRemoveSemester(deleteConfirmation.semesterId)}
+                                >
+                                    Smazat semestr
+                                &lt;/button>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            )}
+        &lt;/div>
+    );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

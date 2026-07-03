@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dts from "vite-plugin-dts";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), dts({ include: ["src"] })],
 
   resolve: {
     alias: {
@@ -31,6 +32,8 @@ export default defineConfig({
         "react-bootstrap",
         "react-router-dom",
         "@reduxjs/toolkit",
+        "@hrbolek/uoisfrontend-gql-shared",
+        "@hrbolek/uoisfrontend-shared",
       ],
       output: {
         globals: {

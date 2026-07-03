@@ -24,7 +24,7 @@ export const RolesOnURI = ReadItemURI.replace("view", "roleson")
  * @param {Object<string, any>} [props]
  *   Další props předané do `ReadWithComponent` (např. `Component`, layout props).
  *
- * @returns {import("react").JSX.Element}
+ * @returns {JSX.Element}
  */
 export const PageReadItemRolesOn = ({ 
     queryAsyncAction=ReadAsyncAction, 

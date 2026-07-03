@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Pages/SubjectSubPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Pages/SubjectSubPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { CardCapsule } from "../Components/CardCapsule"
+import { Table } from "../Components/Table"
+import { Attribute } from "../../../../_template/src/Base/Components"
+import { Link } from "../Components/Link"
+
+/**
+ * Generuje název semestru podle pořadí.
+ * Lichá čísla = zimní semestr, sudá čísla = letní semestr.
+ * @param {number} order - Pořadí semestru (1, 2, 3, ...)
+ * @returns {string} Název semestru, např. "1. ročník zimní"
+ */
+const getSemesterName = (order) => {
+    const orderNum = parseInt(order, 10) || 0
+    const year = Math.ceil(orderNum / 2)
+    const isWinter = orderNum % 2 === 1
+    return `${year}. ročník ${isWinter ? "zimní" : "letní"}`
+}
+
+/**
+ * SubjectSubPage - detailní zobrazení entity Subject (readonly).
+ *
+ * Zobrazuje dvě sekce v CardCapsule komponentách:
+ *
+ * 1. Program - informace o přiřazeném programu:
+ *    - Název programu
+ *    - ID programu
+ *
+ * 2. Semestry - tabulka semestrů přiřazených k předmětu:
+ *    - Pořadí semestru
+ *    - ID semestru
+ *    - Datum poslední změny
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Entita Subject s vlastnostmi:
+ *   @param {Object} props.item.program - Přiřazený program (id, name)
+ *   @param {Array} props.item.semesters - Pole semestrů (id, order)
+ *   @param {string} props.item.lastchange - Datum poslední změny
+ *
+ * @example
+ * &lt;SubjectSubPage item={subjectEntity} />
+ */
+export const SubjectSubPage = ({ item }) => {
+    return (
+        &lt;>
+            &lt;CardCapsule item={item} title="Program">
+                &lt;Attribute label="Název">
+                    {item?.program?.name}
+                &lt;/Attribute>
+                &lt;Attribute label="ID">
+                    &lt;a href={`/program/ProgramGQLModel/${item?.program?.id}`}>{item?.program?.id}&lt;/a>
+                &lt;/Attribute>
+            &lt;/CardCapsule>
+            &lt;CardCapsule title="Semestry">
+            &lt;table className="table table-sm">
+                &lt;thead>
+                &lt;tr>
+                    &lt;th>Pořadí&lt;/th>
+                    &lt;th>Název&lt;/th>
+                    &lt;th>ID&lt;/th>
+                    &lt;th>Last change&lt;/th>
+                &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                {[...item.semesters]
+                    .sort((a, b) => (parseInt(a.order, 10) || 0) - (parseInt(b.order, 10) || 0))
+                    .map(semester => (
+                    &lt;tr key={semester.id}>
+                        &lt;td>{semester.order}&lt;/td>
+                        &lt;td>{getSemesterName(semester.order)}&lt;/td>
+                        &lt;td>&lt;a href={`/semestr/SemesterGQLModel/${semester.id}`}>{semester.id}&lt;/a>&lt;/td>
+                        &lt;td>{item.lastchange}&lt;/td>
+                    &lt;/tr>
+                ))}
+                &lt;/tbody>
+            &lt;/table>
+            &lt;/CardCapsule>
+        &lt;/>
+    )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
