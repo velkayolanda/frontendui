@@ -353,11 +353,13 @@ const GenerateForm = () => {
 
     setListOfGeneratedSubjects([]);
     setAlertInfo("Předměty přidány do seznamu.");
+    setProgram("");
   };
 
   const handleBackGenerated = () => {
     setListOfGeneratedSubjects([]);
     setAlertInfo("");
+    setProgram("");
   };
 
   const handleConfirmJsonImport = (selectedItems) => {
