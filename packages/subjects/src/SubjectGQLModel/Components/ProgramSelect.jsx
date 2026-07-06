@@ -35,7 +35,7 @@ export const ProgramSelect = ({
     ...selectProps
 }) => {
     // Lokální stav pro seznam programů a indikátor načítání
-    const [programs, setPrograms] = useState([]);
+    const [programs, setPrograms] = useState([]); //dostat se k programs / passnout programselectu
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     const gqlClient = useGQLClient();

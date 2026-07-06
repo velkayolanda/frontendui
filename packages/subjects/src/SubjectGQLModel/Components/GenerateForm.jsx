@@ -1,4 +1,5 @@
 import { CardCapsule, Dialog } from "@hrbolek/uoisfrontend-shared";
+import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared";
 import { useEffect, useState } from "react";
 import { ProgramSelect } from "./ProgramSelect";
 import { ConfirmForm } from "./ConfirmForm";
@@ -6,6 +7,12 @@ import { AddNamedTypedItemCard } from "./AddNamedTypedItemCard";
 import { JsonStateTools } from "./JsonStateTools";
 import { loadDictionaryToState, generateUniqueSubjects } from "../Tools/generatorUtils";
 import { AlertBanner } from "./AlertBanner";
+import { PermissionGate } from "../../../../dynamic/src/Hooks/useRoles";
+
+const permissions = {
+  oneOfRoles: ["administrátor"],
+  mode: "absolute",
+}
 
 /**
  * Výchozí slovník přídavných jmen.
@@ -106,6 +113,7 @@ const SubjectGenerateCard = ({ subjects, adjectives, setListOfGeneratedSubjects,
       <input
         type="number"
         min="0"
+        max ="1000"
         className="form-control"
         value={numberOfSubjects}
         onChange={(e) => setNumberOfSubjects(Number(e.target.value))}
@@ -444,11 +452,12 @@ export const GenerateDialog = ({ onOk, onCancel }) => {
  *
  * @returns {JSX.Element} Tlačítko + podmíněně vykreslený `GenerateDialog`.
  */
-export const GenerateButton = ({ ...props }) => {
+export const GenerateButton = ({ rbacitem, ...props }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
 
   return (
     <>
+      <PermissionGate oneOfRoles={permissions.oneOfRoles} mode={permissions.mode} item={rbacitem}>
       <button
         {...props}
         onClick={(e) => {
@@ -458,7 +467,7 @@ export const GenerateButton = ({ ...props }) => {
       >
         {props.children}
       </button>
-
+        </PermissionGate>
       {dialogVisible && (
         <GenerateDialog
           onOk={() => setDialogVisible(false)}
@@ -468,4 +477,3 @@ export const GenerateButton = ({ ...props }) => {
     </>
   );
 };
-//TODO: Přidat guatd pouze pro uživatele s pravomocí

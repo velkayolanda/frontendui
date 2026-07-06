@@ -90,7 +90,7 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
 
             <div className="d-flex justify-content-center gap-5 mb-4 mt-4">
                 <CreateButton className="btn btn-outline-success" rbacitem={{}}>Přidat předmět</CreateButton>
-                <GenerateButton className="btn btn-outline-primary" type="button">
+                <GenerateButton className="btn btn-outline-primary" rbacitem={{}} type="button">
                     Generovat předměty
                 </GenerateButton>
             </div>
