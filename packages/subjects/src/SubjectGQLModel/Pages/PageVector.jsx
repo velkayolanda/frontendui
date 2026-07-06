@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { AsyncStateIndicator } from "../../../../_template/src/Base/Helpers/AsyncStateIndicator"
 import { Collapsible } from "../../../../_template/src/Base/FormControls/Collapsible"
 import { CreateButton } from "../Mutations/Create"
+import { GenerateButton } from "../Components/GenerateForm"
 
 
 function safeParseWhere(sp, paramName = "where") {
@@ -89,10 +90,9 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
 
             <div className="d-flex justify-content-center gap-5 mb-4 mt-4">
                 <CreateButton className="btn btn-outline-success" rbacitem={{}}>Přidat předmět</CreateButton>
-                <button className="btn btn-outline-primary" type="button">
-                    {/* TODO: prosím componentu sem: */}
+                <GenerateButton className="btn btn-outline-primary" type="button">
                     Generovat předměty
-                </button>
+                </GenerateButton>
             </div>
 
             <Table data={items} sortConfig={sortConfig} onSort={handleSort} />
@@ -104,4 +104,3 @@ export const PageVector = ({ children, queryAsyncAction = ReadPageAsyncAction })
         </PageBase>
     )
 }
-
