@@ -1,4 +1,17 @@
-const randomInt = (N) => Math.floor(Math.random() * (N + 1));
+/**
+ * Vrátí náhodné celé číslo včetně obou hranic intervalu `<0, N>`.
+ *
+ * Rozsah:
+ * - minimum: `0`
+ * - maximum: `N`
+ *
+ * @param {number} N - Horní mez intervalu (včetně).
+ * @returns {number} Náhodné celé číslo od `0` do `N` (včetně).
+ *
+ * @example
+ * randomInt(5) // může vrátit 0,1,2,3,4 nebo 5
+ */
+export const randomInt = (N) => Math.floor(Math.random() * (N + 1));
 
 /**
  * Sestaví výsledný název předmětu z podstatného a přídavného jména
@@ -135,4 +148,25 @@ export const loadDictionaryToState = (dictionary, addToState, stateSetter) => {
   for (const [name, type] of Object.entries(dictionary ?? {})) {
     addToState({ name, type }, stateSetter);
   }
+};
+
+/**
+ * Vygeneruje náhodný identifikátor ve formátu UUID v4.
+ *
+ * Poznámka:
+ * - Formát odpovídá UUID v4 (`xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx`),
+ * - implementace využívá `Math.random()`,
+ * - není určeno pro kryptografické/bezpečnostní použití.
+ *
+ * @returns {string} Řetězec ve tvaru UUID v4.
+ *
+ * @example
+ * generateUUID() // např. "3f8c2a4e-91b7-4c2e-a9d1-6d2c8f7b1a22"
+ */
+export const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 };

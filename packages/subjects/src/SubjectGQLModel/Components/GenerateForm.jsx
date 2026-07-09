@@ -1,5 +1,4 @@
-import { CardCapsule, Dialog } from "@hrbolek/uoisfrontend-shared";
-import { createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared";
+import { CardCapsule, Dialog, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
 import { useEffect, useState } from "react";
 import { ProgramSelect } from "./ProgramSelect";
 import { ConfirmForm } from "./ConfirmForm";
@@ -8,6 +7,12 @@ import { JsonStateTools } from "./JsonStateTools";
 import { loadDictionaryToState, generateUniqueSubjects } from "../Tools/generatorUtils";
 import { AlertBanner } from "./AlertBanner";
 import { PermissionGate } from "../../../../dynamic/src/Hooks/useRoles";
+import { ProgramPageAsyncAction, InsertAsyncAction, SemesterInsertAsyncAction} from "../Queries";
+import { useDispatch } from "react-redux";
+import { useGQLClient } from "../../../../dynamic/src/Store/RootProviders";
+import { generateUUID, randomInt } from "../Tools/generatorUtils";
+
+
 
 const permissions = {
   oneOfRoles: ["administrátor"],
@@ -166,6 +171,8 @@ const DataForm = ({
     adjectives,
     setAdjective,
     setAlertInfo,
+    programList,
+    setProgramList,
   } = contextValue;
 
   const listState = (stateVariable) => {
@@ -213,6 +220,7 @@ const DataForm = ({
             listState(predmety);
             listState(adjectives);
             listState(listOfGeneratedSubjects);
+            listState(programList);
           }}
         >
           Print list
@@ -294,25 +302,39 @@ const DataForm = ({
  * - seznam vygenerovaných názvů,
  * - pending položky z JSON importu,
  * - alert zprávy,
- * - volitelný program (`ProgramSelect`).
+ * - zvolený program (`selectedProgram`) a seznam programů (`ProgramSelect`).
  *
- * Podle stavu přepíná mezi:
- * - potvrzením JSON importu (`ConfirmForm`),
- * - potvrzením vygenerovaných položek (`ConfirmForm`),
- * - standardním datovým formulářem (`DataForm`).
+ * Tok obrazovek:
+ * 1) Pokud existují `pendingJsonItems`, vykreslí se `ConfirmForm` pro potvrzení JSON importu.
+ * 2) Pokud existují `listOfGeneratedSubjects`, vykreslí se `ConfirmForm` pro potvrzení generovaných položek
+ *    a doplňkově `ProgramSelect` (případně `LoadingSpinner` při načítání programů).
+ *    - `onConfirm` -> `handleConfirmGenerated`
+ *    - `onCancel`  -> `handleBackGenerated`
+ * 3) Jinak se vykreslí standardní `DataForm`.
+ *
+ * Komponenta při mountu načítá výchozí slovníky (`DEFAULT_ADJECTIVES`, `DEFAULT_SUBJECTS`)
+ * a inicializační hlášku do alertu.
  *
  * @component
- * @returns {JSX.Element} Kompletní UI generátoru včetně alertu.
+ * @returns {JSX.Element} Kompletní UI generátoru včetně alert banneru.
  */
 const GenerateForm = () => {
   const [predmety, setPredmet] = useState([]);
   const [listOfGeneratedSubjects, setListOfGeneratedSubjects] = useState([]);
   const [adjectives, setAdjective] = useState([]);
   const [alertInfo, setAlertInfo] = useState("");
-  const [program, setProgram] = useState();
+  //Selected Program
+  const [selectedProgram, setSelectedProgram] = useState();
+  //Seznam všech programů
+  const [programList, setProgramList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const gqlClient = useGQLClient();
+
 
   const [pendingJsonItems, setPendingJsonItems] = useState([]);
 
+  // Kontext pro předávání stavu do podkomponent
   const contextValue = {
     predmety,
     setPredmet,
@@ -322,8 +344,10 @@ const GenerateForm = () => {
     setAdjective,
     alertInfo,
     setAlertInfo,
-    program,
-    setProgram,
+    selectedProgram,
+    setSelectedProgram,
+    programList,
+    setProgramList,
   };
 
   const AddToState = (payload, stateSetter) => {
@@ -348,26 +372,89 @@ const GenerateForm = () => {
     loadDictionaryToState(DEFAULT_SUBJECTS, AddToState, setPredmet);
   };
 
+  //Fetch programs zkopirovano z ProgramSelect.jsx
   useEffect(() => {
     loadDefaultAdjectives();
     loadDefaultSubjects();
     setAlertInfo("Načteny výchozí hodnoty přídavných jmen a předmětů.");
-  }, []);
+
+    const skip = 0;
+    const limit = 200;
+
+    const fetchPrograms = async () => {
+      try {
+        setLoading(true);
+        const result = await dispatch(ProgramPageAsyncAction({ skip, limit }, gqlClient));
+        const data = result?.data;
+
+        if (data?.programPage) {
+          setProgramList(data.programPage);
+        } else {
+          console.warn("GenerateForm: No programs found in response", result);
+        }
+      } catch (error) {
+        console.error("GenerateForm: Error fetching programs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrograms();
+  }, [dispatch, gqlClient]);
 
   // TODO: Implementovat odeslání vygenerovaných předmětů na server
-  const handleConfirmGenerated = (selectedItems) => {
-    console.log(selectedItems);
-    console.log(program);
+  const handleConfirmGenerated = async (selectedItems) => {
+    setLoading(true);
 
+    const insertSemesters = async (subjectId) => {
+      var count = randomInt(9) + 1;
+      const semesters = Array.from({ length: count }, () => generateUUID());
+
+      for (const semester of semesters) {
+        const semesterResponse =dispatch(SemesterInsertAsyncAction({
+          id: semester,
+          subjectId: subjectId,
+          order: count
+        }, gqlClient));
+
+          const semesterResult = semesterResponse?.data?.semesterInsert || semesterResponse?.semesterInsert || semesterResponse;
+
+          if (semesterResult?.failed === true || semesterResult?.__typename?.includes('Error')) {
+              console.error('Failed to create semester:', semesterResult?.msg);
+          }
+        count--;
+      }
+      return semesters;
+    };
+
+    for (const item of selectedItems) {
+      const id = generateUUID();
+      const response = await dispatch(InsertAsyncAction({
+        id: id,
+        name: item,
+        programId: selectedProgram ? selectedProgram : programList[randomInt(programList.length - 1)].id,
+        semesters: [],
+      }, gqlClient));
+
+      const result = response?.data?.response || response?.subjectInsert || response;
+
+      if (result?.failed === true || result?.__typename?.includes('Error')) {
+        console.error('Failed to create subject:', result?.msg);
+      }
+      else {
+        insertSemesters(id);
+      }
+    }
+    setAlertInfo("Požadavky odeslány na server.");
     setListOfGeneratedSubjects([]);
-    setAlertInfo("Předměty přidány do seznamu.");
-    setProgram("");
+    setSelectedProgram("");
+    setLoading(false);
   };
 
   const handleBackGenerated = () => {
     setListOfGeneratedSubjects([]);
     setAlertInfo("");
-    setProgram("");
+    setSelectedProgram("");
   };
 
   const handleConfirmJsonImport = (selectedItems) => {
@@ -389,6 +476,8 @@ const GenerateForm = () => {
   };
 
   return (
+    loading ?
+      <LoadingSpinner /> :
     <div>
       {pendingJsonItems.length > 0 ? (
         <ConfirmForm
@@ -404,18 +493,17 @@ const GenerateForm = () => {
           itemList={listOfGeneratedSubjects}
           onConfirm={handleConfirmGenerated}
           onCancel={handleBackGenerated}
-        >
-          <ProgramSelect value={program} onChange={setProgram} />
+          >
+          <ProgramSelect value={selectedProgram} onChange={setSelectedProgram} programs={programList}/>
         </ConfirmForm>
-      ) : (
-        <DataForm
-          contextValue={contextValue}
-          loadDefaultAdjectives={loadDefaultAdjectives}
-          loadDefaultSubjects={loadDefaultSubjects}
-          AddToState={AddToState}
-          setPendingJsonItems={setPendingJsonItems}
-        />
-      )}
+        ) : (
+            <DataForm
+              contextValue={contextValue}
+              loadDefaultAdjectives={loadDefaultAdjectives}
+              loadDefaultSubjects={loadDefaultSubjects}
+              AddToState={AddToState}
+              setPendingJsonItems={setPendingJsonItems}/>
+          )}
 
       <AlertBanner message={alertInfo} variant="warning" />
     </div>

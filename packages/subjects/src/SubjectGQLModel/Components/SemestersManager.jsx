@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Label } from "../../../../_template/src/Base/FormControls/Label";
+import { generateUUID } from "../Tools/generatorUtils";
 
 /**
  * Generuje název semestru podle pořadí.
@@ -69,17 +70,6 @@ export const SemestersManager = ({
 
     // Nejvyšší pořadí - pro určení pořadí nově přidaného semestru
     const maxOrder = sortedSemesters.reduce((max, s) => Math.max(max, s.order || 0), 0);
-
-    /**
-     * Generování UUID pro nový semestr.
-     */
-    const generateUUID = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    };
 
     /**
      * Přidání nově vytvořeného semestru.

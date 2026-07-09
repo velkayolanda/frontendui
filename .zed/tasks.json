@@ -1,0 +1,16 @@
+[
+  {
+    "label": "app_subjects: dev",
+    "command": "npm run dev -w @velkayolanda/app_subjects",
+    "cwd": "/Users/lukaskaplanek/Desktop/Projects/frontendui",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+  },
+  {
+    "label": "docker: up hk2026",
+    "command": "docker compose -f \"/Users/lukaskaplanek/Desktop/Projects/frontendui/_uois/docker-compose.hk2026.yml\" up -d",
+    "cwd": "/Users/lukaskaplanek/Desktop/Projects/frontendui",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+  },
+]
