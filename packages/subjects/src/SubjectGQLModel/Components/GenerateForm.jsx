@@ -402,19 +402,18 @@ const GenerateForm = () => {
     fetchPrograms();
   }, [dispatch, gqlClient]);
 
-  // TODO: Implementovat odeslání vygenerovaných předmětů na server
   const handleConfirmGenerated = async (selectedItems) => {
     setLoading(true);
 
     const insertSemesters = async (subjectId) => {
-      var count = randomInt(9) + 1;
+      var count = randomInt(11) + 1;
       const semesters = Array.from({ length: count }, () => generateUUID());
 
-      for (const semester of semesters) {
-        const semesterResponse =dispatch(SemesterInsertAsyncAction({
-          id: semester,
+      for (var i = 0; i < count; i++) {
+        const semesterResponse = dispatch(SemesterInsertAsyncAction({
+          id: semesters[i],
           subjectId: subjectId,
-          order: count
+          order: i+1
         }, gqlClient));
 
           const semesterResult = semesterResponse?.data?.semesterInsert || semesterResponse?.semesterInsert || semesterResponse;
@@ -422,7 +421,6 @@ const GenerateForm = () => {
           if (semesterResult?.failed === true || semesterResult?.__typename?.includes('Error')) {
               console.error('Failed to create semester:', semesterResult?.msg);
           }
-        count--;
       }
       return semesters;
     };
