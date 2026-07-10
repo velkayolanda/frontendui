@@ -37,18 +37,40 @@ export const EditMode = ({
     const [semestersSaving, setSemestersSaving] = useState(false);
     const [semestersError, setSemestersError] = useState(null);
 
+    // Track if we have locally saved semesters that shouldn't be overwritten by item prop
+    const [hasLocalSemesters, setHasLocalSemesters] = useState(false);
+
     // Ref to track pending semester changes for live mode
     const semesterTimerRef = useRef(null);
     // Ref to always have access to the latest originalSemesters in callbacks
     const originalSemestersRef = useRef(originalSemesters);
+    // Ref to track the current semesters for pending save operations
+    const currentSemestersRef = useRef(currentSemesters);
     useEffect(() => {
         originalSemestersRef.current = originalSemesters;
     }, [originalSemesters]);
-
-    // Reset semesters when item changes
     useEffect(() => {
-        setOriginalSemesters(item?.semesters || []);
-        setCurrentSemesters(item?.semesters || []);
+        currentSemestersRef.current = currentSemesters;
+    }, [currentSemesters]);
+
+    // Track the previous item.id to detect actual changes
+    const prevItemIdRef = useRef(item?.id);
+
+    // Reset semesters only when item.id actually changes (navigating to different subject)
+    useEffect(() => {
+        const prevId = prevItemIdRef.current;
+        const currentId = item?.id;
+
+        console.log('[SemesterSync] useEffect triggered. prevId:', prevId, 'currentId:', currentId, 'hasLocalSemesters:', hasLocalSemesters);
+
+        // Only reset if item.id actually changed to a different value
+        if (prevId !== currentId) {
+            console.log('[SemesterSync] Item ID changed, resetting semesters to:', item?.semesters);
+            setHasLocalSemesters(false);
+            setOriginalSemesters(item?.semesters || []);
+            setCurrentSemesters(item?.semesters || []);
+            prevItemIdRef.current = currentId;
+        }
     }, [item?.id, item?.semesters]);
 
     const {
@@ -87,10 +109,32 @@ export const EditMode = ({
 
     const dirty = fieldsDirty || semestersDirty();
 
+    // Ref to prevent concurrent save operations
+    const isSavingRef = useRef(false);
+
     // Save semester changes to server
     const saveSemesterChanges = useCallback(async (semesters) => {
+        // Prevent concurrent saves - if already saving, skip this call
+        // The next debounced call will pick up the changes
+        if (isSavingRef.current) {
+            console.log('[SemesterSave] Skipping - already saving');
+            return false;
+        }
+        isSavingRef.current = true;
         setSemestersSaving(true);
         setSemestersError(null);
+
+        console.log('[SemesterSave] Starting save with semesters:', semesters);
+        console.log('[SemesterSave] Original semesters:', originalSemestersRef.current);
+
+        // Validace maximálního počtu semestrů
+        const MAX_SEMESTERS = 12;
+        if (semesters.length > MAX_SEMESTERS) {
+            setSemestersError(new Error(`Překročen maximální počet semestrů (${MAX_SEMESTERS}). Aktuálně: ${semesters.length}`));
+            isSavingRef.current = false;
+            setSemestersSaving(false);
+            return false;
+        }
 
         // Track which semesters failed to delete (for rollback)
         const failedToDelete = [];
@@ -111,17 +155,24 @@ export const EditMode = ({
             const toDelete = currentOriginalSemesters.filter(s => !currMap.has(s.id) && !s._action);
 
             // Execute creates
+            console.log('[SemesterSave] To create:', toCreate);
+            console.log('[SemesterSave] To delete:', toDelete);
             for (const semester of toCreate) {
+                console.log('[SemesterSave] Creating semester:', semester);
                 const response = await dispatch(SemesterInsertAsyncAction({
                     id: semester.id,
                     subjectId: item.id,
                     order: semester.order
                 }, gqlClient));
+                console.log('[SemesterSave] Create response:', response);
                 // Extract result from GraphQL response structure
                 const result = response?.data?.semesterInsert || response?.semesterInsert || response;
                 // Store the lastchange from server response for future operations
                 if (result?.id) {
                     lastchangeMap.set(result.id, result.lastchange);
+                    console.log('[SemesterSave] Created successfully, id:', result.id, 'lastchange:', result.lastchange);
+                } else {
+                    console.error('[SemesterSave] Create failed - no id in result:', result);
                 }
             }
 
@@ -147,19 +198,23 @@ export const EditMode = ({
                 }
             }
 
-            // Build working list: strip _action, add back failed deletes, sort and compact orders
+            // Sestavení pracovního seznamu: odstranění _action flagu, přidání neúspěšně smazaných
             let workingSemesters = semesters.map(s => { const { _action, ...rest } = s; return rest; });
             for (const failedSemester of failedToDelete) {
                 if (!workingSemesters.some(s => s.id === failedSemester.id)) {
                     workingSemesters.push(failedSemester);
                 }
             }
-            workingSemesters.sort((a, b) => (a.order || 0) - (b.order || 0));
-            workingSemesters = workingSemesters.map((s, i) => ({ ...s, order: i + 1 }));
 
-            // Find semesters whose order differs from original after compaction
+            // Seřazení pro konzistentní zobrazení
+            workingSemesters.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+            // Najít semestry, jejichž pořadí se změnilo oproti originálu
+            // DŮLEŽITÉ: Neměníme automaticky pořadí všech semestrů!
+            // Aktualizujeme pouze ty, které uživatel explicitně změnil.
             const toUpdate = workingSemesters.filter(s => {
                 const orig = origMap.get(s.id);
+                // Aktualizovat pouze pokud existoval v originálu a pořadí se změnilo
                 return orig && orig.order !== s.order;
             });
 
@@ -196,6 +251,9 @@ export const EditMode = ({
                 return updatedLastchange ? { ...s, lastchange: updatedLastchange } : s;
             });
 
+            // Mark that we have locally saved semesters - prevents useEffect from overwriting
+            console.log('[SemesterSave] Save complete. Final savedSemesters:', savedSemesters);
+            setHasLocalSemesters(true);
             setOriginalSemesters(savedSemesters);
             setCurrentSemesters(savedSemesters);
             setDraft(prev => ({ ...prev, semesters: savedSemesters }));
@@ -214,9 +272,22 @@ export const EditMode = ({
             setSemestersError(err);
             return false;
         } finally {
+            isSavingRef.current = false;
             setSemestersSaving(false);
+
+            // Check if there are pending changes that happened during save
+            // If so, schedule another save
+            if (pendingSaveRef.current) {
+                pendingSaveRef.current = false;
+                semesterTimerRef.current = setTimeout(() => {
+                    saveSemesterChanges(currentSemestersRef.current);
+                }, 300);
+            }
         }
     }, [dispatch, gqlClient, item?.id, setDraft]);
+
+    // Ref to track if there are pending changes during a save operation
+    const pendingSaveRef = useRef(false);
 
     // Handle semester changes from SemestersManager
     const handleSemestersChange = useCallback((newSemesters) => {
@@ -226,12 +297,20 @@ export const EditMode = ({
 
         // In live mode, auto-save semester changes after debounce
         if (effectiveMode === "live") {
+            // If currently saving, mark that there are pending changes
+            if (isSavingRef.current) {
+                pendingSaveRef.current = true;
+                return;
+            }
+
             if (semesterTimerRef.current) {
                 clearTimeout(semesterTimerRef.current);
             }
             semesterTimerRef.current = setTimeout(() => {
-                saveSemesterChanges(newSemesters);
-            }, 600);
+                // Use ref to get the most current semesters at save time
+                // This prevents saving stale data if user made more changes during debounce
+                saveSemesterChanges(currentSemestersRef.current);
+            }, 800); // Increased debounce to 800ms for more stability
         }
     }, [effectiveMode, setDraft, saveSemesterChanges]);
 

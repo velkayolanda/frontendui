@@ -2,6 +2,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Label } from "../../../../_template/src/Base/FormControls/Label";
 import { generateUUID } from "../Tools/generatorUtils";
 
+// Maximální počet semestrů (6 let * 2 semestry za rok)
+const MAX_SEMESTERS = 12;
+
 /**
  * Generuje název semestru podle pořadí.
  * Lichá čísla = zimní semestr, sudá čísla = letní semestr.
@@ -73,8 +76,14 @@ export const SemestersManager = ({
 
     /**
      * Přidání nově vytvořeného semestru.
+     * Kontroluje, zda nebyl překročen maximální počet semestrů.
      */
     const handleAddNewSemester = useCallback(() => {
+        // Kontrola maximálního počtu semestrů
+        if (maxOrder >= MAX_SEMESTERS) {
+            return;
+        }
+
         const newSemester = {
             id: generateUUID(),
             order: maxOrder + 1,
@@ -225,10 +234,18 @@ export const SemestersManager = ({
                     type="button"
                     className="btn btn-sm btn-success"
                     onClick={handleAddNewSemester}
-                    disabled={disabled}
+                    disabled={disabled || maxOrder >= MAX_SEMESTERS}
+                    title={maxOrder >= MAX_SEMESTERS ? `Dosažen maximální počet semestrů (${MAX_SEMESTERS})` : ''}
                 >
                     + Přidat nový semestr (pořadí: {maxOrder + 1})
                 </button>
+                {maxOrder >= MAX_SEMESTERS && (
+                    <div className="alert alert-warning mt-2 mb-0">
+                        <small>
+                            Dosažen maximální počet semestrů ({MAX_SEMESTERS}). Nelze přidat další semestry.
+                        </small>
+                    </div>
+                )}
             </Label>
 
             {/* Delete Confirmation Modal */}

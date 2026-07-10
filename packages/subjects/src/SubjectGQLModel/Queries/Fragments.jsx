@@ -51,7 +51,7 @@ fragment Medium on SubjectGQLModel {
 const LargeFragmentStr = `
 fragment Large on SubjectGQLModel {
   ...Medium
-  semesters {
+  semesters(limit: 100) {
     __typename id
     id
     order
