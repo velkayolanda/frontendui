@@ -32,7 +32,7 @@ const SortButton = ({ column, sortConfig, onSort }) => {
  * Custom table header with sort buttons
  */
 const SortableTableHeader = ({ tableDef, sortConfig, onSort }) => {
-    const sortableColumns = ['name', 'nameEn', 'program', 'lastchange']
+    const sortableColumns = ['name', 'nameEn', 'program', 'semesters', 'lastchange']
 
     return (
         <thead>

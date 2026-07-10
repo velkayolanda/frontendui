@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: SubjectGQLModel/Components/ConfirmEdit.jsx</title>
+    <title>JSDoc: Source: SubjectGQLModel/Components/JsonStateTools.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: SubjectGQLModel/Components/ConfirmEdit.jsx</h1>
+    <h1 class="page-title">Source: SubjectGQLModel/Components/JsonStateTools.jsx</h1>
 
     
 
@@ -26,102 +26,100 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { UpdateAsyncAction } from "../Queries";
-import { MediumEditableContent } from "./MediumEditableContent";
-import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
-import { useCallback } from "react";
-import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
+            <pre class="prettyprint source linenums"><code>import { useRef } from "react";
 
 /**
- * ConfirmEdit komponenta pro editaci entity Subject s explicitním potvrzením.
+ * Univerzální nástroj pro export a import JSON dat.
  *
- * Používá hook `useEditAction` v režimu "confirm" - změny se neukládají automaticky,
- * ale až po kliknutí na tlačítko "Uložit změny". Uživatel může změny také zrušit.
- *
- * Po úspěšném uložení se aktualizuje kontext (GQLEntityContext), což způsobí
- * překreslení všech komponent na stránce, které tento kontext používají.
+ * Umožňuje:
+ * - export aktuálního stavu do `.json` souboru,
+ * - načtení `.json` souboru z disku a předání naparsovaného obsahu callbacku.
  *
  * @component
- * @param {Object} props
- * @param {Object} props.item - Entita Subject k editaci
- * @param {React.ReactNode} [props.children] - Další obsah zobrazený ve formuláři
+ * @param {Object} props - Vstupní vlastnosti komponenty.
+ * @param {Function} props.toJsonObject - Funkce vracející serializovatelný objekt pro export.
+ * @param {Function} props.fromJsonObject - Funkce zpracovávající naparsovaný JSON při importu.
+ * @param {Function} [props.onMessage] - Volitelný callback pro informační hlášky.
+ * @param {string} [props.fileName="data.json"] - Název exportovaného souboru.
+ * @param {string} [props.downloadLabel="Download as JSON"] - Text tlačítka pro export.
+ * @param {string} [props.loadLabel="Load from JSON"] - Text tlačítka pro import.
+ * @param {string} [props.className="btn btn-outline-primary"] - CSS třída tlačítek.
  *
- * @example
- * &lt;ConfirmEdit item={subjectEntity}>
- *   &lt;p>Dodatečné informace&lt;/p>
- * &lt;/ConfirmEdit>
+ * @returns {JSX.Element} Dvojice tlačítek (export/import) + skrytý file input.
  */
-export const ConfirmEdit = ({ item, children }) => {
-    // Získání funkcí z kontextu pro aktualizaci stavu po uložení
-    const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
+export const JsonStateTools = ({
+  toJsonObject,
+  fromJsonObject,
+  onMessage,
+  fileName = "data.json",
+  downloadLabel = "Download as JSON",
+  loadLabel = "Load from JSON",
+  className = "btn btn-outline-primary",
+}) => {
+  const fileInputRef = useRef(null);
 
-    /**
-     * Vytvoří handler pro mutační události, který spojí lokální změnu s notifikací kontextu.
-     * Nejprve notifikuje kontext o změně, poté provede mutaci.
-     */
-    const localOnMutationEvent = useCallback((mutationHandler, notifyHandler) => async (e) => {
-        const newItem = { ...item, [e.target.id]: e.target.value }
-        const newEvent = { target: { value: newItem } }
+  const downloadJson = () => {
+    try {
+      const dump = toJsonObject?.() ?? {};
+      const json = JSON.stringify(dump, null, 2);
+      const blob = new Blob([json], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
 
-        await notifyHandler(newEvent)
-        return await mutationHandler(e)
-    })
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    /**
-     * Hook useEditAction v režimu "confirm":
-     * - draft: aktuální stav formuláře (kopie item s aplikovanými změnami)
-     * - dirty: true pokud jsou neuložené změny
-     * - onChange/onBlur: handlery pro vstupní pole
-     * - onCancel: vrátí draft na původní hodnoty
-     * - onConfirm: odešle mutaci na backend
-     */
-    const {
-        draft,
-        dirty,
-        onChange,
-        onBlur,
-        onCancel,
-        onConfirm,
-    } = useEditAction(UpdateAsyncAction, item, {mode: "confirm"})
+      URL.revokeObjectURL(url);
+      onMessage?.("Data dumpnuta do souboru.");
+    } catch (err) {
+      console.error("JSON export failed", err);
+      onMessage?.("Chyba při exportu JSON.");
+    }
+  };
 
-    /**
-     * Handler pro potvrzení změn.
-     * Po úspěšném uložení aktualizuje kontext, což způsobí překreslení celé stránky.
-     */
-    const handleConfirm = useCallback(async () => {
-        const result = await onConfirm();
-        console.log("ConfirmEdit handleConfirm result", result, "draft", draft)
-        if (result) {
-            const event = { target: { value: result } };
-            // důležité: použij params z kontextu (provider si je drží jako "poslední vars")
-            await contextOnChange(event);
-        }
-        return result;
-    }, [onConfirm, contextOnChange]);
+  const openJsonPicker = () => {
+    fileInputRef.current?.click();
+  };
 
+  const loadFromJsonFile = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-    return (
-        &lt;MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
-            {children}
-            &lt;hr />
-            {/* &lt;pre>{JSON.stringify(item, null, 2)}&lt;/pre> */}
-            &lt;button
-                className="btn btn-warning form-control"
-                onClick={onCancel}
-                disabled={!dirty || loading}
-            >
-                Zrušit změny
-            &lt;/button>
-            &lt;button
-                className="btn btn-primary form-control"
-                onClick={handleConfirm}
-                disabled={!dirty || loading}
-            >
-                Uložit změny
-            &lt;/button>
-        &lt;/MediumEditableContent>
-    )
-}</code></pre>
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      fromJsonObject?.(parsed);
+      onMessage?.("Načteno úspěšně.");
+    } catch (err) {
+      console.error("Invalid JSON file", err);
+      onMessage?.("Chyba při načítání JSON souboru.");
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  return (
+    &lt;>
+      &lt;button className={className} onClick={downloadJson}>
+        {downloadLabel}
+      &lt;/button>
+      &lt;button className={className} onClick={openJsonPicker}>
+        {loadLabel}
+      &lt;/button>
+      &lt;input
+        ref={fileInputRef}
+        type="file"
+        accept="application/json,.json"
+        style={{ display: "none" }}
+        onChange={loadFromJsonFile}
+      />
+    &lt;/>
+  );
+};
+</code></pre>
         </article>
     </section>
 

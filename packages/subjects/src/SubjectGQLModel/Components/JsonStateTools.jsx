@@ -9,9 +9,9 @@ import { useRef } from "react";
  *
  * @component
  * @param {Object} props - Vstupní vlastnosti komponenty.
- * @param {() => any} props.toJsonObject - Funkce vracející serializovatelný objekt pro export.
- * @param {(parsed: any) => void} props.fromJsonObject - Funkce zpracovávající naparsovaný JSON při importu.
- * @param {(message: string) => void} [props.onMessage] - Volitelný callback pro informační hlášky.
+ * @param {Function} props.toJsonObject - Funkce vracející serializovatelný objekt pro export.
+ * @param {Function} props.fromJsonObject - Funkce zpracovávající naparsovaný JSON při importu.
+ * @param {Function} [props.onMessage] - Volitelný callback pro informační hlášky.
  * @param {string} [props.fileName="data.json"] - Název exportovaného souboru.
  * @param {string} [props.downloadLabel="Download as JSON"] - Text tlačítka pro export.
  * @param {string} [props.loadLabel="Load from JSON"] - Text tlačítka pro import.

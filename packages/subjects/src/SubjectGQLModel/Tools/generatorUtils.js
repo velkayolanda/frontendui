@@ -138,8 +138,8 @@ export const generateUniqueSubjects = ({ subjects = [], adjectives = [], count =
  * Každý záznam slovníku převádí na payload `{ name, type }`
  * a předává ho funkci `addToState`.
  *
- * @param {Record<string, string>} dictionary - Zdrojový slovník.
- * @param {(payload: {name: string, type: string}, stateSetter: Function) => void} addToState - Funkce pro vložení položky do stavu.
+ * @param {Object.<string, string>} dictionary - Zdrojový slovník.
+ * @param {Function} addToState - Funkce pro vložení položky do stavu. Přijímá (payload, stateSetter).
  * @param {Function} stateSetter - Setter cílového stavu (`setState`).
  *
  * @returns {void}

@@ -13,7 +13,7 @@ import { CardCapsule } from "@hrbolek/uoisfrontend-shared";
  * @param {Array<{value: string, label: string}>} [props.options=[]] - Možnosti typu.
  * @param {string} [props.defaultType=""] - Výchozí hodnota typu.
  * @param {string} [props.placeholder="..."] - Placeholder pro pole názvu.
- * @param {(payload: {name: string, type: string}) => void} [props.onAdd] - Callback volaný po kliknutí na Send.
+ * @param {Function} [props.onAdd] - Callback volaný po kliknutí na Send. Přijímá payload {name, type}.
  *
  * @returns {JSX.Element} Karta s formulářem pro přidání položky.
  */

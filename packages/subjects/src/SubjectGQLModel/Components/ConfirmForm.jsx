@@ -15,11 +15,11 @@ import { useEffect, useState } from "react";
  *
  * @component
  * @param {Object} props - Vstupní vlastnosti komponenty ConfirmForm.
- * @param {Array<any>} [props.itemList=[]] - Seznam položek určených k potvrzení.
- * @param {(item: any, index: number) => string} [props.getLabel] - Funkce pro vykreslení popisku položky.
- * @param {(selectedItems: Array<any>) => void} [props.onConfirm] - Callback volaný po kliknutí na Confirm; dostane pouze vybrané položky.
- * @param {() => void} [props.onCancel] - Callback volaný po kliknutí na Cancel.
- * @param {React.ReactNode} [props.children] - Volitelný obsah vykreslený mezi sekcí „Options“ a akčními tlačítky.
+ * @param {Array} [props.itemList=[]] - Seznam položek určených k potvrzení.
+ * @param {Function} [props.getLabel] - Funkce pro vykreslení popisku položky. Přijímá (item, index).
+ * @param {Function} [props.onConfirm] - Callback volaný po kliknutí na Confirm; dostane pouze vybrané položky.
+ * @param {Function} [props.onCancel] - Callback volaný po kliknutí na Cancel.
+ * @param {React.ReactNode} [props.children] - Volitelný obsah vykreslený mezi sekcí „Options" a akčními tlačítky.
  * @param {number} [props.rowsPerColumn=10] - Počet řádků na každém sloupci.
  * @param {number} [props.columnsPerPage=4] - Počet sloupců na každé stránce.
  *

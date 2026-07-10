@@ -1,4 +1,32 @@
-import { CardCapsule, Dialog, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Components/GenerateForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Components/GenerateForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { CardCapsule, Dialog, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
 import { useEffect, useState } from "react";
 import { ProgramSelect } from "./ProgramSelect";
 import { ConfirmForm } from "./ConfirmForm";
@@ -25,7 +53,7 @@ const permissions = {
  * Klíč = text přídavného jména, hodnota = typ skloňování.
  * Očekávané hodnoty typu: `tvrde` | `mekke`.
  *
- * @type {Object.<string, string>}
+ * @type {Object.&lt;string, string>}
  */
 const DEFAULT_ADJECTIVES = {
   Pokročilý: "tvrde",
@@ -57,7 +85,7 @@ const DEFAULT_ADJECTIVES = {
  * Klíč = název předmětu, hodnota = rod/číslo podstatného jména.
  * Očekávané hodnoty typu: `zensky` | `muzsky` | `stredni` | `mnozne`.
  *
- * @type {Object.<string, string>}
+ * @type {Object.&lt;string, string>}
  */
 const DEFAULT_SUBJECTS = {
   Matematika: "zensky",
@@ -114,8 +142,8 @@ const SubjectGenerateCard = ({ subjects, adjectives, setListOfGeneratedSubjects,
   };
 
   return (
-    <CardCapsule title="Generator">
-      <input
+    &lt;CardCapsule title="Generator">
+      &lt;input
         type="number"
         min="0"
         max ="1000"
@@ -124,10 +152,10 @@ const SubjectGenerateCard = ({ subjects, adjectives, setListOfGeneratedSubjects,
         onChange={(e) => setNumberOfSubjects(Number(e.target.value))}
         placeholder="..."
       />
-      <button className="btn btn-outline-primary" onClick={handleGeneration}>
+      &lt;button className="btn btn-outline-primary" onClick={handleGeneration}>
         Generate
-      </button>
-    </CardCapsule>
+      &lt;/button>
+    &lt;/CardCapsule>
   );
 };
 /**
@@ -180,8 +208,8 @@ const DataForm = ({
   };
 
   return (
-    <>
-      <AddNamedTypedItemCard
+    &lt;>
+      &lt;AddNamedTypedItemCard
         title="Podstatné jméno předmetu"
         placeholder="..."
         options={[
@@ -194,7 +222,7 @@ const DataForm = ({
         onAdd={(payload) => AddToState(payload, setPredmet)}
       />
 
-      <AddNamedTypedItemCard
+      &lt;AddNamedTypedItemCard
         title="Přídavné jmnéno předmětu"
         placeholder="..."
         options={[
@@ -205,15 +233,15 @@ const DataForm = ({
         onAdd={(payload) => AddToState(payload, setAdjective)}
       />
 
-      <SubjectGenerateCard
+      &lt;SubjectGenerateCard
         subjects={predmety}
         adjectives={adjectives}
         setListOfGeneratedSubjects={setListOfGeneratedSubjects}
         setAlertInfo={setAlertInfo}
       />
 
-      <CardCapsule title="Tools">
-        <button
+      &lt;CardCapsule title="Tools">
+        &lt;button
           className="btn btn-outline-primary"
           onClick={() => {
             setAlertInfo("Data vypsána do konzole");
@@ -224,9 +252,9 @@ const DataForm = ({
           }}
         >
           Print list
-        </button>
+        &lt;/button>
 
-        <button
+        &lt;button
           className="btn btn-outline-primary"
           onClick={() => {
             setAlertInfo("Přídavná jména z výchozího seznamu načtena");
@@ -234,9 +262,9 @@ const DataForm = ({
           }}
         >
           Load default adjectives
-        </button>
+        &lt;/button>
 
-        <button
+        &lt;button
           className="btn btn-outline-primary"
           onClick={() => {
             setAlertInfo("Předměty z výchozího seznamu načteny");
@@ -244,9 +272,9 @@ const DataForm = ({
           }}
         >
           Load default subjects
-        </button>
+        &lt;/button>
 
-        <button
+        &lt;button
           className="btn btn-outline-danger"
           onClick={() => {
             setPredmet([]);
@@ -255,9 +283,9 @@ const DataForm = ({
           }}
         >
           Clear list
-        </button>
+        &lt;/button>
 
-        <JsonStateTools
+        &lt;JsonStateTools
           fileName="generator-keywords.json"
           onMessage={(msg) => setAlertInfo(msg)}
           toJsonObject={() => ({
@@ -288,8 +316,8 @@ const DataForm = ({
             setAlertInfo("Potvrďte import položek z JSON.");
           }}
         />
-      </CardCapsule>
-    </>
+      &lt;/CardCapsule>
+    &lt;/>
   );
 };
 
@@ -409,7 +437,7 @@ const GenerateForm = ({ onSuccess }) => {
       var count = randomInt(11) + 1;
       const semesters = Array.from({ length: count }, () => generateUUID());
 
-      for (var i = 0; i < count; i++) {
+      for (var i = 0; i &lt; count; i++) {
         const semesterResponse = dispatch(SemesterInsertAsyncAction({
           id: semesters[i],
           subjectId: subjectId,
@@ -477,10 +505,10 @@ const GenerateForm = ({ onSuccess }) => {
 
   return (
     loading ?
-      <LoadingSpinner /> :
-    <div>
+      &lt;LoadingSpinner /> :
+    &lt;div>
       {pendingJsonItems.length > 0 ? (
-        <ConfirmForm
+        &lt;ConfirmForm
           itemList={pendingJsonItems}
           getLabel={(item) =>
             `${item.target === "subjects" ? "[SUBJECT]" : "[ADJECTIVE]"} ${item.name} (${item.type})`
@@ -489,15 +517,15 @@ const GenerateForm = ({ onSuccess }) => {
           onCancel={handleCancelJsonImport}
         />
       ) : listOfGeneratedSubjects.length > 0 ? (
-        <ConfirmForm
+        &lt;ConfirmForm
           itemList={listOfGeneratedSubjects}
           onConfirm={handleConfirmGenerated}
           onCancel={handleBackGenerated}
           >
-          <ProgramSelect value={selectedProgram} onChange={setSelectedProgram} programs={programList}/>
-        </ConfirmForm>
+          &lt;ProgramSelect value={selectedProgram} onChange={setSelectedProgram} programs={programList}/>
+        &lt;/ConfirmForm>
         ) : (
-            <DataForm
+            &lt;DataForm
               contextValue={contextValue}
               loadDefaultAdjectives={loadDefaultAdjectives}
               loadDefaultSubjects={loadDefaultSubjects}
@@ -505,8 +533,8 @@ const GenerateForm = ({ onSuccess }) => {
               setPendingJsonItems={setPendingJsonItems}/>
           )}
 
-      <AlertBanner message={alertInfo} variant="warning" />
-    </div>
+      &lt;AlertBanner message={alertInfo} variant="warning" />
+    &lt;/div>
   );
 };
 
@@ -523,16 +551,16 @@ const GenerateForm = ({ onSuccess }) => {
  */
 export const GenerateDialog = ({ onOk, onCancel, onSuccess }) => {
   return (
-    <Dialog title="Data Generator" onOk={onOk} onCancel={onCancel}>
-      <GenerateForm onSuccess={onSuccess} />
-    </Dialog>
+    &lt;Dialog title="Data Generator" onOk={onOk} onCancel={onCancel}>
+      &lt;GenerateForm onSuccess={onSuccess} />
+    &lt;/Dialog>
   );
 };
 
 /**
  * Tlačítko pro otevření dialogu generátoru dat.
  *
- * Komponenta předává všechny přijaté props na `<button>` a zachovává
+ * Komponenta předává všechny přijaté props na `&lt;button>` a zachovává
  * i externí `onClick` handler (pokud je předán).
  *
  * @component
@@ -546,9 +574,9 @@ export const GenerateButton = ({ rbacitem, onSuccess, ...props }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
 
   return (
-    <>
-      <PermissionGate oneOfRoles={permissions.oneOfRoles} mode={permissions.mode} item={rbacitem}>
-      <button
+    &lt;>
+      &lt;PermissionGate oneOfRoles={permissions.oneOfRoles} mode={permissions.mode} item={rbacitem}>
+      &lt;button
         {...props}
         onClick={(e) => {
           props.onClick?.(e);
@@ -556,15 +584,38 @@ export const GenerateButton = ({ rbacitem, onSuccess, ...props }) => {
         }}
       >
         {props.children}
-      </button>
-        </PermissionGate>
-      {dialogVisible && (
-        <GenerateDialog
+      &lt;/button>
+        &lt;/PermissionGate>
+      {dialogVisible &amp;&amp; (
+        &lt;GenerateDialog
           onOk={() => setDialogVisible(false)}
           onCancel={() => setDialogVisible(false)}
           onSuccess={onSuccess}
         />
       )}
-    </>
+    &lt;/>
   );
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-SemestersManager.html">SemestersManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNamedTypedItemCard">AddNamedTypedItemCard</a></li><li><a href="global.html#AlertBanner">AlertBanner</a></li><li><a href="global.html#CLIENT_SIDE_SORT_COLUMNS">CLIENT_SIDE_SORT_COLUMNS</a></li><li><a href="global.html#COLUMN_TO_DB_FIELD">COLUMN_TO_DB_FIELD</a></li><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#ConfirmForm">ConfirmForm</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DEFAULT_ADJECTIVES">DEFAULT_ADJECTIVES</a></li><li><a href="global.html#DEFAULT_SUBJECTS">DEFAULT_SUBJECTS</a></li><li><a href="global.html#DataForm">DataForm</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#Filter">Filter</a></li><li><a href="global.html#GenerateButton">GenerateButton</a></li><li><a href="global.html#GenerateDialog">GenerateDialog</a></li><li><a href="global.html#GenerateForm">GenerateForm</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#JsonStateTools">JsonStateTools</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#PageVector">PageVector</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#StringFilter">StringFilter</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectGenerateCard">SubjectGenerateCard</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectName">buildSubjectName</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#computeOrderby">computeOrderby</a></li><li><a href="global.html#filterParameterName">filterParameterName</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#generateUniqueSubjects">generateUniqueSubjects</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li><li><a href="global.html#loadDictionaryToState">loadDictionaryToState</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#safeParseWhere">safeParseWhere</a></li><li><a href="global.html#sortItemsClientSide">sortItemsClientSide</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 10 2026 14:49:13 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

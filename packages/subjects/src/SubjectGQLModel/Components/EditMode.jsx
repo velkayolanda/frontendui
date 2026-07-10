@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, useEffect } from "react";
+ import { useCallback, useState, useRef, useEffect } from "react";
 import { UpdateAsyncAction, SemesterInsertAsyncAction, SemesterDeleteAsyncAction, SemesterUpdateAsyncAction } from "../Queries";
 import { MediumEditableContent } from "./MediumEditableContent";
 import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
@@ -10,16 +10,49 @@ import { useDispatch } from "react-redux";
  * EditMode Component
  *
  * Univerzální komponenta pro editaci entity Subject s přepínačem mezi automatickým a manuálním ukládáním.
+ * Podporuje správu semestrů s debounce auto-save a prevencí race conditions.
  *
- * - Defaultně je zapnuté automatické ukládání (live mode)
- * - Přepínač umožňuje přepnout na manuální režim s tlačítky Uložit/Zrušit
+ * ## Funkce
+ * - Přepínač mezi automatickým (live) a manuálním (confirm) ukládáním
+ * - Správa semestrů s debounce (800ms) pro stabilní auto-save
+ * - Prevence souběžných save operací pomocí `isSavingRef`
+ * - Tracking lokálně uložených semestrů (`hasLocalSemesters`) - zabraňuje přepsání daty z props
+ * - Automatické uložení čekajících změn po dokončení aktuálního save (`pendingSaveRef`)
+ * - Rollback při chybě - obnovení původních dat v UI
+ * - Validace max. počtu semestrů (12)
+ *
+ * ## Režimy ukládání
+ * - **Live mode**: Změny se ukládají automaticky po 800ms od poslední změny
+ * - **Confirm mode**: Změny se ukládají až po kliknutí na tlačítko "Uložit změny"
+ *
+ * ## Technické detaily
+ * - `originalSemestersRef` - vždy aktuální reference na originální semestry
+ * - `currentSemestersRef` - vždy aktuální reference na současné semestry (pro debounced save)
+ * - `prevItemIdRef` - sleduje změnu item.id pro reset stavu při navigaci
+ * - `lastchangeMap` - sleduje lastchange hodnoty pro optimistické aktualizace
  *
  * @component
  * @param {Object} props
- * @param {Object} props.item - Objekt reprezentující editovanou entitu
- * @param {React.ReactNode} [props.children] - Další obsah pod formulářem
- * @param {Function} [props.mutationAsyncAction=UpdateAsyncAction] - Asynchronní akce pro update
- * @param {React.ComponentType} [props.DefaultContent=MediumEditableContent] - Komponenta pro zobrazení obsahu
+ * @param {Object} props.item - Entita Subject k editaci (vyžaduje id, semesters, lastchange)
+ * @param {string} props.item.id - UUID předmětu
+ * @param {Array<Object>} [props.item.semesters=[]] - Pole semestrů přiřazených k předmětu
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený pod formulářem
+ * @param {Function} [props.mutationAsyncAction=UpdateAsyncAction] - GraphQL mutace pro update entity
+ * @param {React.ComponentType} [props.DefaultContent=MediumEditableContent] - Komponenta pro zobrazení editačního obsahu
+ *
+ * @example
+ * // Základní použití
+ * <EditMode item={subjectEntity}>
+ *   <CustomFields />
+ * </EditMode>
+ *
+ * @example
+ * // S vlastní mutací a obsahem
+ * <EditMode
+ *   item={subjectEntity}
+ *   mutationAsyncAction={CustomUpdateAction}
+ *   DefaultContent={CustomEditableContent}
+ * />
  */
 export const EditMode = ({
     item,
@@ -27,25 +60,44 @@ export const EditMode = ({
     mutationAsyncAction = UpdateAsyncAction,
     DefaultContent = MediumEditableContent
 }) => {
+    // Context pro propagaci změn do nadřazené komponenty (např. refresh dat)
     const { onChange: contextOnChange } = useGQLEntityContext();
+    // Redux dispatch pro volání GraphQL mutací
     const dispatch = useDispatch();
+    // Apollo/GraphQL client pro API volání
     const gqlClient = useGQLClient();
 
-    // Track original semesters for comparison
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE: Správa semestrů
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /** Originální semestry pro porovnání změn */
     const [originalSemesters, setOriginalSemesters] = useState(item?.semesters || []);
+    /** Aktuální semestry v editaci */
     const [currentSemesters, setCurrentSemesters] = useState(item?.semesters || []);
+    /** Indikátor probíhajícího ukládání semestrů */
     const [semestersSaving, setSemestersSaving] = useState(false);
+    /** Chyba při ukládání semestrů */
     const [semestersError, setSemestersError] = useState(null);
 
-    // Track if we have locally saved semesters that shouldn't be overwritten by item prop
+    /**
+     * Flag indikující, že máme lokálně uložené semestry.
+     * Zabraňuje useEffect přepsat lokální data daty z props (které se ještě neaktualizovaly).
+     */
     const [hasLocalSemesters, setHasLocalSemesters] = useState(false);
 
-    // Ref to track pending semester changes for live mode
+    // ═══════════════════════════════════════════════════════════════════════════
+    // REFS: Reference pro asynchronní operace a debounce
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /** Timer pro debounce auto-save */
     const semesterTimerRef = useRef(null);
-    // Ref to always have access to the latest originalSemesters in callbacks
+    /** Vždy aktuální originální semestry (pro closure) */
     const originalSemestersRef = useRef(originalSemesters);
-    // Ref to track the current semesters for pending save operations
+    /** Vždy aktuální editované semestry (pro debounced save) */
     const currentSemestersRef = useRef(currentSemesters);
+
+    // Synchronizace refs se state
     useEffect(() => {
         originalSemestersRef.current = originalSemesters;
     }, [originalSemesters]);
@@ -53,19 +105,20 @@ export const EditMode = ({
         currentSemestersRef.current = currentSemesters;
     }, [currentSemesters]);
 
-    // Track the previous item.id to detect actual changes
+    /** Předchozí item.id pro detekci navigace */
     const prevItemIdRef = useRef(item?.id);
 
-    // Reset semesters only when item.id actually changes (navigating to different subject)
+    /**
+     * Reset semestrů při navigaci na jiný předmět.
+     * Resetuje pouze když se změní item.id (ne při každém renderování).
+     * Pokud máme lokálně uložené semestry (hasLocalSemesters=true), nereset se neprovede.
+     */
     useEffect(() => {
         const prevId = prevItemIdRef.current;
         const currentId = item?.id;
 
-        console.log('[SemesterSync] useEffect triggered. prevId:', prevId, 'currentId:', currentId, 'hasLocalSemesters:', hasLocalSemesters);
-
-        // Only reset if item.id actually changed to a different value
+        // Pouze pokud se ID skutečně změnilo (navigace na jiný předmět)
         if (prevId !== currentId) {
-            console.log('[SemesterSync] Item ID changed, resetting semesters to:', item?.semesters);
             setHasLocalSemesters(false);
             setOriginalSemesters(item?.semesters || []);
             setCurrentSemesters(item?.semesters || []);
@@ -73,33 +126,43 @@ export const EditMode = ({
         }
     }, [item?.id, item?.semesters]);
 
+    // Hook pro editaci polí entity (name, description, atd.)
+    // Vrací draft stav, dirty flag, handlery pro onChange/onBlur a funkce pro save/cancel
     const {
-        draft,
-        setDraft,
-        dirty: fieldsDirty,
-        loading: saving,
-        error,
-        autoSaveEnabled,
-        toggleAutoSave,
-        effectiveMode,
-        onChange,
-        onBlur,
-        onCancel: baseOnCancel,
-        onConfirm: baseOnConfirm,
+        draft,              // Lokální kopie dat pro editaci
+        setDraft,           // Setter pro draft (používáme pro sync semestrů)
+        dirty: fieldsDirty, // True pokud se změnila nějaká pole (ne semestry)
+        loading: saving,    // True během ukládání polí na server
+        error,              // Chyba při ukládání polí
+        autoSaveEnabled,    // Stav přepínače auto-save
+        toggleAutoSave,     // Handler pro přepínač auto-save
+        effectiveMode,      // "live" nebo "confirm" podle autoSaveEnabled
+        onChange,           // Handler pro změnu pole (aktualizuje draft)
+        onBlur,             // Handler pro opuštění pole (triggeruje save v live režimu)
+        onCancel: baseOnCancel,   // Zruší změny polí
+        onConfirm: baseOnConfirm, // Uloží změny polí na server
     } = useEditAction(mutationAsyncAction, item, {
-        mode: "live",
-        defaultAutoSave: true,
+        mode: "live",           // Výchozí režim - automatické ukládání
+        defaultAutoSave: true,  // Auto-save je defaultně zapnutý
     });
 
-    // Check if semesters have changed
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DIRTY CHECK: Detekce změn
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /**
+     * Kontroluje, zda se semestry změnily oproti originálu.
+     * Porovnává: počet, přidané/odebrané ID, změny pořadí.
+     * @returns {boolean} True pokud jsou změny, false pokud jsou data identická
+     */
     const semestersDirty = useCallback(() => {
         if (originalSemesters.length !== currentSemesters.length) return true;
         const origIds = new Set(originalSemesters.map(s => s.id));
         const currIds = new Set(currentSemesters.map(s => s.id));
-        // Check for added/removed
+        // Kontrola přidaných/odebraných semestrů
         for (const id of currIds) if (!origIds.has(id)) return true;
         for (const id of origIds) if (!currIds.has(id)) return true;
-        // Check for order changes
+        // Kontrola změny pořadí
         for (const curr of currentSemesters) {
             const orig = originalSemesters.find(s => s.id === curr.id);
             if (orig && orig.order !== curr.order) return true;
@@ -107,27 +170,42 @@ export const EditMode = ({
         return false;
     }, [originalSemesters, currentSemesters]);
 
+    /** Kombinovaný dirty flag - pole nebo semestry */
     const dirty = fieldsDirty || semestersDirty();
 
-    // Ref to prevent concurrent save operations
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SAVE OPERATION: Ukládání semestrů na server
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /** Prevence souběžných save operací */
     const isSavingRef = useRef(false);
 
-    // Save semester changes to server
+    /**
+     * Uloží změny semestrů na server.
+     *
+     * Provádí operace v pořadí:
+     * 1. Vytvoření nových semestrů (s _action: 'create')
+     * 2. Smazání odebraných semestrů
+     * 3. Aktualizace pořadí změněných semestrů
+     *
+     * @param {Array<Object>} semesters - Pole semestrů k uložení
+     * @param {string} semesters[].id - UUID semestru
+     * @param {number} semesters[].order - Pořadí semestru
+     * @param {string} [semesters[]._action] - 'create' pro nové semestry
+     * @param {string} [semesters[].lastchange] - Timestamp poslední změny
+     * @returns {Promise<boolean>} True při úspěchu, false při chybě
+     */
     const saveSemesterChanges = useCallback(async (semesters) => {
-        // Prevent concurrent saves - if already saving, skip this call
-        // The next debounced call will pick up the changes
+        // Prevence souběžných save - pokud již ukládáme, přeskočíme
+        // Změny se uloží v dalším cyklu díky pendingSaveRef
         if (isSavingRef.current) {
-            console.log('[SemesterSave] Skipping - already saving');
             return false;
         }
         isSavingRef.current = true;
         setSemestersSaving(true);
         setSemestersError(null);
 
-        console.log('[SemesterSave] Starting save with semesters:', semesters);
-        console.log('[SemesterSave] Original semesters:', originalSemestersRef.current);
-
-        // Validace maximálního počtu semestrů
+        // Validace maximálního počtu semestrů (6 let × 2 semestry)
         const MAX_SEMESTERS = 12;
         if (semesters.length > MAX_SEMESTERS) {
             setSemestersError(new Error(`Překročen maximální počet semestrů (${MAX_SEMESTERS}). Aktuálně: ${semesters.length}`));
@@ -136,95 +214,87 @@ export const EditMode = ({
             return false;
         }
 
-        // Track which semesters failed to delete (for rollback)
+        // Sledování semestrů, které se nepodařilo smazat (pro rollback)
         const failedToDelete = [];
 
         try {
-            // Use ref to get the most current original semesters (avoids stale closure)
+            // Použití ref pro aktuální originální semestry (vyhnutí se stale closure)
+            // Closure by jinak zachytila starou hodnotu originalSemesters z doby vytvoření callbacku
             const currentOriginalSemesters = originalSemestersRef.current;
+
+            // Mapy pro rychlé vyhledávání podle ID - O(1) místo O(n)
             const origMap = new Map(currentOriginalSemesters.map(s => [s.id, s]));
             const currMap = new Map(semesters.map(s => [s.id, s]));
 
-            // Track updated lastchange values from server responses
+            // Mapa lastchange hodnot - klíčová pro optimistické aktualizace
+            // Server vyžaduje aktuální lastchange pro každou mutaci (optimistic locking)
+            // Po každé úspěšné operaci aktualizujeme hodnotu v mapě pro další operace
             const lastchangeMap = new Map(currentOriginalSemesters.map(s => [s.id, s.lastchange]));
 
-            // Find semesters to create (have _action: 'create' flag)
+            // Identifikace operací podle změn mezi originálním a aktuálním stavem
+            // toCreate: semestry s _action:'create' flag (nově přidané v UI)
             const toCreate = semesters.filter(s => s._action === 'create');
-
-            // Find semesters to delete (in original but not in current, excluding newly created ones)
+            // toDelete: semestry v originálu, které nejsou v aktuálním (odebrané v UI)
             const toDelete = currentOriginalSemesters.filter(s => !currMap.has(s.id) && !s._action);
 
-            // Execute creates
-            console.log('[SemesterSave] To create:', toCreate);
-            console.log('[SemesterSave] To delete:', toDelete);
+            // === KROK 1: Vytvoření nových semestrů ===
+            // Iterujeme postupně (ne Promise.all) kvůli pořadí a error handling
             for (const semester of toCreate) {
-                console.log('[SemesterSave] Creating semester:', semester);
                 const response = await dispatch(SemesterInsertAsyncAction({
-                    id: semester.id,
-                    subjectId: item.id,
-                    order: semester.order
+                    id: semester.id,       // UUID vygenerované na klientovi
+                    subjectId: item.id,    // Vazba na předmět
+                    order: semester.order  // Pořadí semestru (1-12)
                 }, gqlClient));
-                console.log('[SemesterSave] Create response:', response);
-                // Extract result from GraphQL response structure
+                // GraphQL response může mít různou strukturu podle použitého middleware
                 const result = response?.data?.semesterInsert || response?.semesterInsert || response;
-                // Store the lastchange from server response for future operations
                 if (result?.id) {
+                    // Uložíme lastchange ze serveru pro budoucí operace s tímto semestrem
                     lastchangeMap.set(result.id, result.lastchange);
-                    console.log('[SemesterSave] Created successfully, id:', result.id, 'lastchange:', result.lastchange);
-                } else {
-                    console.error('[SemesterSave] Create failed - no id in result:', result);
                 }
             }
 
-            // Execute deletes - use fresh lastchange from map
+            // === KROK 2: Smazání odebraných semestrů ===
             for (const semester of toDelete) {
+                // Získání aktuálního lastchange - nejdřív z mapy, pak z objektu
                 const currentLastchange = lastchangeMap.get(semester.id) || semester.lastchange;
-                // Validate lastchange before making API call
                 if (!currentLastchange) {
-                    console.error('Cannot delete semester - missing lastchange:', semester.id);
+                    // Bez lastchange nelze smazat (server odmítne) - označíme jako failed
                     failedToDelete.push(semester);
                     continue;
                 }
                 const response = await dispatch(SemesterDeleteAsyncAction({
                     id: semester.id,
-                    lastchange: currentLastchange
+                    lastchange: currentLastchange  // Server porovná s DB hodnotou (optimistic lock)
                 }, gqlClient));
-                // Extract result from GraphQL response structure
                 const result = response?.data?.semesterDelete || response?.semesterDelete || response;
-                // Check for error response
+                // Smazání může selhat kvůli foreign key (semestr má klasifikace apod.)
                 if (result?.failed === true) {
-                    failedToDelete.push(semester);
-                    continue;
+                    failedToDelete.push(semester);  // Označíme pro rollback v UI
                 }
             }
 
-            // Sestavení pracovního seznamu: odstranění _action flagu, přidání neúspěšně smazaných
+            // Sestavení pracovního seznamu pro finální stav
+            // 1. Odstraníme _action flag (už není potřeba - semestr je vytvořen)
             let workingSemesters = semesters.map(s => { const { _action, ...rest } = s; return rest; });
+            // 2. Přidáme zpět semestry, které se nepodařilo smazat (rollback)
             for (const failedSemester of failedToDelete) {
                 if (!workingSemesters.some(s => s.id === failedSemester.id)) {
                     workingSemesters.push(failedSemester);
                 }
             }
-
-            // Seřazení pro konzistentní zobrazení
+            // 3. Seřadíme podle pořadí pro konzistentní zobrazení
             workingSemesters.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-            // Najít semestry, jejichž pořadí se změnilo oproti originálu
-            // DŮLEŽITÉ: Neměníme automaticky pořadí všech semestrů!
-            // Aktualizujeme pouze ty, které uživatel explicitně změnil.
+            // === KROK 3: Aktualizace pořadí změněných semestrů ===
+            // DŮLEŽITÉ: Aktualizujeme pouze semestry, které uživatel explicitně změnil
             const toUpdate = workingSemesters.filter(s => {
                 const orig = origMap.get(s.id);
-                // Aktualizovat pouze pokud existoval v originálu a pořadí se změnilo
                 return orig && orig.order !== s.order;
             });
 
-            // Execute updates - use fresh lastchange from map for each update
             for (const semester of toUpdate) {
-                // Try multiple sources for lastchange: map (from previous ops), semester itself, or original
                 const currentLastchange = lastchangeMap.get(semester.id) || semester.lastchange || origMap.get(semester.id)?.lastchange;
-                // Validate lastchange before making API call
                 if (!currentLastchange) {
-                    console.error('Cannot update semester - missing lastchange:', semester.id);
                     throw new Error('Nepodařilo se aktualizovat semestr - chybí lastchange');
                 }
                 const response = await dispatch(SemesterUpdateAsyncAction({
@@ -233,32 +303,28 @@ export const EditMode = ({
                     subjectId: item.id,
                     order: semester.order
                 }, gqlClient));
-                // Extract result from GraphQL response structure
                 const result = response?.data?.semesterUpdate || response?.semesterUpdate || response;
-                // Check for error response
                 if (result?.__typename?.includes('Error') || result?.failed === true) {
                     throw new Error(result?.msg || 'Nepodařilo se aktualizovat pořadí semestru');
                 }
-                // Update lastchange for any subsequent operations on this semester
                 if (result?.lastchange) {
                     lastchangeMap.set(semester.id, result.lastchange);
                 }
             }
 
-            // Apply updated lastchange values to the final list
+            // Aplikace aktualizovaných lastchange hodnot
             let savedSemesters = workingSemesters.map(s => {
                 const updatedLastchange = lastchangeMap.get(s.id);
                 return updatedLastchange ? { ...s, lastchange: updatedLastchange } : s;
             });
 
-            // Mark that we have locally saved semesters - prevents useEffect from overwriting
-            console.log('[SemesterSave] Save complete. Final savedSemesters:', savedSemesters);
+            // Označení lokálně uložených semestrů - zabraňuje přepsání z props
             setHasLocalSemesters(true);
             setOriginalSemesters(savedSemesters);
             setCurrentSemesters(savedSemesters);
             setDraft(prev => ({ ...prev, semesters: savedSemesters }));
 
-            // If any deletes failed, show error but don't fail the whole operation
+            // Pokud některá mazání selhala, zobrazíme varování
             if (failedToDelete.length > 0) {
                 setSemestersError(new Error('Nelze smazat semestr - obsahuje klasifikace nebo jiná data'));
                 return false;
@@ -266,7 +332,7 @@ export const EditMode = ({
 
             return true;
         } catch (err) {
-            // On error, restore original semesters to UI
+            // Při chybě obnovíme původní semestry v UI
             setCurrentSemesters(originalSemestersRef.current);
             setDraft(prev => ({ ...prev, semesters: originalSemestersRef.current }));
             setSemestersError(err);
@@ -275,8 +341,7 @@ export const EditMode = ({
             isSavingRef.current = false;
             setSemestersSaving(false);
 
-            // Check if there are pending changes that happened during save
-            // If so, schedule another save
+            // Pokud během ukládání přišly další změny, naplánujeme další save
             if (pendingSaveRef.current) {
                 pendingSaveRef.current = false;
                 semesterTimerRef.current = setTimeout(() => {
@@ -286,18 +351,21 @@ export const EditMode = ({
         }
     }, [dispatch, gqlClient, item?.id, setDraft]);
 
-    // Ref to track if there are pending changes during a save operation
+    /** Flag pro čekající změny během save operace */
     const pendingSaveRef = useRef(false);
 
-    // Handle semester changes from SemestersManager
+    /**
+     * Handler pro změny semestrů z SemestersManager komponenty.
+     * V live režimu automaticky ukládá změny po debounce (800ms).
+     * @param {Array<Object>} newSemesters - Nové pole semestrů
+     */
     const handleSemestersChange = useCallback((newSemesters) => {
         setCurrentSemesters(newSemesters);
-        // Update draft so it has the new semesters for display
         setDraft(prev => ({ ...prev, semesters: newSemesters }));
 
-        // In live mode, auto-save semester changes after debounce
+        // V live režimu auto-save po debounce
         if (effectiveMode === "live") {
-            // If currently saving, mark that there are pending changes
+            // Pokud právě ukládáme, označíme čekající změny
             if (isSavingRef.current) {
                 pendingSaveRef.current = true;
                 return;
@@ -307,14 +375,13 @@ export const EditMode = ({
                 clearTimeout(semesterTimerRef.current);
             }
             semesterTimerRef.current = setTimeout(() => {
-                // Use ref to get the most current semesters at save time
-                // This prevents saving stale data if user made more changes during debounce
+                // Použití ref pro aktuální data - zabraňuje uložení zastaralých dat
                 saveSemesterChanges(currentSemestersRef.current);
-            }, 800); // Increased debounce to 800ms for more stability
+            }, 800);
         }
     }, [effectiveMode, setDraft, saveSemesterChanges]);
 
-    // Clean up timer on unmount
+    // Cleanup timeru při unmount
     useEffect(() => {
         return () => {
             if (semesterTimerRef.current) {
@@ -323,14 +390,23 @@ export const EditMode = ({
         };
     }, []);
 
+    // ═══════════════════════════════════════════════════════════════════════════
+    // HANDLERS: Tlačítka Uložit/Zrušit (confirm režim)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /**
+     * Handler pro potvrzení změn (tlačítko "Uložit změny" v confirm režimu).
+     * Nejdřív uloží semestry, pak ostatní pole.
+     * @returns {Promise<Object|null>} Výsledek uložení nebo null při chybě
+     */
     const handleConfirm = useCallback(async () => {
-        // Save semester changes first
+        // Nejdřív uložíme změny semestrů
         if (semestersDirty()) {
             const semesterSuccess = await saveSemesterChanges(currentSemesters);
             if (!semesterSuccess) return null;
         }
 
-        // Then save field changes
+        // Pak uložíme změny polí
         const result = await baseOnConfirm();
         if (result) {
             const event = { target: { value: result } };
@@ -339,20 +415,28 @@ export const EditMode = ({
         return result;
     }, [baseOnConfirm, contextOnChange, semestersDirty, saveSemesterChanges, currentSemesters]);
 
+    /**
+     * Handler pro zrušení změn (tlačítko "Zrušit změny" v confirm režimu).
+     * Obnoví původní semestry a pole.
+     */
     const handleCancel = useCallback(() => {
-        // Reset semesters to original
         setCurrentSemesters(originalSemesters);
         setDraft(prev => ({ ...prev, semesters: originalSemesters }));
-        // Cancel field changes
         baseOnCancel();
     }, [baseOnCancel, originalSemesters, setDraft]);
 
+    // ═══════════════════════════════════════════════════════════════════════════
+    // RENDER
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    /** Kombinovaný indikátor ukládání (pole nebo semestry) */
     const isSaving = saving || semestersSaving;
+    /** Kombinovaná chyba (pole nebo semestry) */
     const combinedError = error || semestersError;
 
     return (
         <>
-            {/* Přepínač autosave - nahoře */}
+            {/* Přepínač autosave */}
             <div className="d-flex justify-content-end align-items-center mb-3 p-2 bg-light rounded">
                 <div className="form-check form-switch m-0 me-3">
                     <input

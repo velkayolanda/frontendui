@@ -98,6 +98,254 @@
 
         
             
+<h4 class="name" id="AddNamedTypedItemCard"><span class="type-signature">(constant) </span>AddNamedTypedItemCard<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Univerzální karta pro přidání položky se strukturou `{ name, type }`.Komponenta zobrazuje textové pole pro název, výběr typu, tlačítko pro odeslánía tlačítko pro vymazání formuláře.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_AddNamedTypedItemCard.jsx.html">SubjectGQLModel/Components/AddNamedTypedItemCard.jsx</a>, <a href="SubjectGQLModel_Components_AddNamedTypedItemCard.jsx.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="AlertBanner"><span class="type-signature">(constant) </span>AlertBanner<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Jednoduchý znovupoužitelný alert banner.Pokud `message` není vyplněná, komponenta nic nevykreslí.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_AlertBanner.jsx.html">SubjectGQLModel/Components/AlertBanner.jsx</a>, <a href="SubjectGQLModel_Components_AlertBanner.jsx.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CLIENT_SIDE_SORT_COLUMNS"><span class="type-signature">(constant) </span>CLIENT_SIDE_SORT_COLUMNS<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Sloupce které se řadí lokálně (client-side).Backend nepodporuje řazení podle těchto sloupců (např. počet semestrůje odvozená hodnota z relace, ne přímý sloupec v DB).Pro tyto sloupce:- Nevolá se restart() při změně řazení- Řadí se pouze již načtená data v paměti
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="COLUMN_TO_DB_FIELD"><span class="type-signature">(constant) </span>COLUMN_TO_DB_FIELD<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Mapování názvů sloupců UI na názvy polí v databázi.Používá se pro backend řazení (orderby parametr v GraphQL).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="CardCapsule"><span class="type-signature">(constant) </span>CardCapsule<span class="type-signature"></span></h4>
 
 
@@ -294,6 +542,68 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>&lt;ConfirmEdit item={subjectEntity}>  &lt;p>Dodatečné informace&lt;/p>&lt;/ConfirmEdit></code></pre>
+
+
+
+        
+            
+<h4 class="name" id="ConfirmForm"><span class="type-signature">(constant) </span>ConfirmForm<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Univerzální potvrzovací formulář pro výběr položek pomocí checkboxů.Komponenta zobrazuje:- stránkování seznamu (tlačítka Prev / Next),- více sloupcové zobrazení položek (výchozí rozložení 4 sloupce × 10 řádků),- hromadné akce pro výběr / zrušení výběru (na aktuální stránce i globálně),- potvrzení nebo zrušení akce.Interní stav výběru se inicializuje z `itemList` a při změně `itemList` se resetuje.Po potvrzení (`onConfirm`) se vrací pouze zaškrtnuté položky v původním pořadí.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_ConfirmForm.jsx.html">SubjectGQLModel/Components/ConfirmForm.jsx</a>, <a href="SubjectGQLModel_Components_ConfirmForm.jsx.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
 
 
 
@@ -530,6 +840,150 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="SubjectGQLModel_Mutations_Create.jsx.html">SubjectGQLModel/Mutations/Create.jsx</a>, <a href="SubjectGQLModel_Mutations_Create.jsx.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DEFAULT_ADJECTIVES"><span class="type-signature">(constant) </span>DEFAULT_ADJECTIVES<span class="type-signature"> :Object.&lt;string, string></span></h4>
+
+
+
+
+<div class="description">
+    Výchozí slovník přídavných jmen.Klíč = text přídavného jména, hodnota = typ skloňování.Očekávané hodnoty typu: `tvrde` | `mekke`.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object.&lt;string, string></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DEFAULT_SUBJECTS"><span class="type-signature">(constant) </span>DEFAULT_SUBJECTS<span class="type-signature"> :Object.&lt;string, string></span></h4>
+
+
+
+
+<div class="description">
+    Výchozí slovník podstatných jmen (názvů předmětů).Klíč = název předmětu, hodnota = rod/číslo podstatného jména.Očekávané hodnoty typu: `zensky` | `muzsky` | `stredni` | `mnozne`.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object.&lt;string, string></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -930,7 +1384,7 @@
 
 
 <div class="description">
-    EditMode ComponentUniverzální komponenta pro editaci entity Subject s přepínačem mezi automatickým a manuálním ukládáním.- Defaultně je zapnuté automatické ukládání (live mode)- Přepínač umožňuje přepnout na manuální režim s tlačítky Uložit/Zrušit
+    EditMode ComponentUniverzální komponenta pro editaci entity Subject s přepínačem mezi automatickým a manuálním ukládáním.Podporuje správu semestrů s debounce auto-save a prevencí race conditions.## Funkce- Přepínač mezi automatickým (live) a manuálním (confirm) ukládáním- Správa semestrů s debounce (800ms) pro stabilní auto-save- Prevence souběžných save operací pomocí `isSavingRef`- Tracking lokálně uložených semestrů (`hasLocalSemesters`) - zabraňuje přepsání daty z props- Automatické uložení čekajících změn po dokončení aktuálního save (`pendingSaveRef`)- Rollback při chybě - obnovení původních dat v UI- Validace max. počtu semestrů (12)## Režimy ukládání- **Live mode**: Změny se ukládají automaticky po 800ms od poslední změny- **Confirm mode**: Změny se ukládají až po kliknutí na tlačítko "Uložit změny"## Technické detaily- `originalSemestersRef` - vždy aktuální reference na originální semestry- `currentSemestersRef` - vždy aktuální reference na současné semestry (pro debounced save)- `prevItemIdRef` - sleduje změnu item.id pro reset stavu při navigaci- `lastchangeMap` - sleduje lastchange hodnoty pro optimistické aktualizace
 </div>
 
 
@@ -968,7 +1422,205 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Components_EditMode.jsx.html">SubjectGQLModel/Components/EditMode.jsx</a>, <a href="SubjectGQLModel_Components_EditMode.jsx.html#line24">line 24</a>
+        <a href="SubjectGQLModel_Components_EditMode.jsx.html">SubjectGQLModel/Components/EditMode.jsx</a>, <a href="SubjectGQLModel_Components_EditMode.jsx.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// Základní použití&lt;EditMode item={subjectEntity}>  &lt;CustomFields />&lt;/EditMode></code></pre>
+
+    <pre class="prettyprint"><code>// S vlastní mutací a obsahem&lt;EditMode  item={subjectEntity}  mutationAsyncAction={CustomUpdateAction}  DefaultContent={CustomEditableContent}/></code></pre>
+
+
+
+        
+            
+<h4 class="name" id="Filter"><span class="type-signature">(constant) </span>Filter<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Filtrační panel pro entitu Subject.Skládá filtrovací ovládací prvky pro `SubjectGQLModel`. Každý podřízený prvekse zaregistruje v nadřazeném BaseFilter přes `FilterDesignerContext`a přispívá svou klauzulí do kombinovaného výrazu `where`.Výraz je buď předán do `onChange` (pro programové konzumenty), nebo zapsándo URL parametru po kliknutí na FilterButton předaný jako `children`.**Dostupná filtrační pole:**| Pole      | Ovládací prvek  | Poznámka                                        ||-----------|-----------------|--------------------------------------------------|| `id`      | `UUIDFilter`    | Přesná shoda UUID (`_eq`).                       || `name`    | `StringFilter`  | Český název; podporuje všechny řetězcové operátory. || `nameEn`  | `StringFilter`  | Anglický název; podporuje všechny řetězcové operátory. || `created` | `DateTimeFilter`| Datum vytvoření; odesílá lokální čas bez konverze na UTC. |
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_Filter.jsx.html">SubjectGQLModel/Components/Filter.jsx</a>, <a href="SubjectGQLModel_Components_Filter.jsx.html#line218">line 218</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Typické použití v PageVector — tlačítka se předají jako children:&lt;Filter>  &lt;FilterButton paramName="gr_where">Filtrovat&lt;/FilterButton>  &lt;ResetFilterButton paramName="gr_where">Vymazat filtr&lt;/ResetFilterButton>&lt;/Filter></code></pre>
+
+
+
+        
+            
+<h4 class="name" id="GenerateButton"><span class="type-signature">(constant) </span>GenerateButton<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Tlačítko pro otevření dialogu generátoru dat.Komponenta předává všechny přijaté props na `<button>` a zachovávái externí `onClick` handler (pokud je předán).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line545">line 545</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="GenerateDialog"><span class="type-signature">(constant) </span>GenerateDialog<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Dialogové okno obalující formulář generátoru.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line524">line 524</a>
     </li></ul></dd>
     
 
@@ -1182,6 +1834,68 @@
 
         
             
+<h4 class="name" id="JsonStateTools"><span class="type-signature">(constant) </span>JsonStateTools<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Univerzální nástroj pro export a import JSON dat.Umožňuje:- export aktuálního stavu do `.json` souboru,- načtení `.json` souboru z disku a předání naparsovaného obsahu callbacku.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_JsonStateTools.jsx.html">SubjectGQLModel/Components/JsonStateTools.jsx</a>, <a href="SubjectGQLModel_Components_JsonStateTools.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="LargeCard"><span class="type-signature">(constant) </span>LargeCard<span class="type-signature"></span></h4>
 
 
@@ -1244,68 +1958,6 @@
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Example usage:const templateEntity = { id: 123, name: "Sample Entity" };&lt;TemplateLargeCard template={templateEntity}>  &lt;p>Additional content for the middle column.&lt;/p>&lt;/TemplateLargeCard></code></pre>
-
-
-
-        
-            
-<h4 class="name" id="LinkFragmentStr"><span class="type-signature">(constant) </span>LinkFragmentStr<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    GraphQL fragmenty pro entitu Subject — hierarchicky uspořádané:  Link ⊂ Medium ⊂ LargeLinkFragment  — skalární pole entity; použij pro seznamy (Table) a linkyMediumFragment — Link + relace createdby/changedby/rbacobject/program; použij pro detailní zobrazeníLargeFragment  — Medium + semesters + guarantors; použij pro edit stránkuPOZOR: LargeFragment (se semestry) nepoužívej v delete mutaci —načítání semestrů uvnitř delete transakce způsobuje transakční konflikty v backendu.
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line15">line 15</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
 
 
 
@@ -1834,14 +2486,75 @@
 
         
             
+<h4 class="name" id="PageVector"><span class="type-signature">(constant) </span>PageVector<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    PageVector - Stránka se seznamem předmětů.Funkce:- Infinite scroll pro postupné načítání dat- Filtrování podle URL parametrů- Řazení (backend i client-side)- Tlačítka pro vytvoření a generování předmětů
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line135">line 135</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="ProgramPageAsyncAction"><span class="type-signature">(constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Async action pro načtení seznamu programů.
-Používá se s dispatch v Redux store.
+    Async action pro načtení seznamu programů.Používá se s dispatch v Redux store.
 </div>
 
 
@@ -1896,8 +2609,7 @@ Používá se s dispatch v Redux store.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
-const programs = result?.data?.programPage</code></pre>
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))const programs = result?.data?.programPage</code></pre>
 
 
 
@@ -1909,21 +2621,7 @@ const programs = result?.data?.programPage</code></pre>
 
 
 <div class="description">
-    GraphQL query pro načtení seznamu programů.
-
-Používá se primárně v ProgramSelect komponentě pro zobrazení
-dostupných programů při vytváření/editaci předmětu.
-
-Vstupní parametry:
-- skip: Počet záznamů k přeskočení (pro stránkování)
-- limit: Maximální počet vrácených záznamů
-- where: Filtr dle ProgramInputFilter (volitelné)
-
-Vrací pole programů s:
-- __typename: Typ entity
-- id: UUID programu
-- name: Název v češtině
-- nameEn: Název v angličtině
+    GraphQL query pro načtení seznamu programů.Používá se primárně v ProgramSelect komponentě pro zobrazenídostupných programů při vytváření/editaci předmětu.Vstupní parametry:- skip: Počet záznamů k přeskočení (pro stránkování)- limit: Maximální počet vrácených záznamů- where: Filtr dle ProgramInputFilter (volitelné)Vrací pole programů s:- __typename: Typ entity- id: UUID programu- name: Název v češtině- nameEn: Název v angličtině
 </div>
 
 
@@ -1985,14 +2683,7 @@ Vrací pole programů s:
 
 
 <div class="description">
-    Select komponenta pro výběr programu.
-
-Při prvním renderování načte seznam programů z GraphQL backendu
-pomocí ProgramPageAsyncAction a zobrazí je v dropdown selectu.
-
-Stavy komponenty:
-- Loading: zobrazí disabled select s textem "Načítání programů..."
-- Loaded: zobrazí select s možnostmi (první prázdná možnost + seznam programů)
+    Select komponenta pro výběr programu.Při prvním renderování načte seznam programů z GraphQL backendupomocí ProgramPageAsyncAction a zobrazí je v dropdown selectu.Alternativně lze předat programy přímo přes prop `programs`.Stavy komponenty:- Loading: zobrazí disabled select s textem "Načítání programů..."- Loaded: zobrazí select s možnostmi (první prázdná možnost + seznam programů)
 </div>
 
 
@@ -2030,7 +2721,7 @@ Stavy komponenty:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Components_ProgramSelect.jsx.html">SubjectGQLModel/Components/ProgramSelect.jsx</a>, <a href="SubjectGQLModel_Components_ProgramSelect.jsx.html#line30">line 30</a>
+        <a href="SubjectGQLModel_Components_ProgramSelect.jsx.html">SubjectGQLModel/Components/ProgramSelect.jsx</a>, <a href="SubjectGQLModel_Components_ProgramSelect.jsx.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -2045,12 +2736,11 @@ Stavy komponenty:
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>&lt;ProgramSelect
-  value={selectedProgramId}
-  onChange={(programId) => setSelectedProgramId(programId)}
-/></code></pre>
+    <pre class="prettyprint"><code>// S automatickým načítáním&lt;ProgramSelect  value={selectedProgramId}  onChange={(programId) => setSelectedProgramId(programId)}/></code></pre>
+
+    <pre class="prettyprint"><code>// S předanými programy&lt;ProgramSelect  programs={myPrograms}  value={selectedProgramId}  onChange={(programId) => setSelectedProgramId(programId)}/></code></pre>
 
 
 
@@ -2128,68 +2818,6 @@ Stavy komponenty:
     <h5>Example</h5>
     
     <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
-
-
-
-        
-            
-<h4 class="name" id="SemestersManager"><span class="type-signature">(constant) </span>SemestersManager<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    SemestersManager - Komponenta pro správu semestrů předmětu (Subject).Tato komponenta umožňuje:- Zobrazit seznam aktuálních semestrů přiřazených k předmětu- Vytvořit nový semestr s názvem a automaticky generovaným ID- Odebrat semestr z předmětu- Změnit pořadí semestrů pomocí tlačítek nahoru/dolůDŮLEŽITÉ: Změny se neukládají okamžitě na server!Komponenta pouze upravuje lokální stav a volá callback `onSemestersChange`s novým seznamem semestrů. Skutečné uložení na server provádí nadřazenákomponenta (EditMode) po kliknutí na tlačítko "Uložit".
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Components_SemestersManager.jsx.html">SubjectGQLModel/Components/SemestersManager.jsx</a>, <a href="SubjectGQLModel_Components_SemestersManager.jsx.html#line38">line 38</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
 
 
 
@@ -3193,6 +3821,393 @@ Stavy komponenty:
 
 
         
+            
+<h4 class="name" id="buildSubjectName"><span class="type-signature">(constant) </span>buildSubjectName<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Sestaví výsledný název předmětu z podstatného a přídavného jménapodle typu přídavného jména a rodu podstatného jména.Pravidla:- Pokud je přídavné jméno typu `mekke`, použije se přímo ve tvaru  `Adjective + Subject` (s velkým počátečním písmenem).- Jinak se upraví koncovka přídavného jména podle rodu podstatného jména:  - `zensky` -> `á`  - `stredni` -> `é`  - `muzsky` -> `ý`  - `mnozne` -> `é`  - výchozí -> `ý`
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>buildSubjectName({ name: "informatika", type: "zensky" }, { name: "teoretický", type: "tvrde" })// => "Teoretická Informatika"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="filterParameterName"><span class="type-signature">(constant) </span>filterParameterName<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Název URL parametru pro filtr
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line119">line 119</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="generateUUID"><span class="type-signature">(constant) </span>generateUUID<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Vygeneruje náhodný identifikátor ve formátu UUID v4.Poznámka:- Formát odpovídá UUID v4 (`xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx`),- implementace využívá `Math.random()`,- není určeno pro kryptografické/bezpečnostní použití.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line166">line 166</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>generateUUID() // např. "3f8c2a4e-91b7-4c2e-a9d1-6d2c8f7b1a22"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="generateUniqueSubjects"><span class="type-signature">(constant) </span>generateUniqueSubjects<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Vygeneruje unikátní kombinace přídavných a podstatných jmen.Funkce vybírá náhodné dvojice indexů `subject + adjective` tak,aby se neopakovaly. Výsledkem je pole vygenerovaných názvů a doprovodná zpráva.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line87">line 87</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="loadDictionaryToState"><span class="type-signature">(constant) </span>loadDictionaryToState<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Načte slovník `name -> type` do cílového stavu přes předaný callback.Každý záznam slovníku převádí na payload `{ name, type }`a předává ho funkci `addToState`.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="randomInt"><span class="type-signature">(constant) </span>randomInt<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Vrátí náhodné celé číslo včetně obou hranic intervalu `<0, N>`.Rozsah:- minimum: `0`- maximum: `N`
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>randomInt(5) // může vrátit 0,1,2,3,4 nebo 5</code></pre>
+
+
+
+        
     
 
     
@@ -3281,6 +4296,603 @@ Stavy komponenty:
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="DataForm"><span class="type-signature"></span>DataForm<span class="signature">(props)</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Hlavní datová část formuláře generátoru.Komponenta sdružuje:- přidávání podstatných jmen (`AddNamedTypedItemCard`),- přidávání přídavných jmen (`AddNamedTypedItemCard`),- generování kombinací (`SubjectGenerateCard`),- nástroje (výpis do konzole, load default dat, clear, JSON import/export).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Vstupní vlastnosti komponenty.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contextValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Sdílený stav generátoru.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>predmety</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Seznam podstatných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setPredmet</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter pro podstatná jména.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listOfGeneratedSubjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Seznam vygenerovaných názvů.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setListOfGeneratedSubjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter pro vygenerované názvy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adjectives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Seznam přídavných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setAdjective</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter pro přídavná jména.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setAlertInfo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter pro informační hlášku.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>loadDefaultAdjectives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Načtení výchozích přídavných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>loadDefaultSubjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Načtení výchozích podstatných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>AddToState</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Univerzální přidání položky do stavu.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setPendingJsonItems</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter pending položek pro potvrzení JSON importu.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line159">line 159</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Formulářová část pro práci s daty a nástroji.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="GenerateForm"><span class="type-signature"></span>GenerateForm<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Kořenová komponenta formuláře generátoru dat.Spravuje kompletní stav:- seznam podstatných jmen,- seznam přídavných jmen,- seznam vygenerovaných názvů,- pending položky z JSON importu,- alert zprávy,- zvolený program (`selectedProgram`) a seznam programů (`ProgramSelect`).Tok obrazovek:1) Pokud existují `pendingJsonItems`, vykreslí se `ConfirmForm` pro potvrzení JSON importu.2) Pokud existují `listOfGeneratedSubjects`, vykreslí se `ConfirmForm` pro potvrzení generovaných položek   a doplňkově `ProgramSelect` (případně `LoadingSpinner` při načítání programů).   - `onConfirm` -> `handleConfirmGenerated`   - `onCancel`  -> `handleBackGenerated`3) Jinak se vykreslí standardní `DataForm`.Komponenta při mountu načítá výchozí slovníky (`DEFAULT_ADJECTIVES`, `DEFAULT_SUBJECTS`)a inicializační hlášku do alertu.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line321">line 321</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Kompletní UI generátoru včetně alert banneru.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -3666,6 +5278,623 @@ Stavy komponenty:
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="StringFilter"><span class="type-signature"></span>StringFilter<span class="signature">(props)</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Textový filtr pro použití uvnitř bloku <a href="global.html#Filter">Filter</a>.Lokální náhrada za `StringFilter` ze šablony. Verze v šabloně má prohozenéatributy `value` a zobrazovaný text v `<option>` prvcích — stav `op` takobsahuje český popisek ("Obsahuje") místo platného GQL operátoru ("_ilike"),což produkuje nefunkční filtrovací objekty jako `{ name: { "Obsahuje": "…" } }`.Tato verze správně ukládá GQL operátor do `value` a zobrazuje český popisekjako viditelný text.Podporované operátory: `_ilike`, `_startswith`, `_endswith`, `_eq`, `_gt`,`_lt`, `_between`. V režimu `_ilike` je hodnota automaticky obalenazástupnými znaky `%…%`, pokud žádné neobsahuje. V režimu `_between` sezobrazí dvě samostatná pole (`_gt` / `_lt`).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Název GQL pole použitého jako klíč filtru (např. `"name"`, `"nameEn"`).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>label</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Titulek kapsle; pokud není uveden, použije se `props.id`.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initialValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last">Předvyplněná hodnota jednoduchého vstupního pole.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initialOp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "_ilike"
+                
+                </td>
+            
+
+            <td class="description last">Předvolený GQL operátor.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_Filter.jsx.html">SubjectGQLModel/Components/Filter.jsx</a>, <a href="SubjectGQLModel_Components_Filter.jsx.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Použití uvnitř &lt;Filter> pro filtrování pole `name`:&lt;StringFilter id="name" label="Název" /></code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="SubjectGenerateCard"><span class="type-signature"></span>SubjectGenerateCard<span class="signature">(props)</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Karta generátoru názvů předmětů.Komponenta umožňuje zadat počet generovaných položek a spustit generováníunikátních kombinací z dostupných podstatných a přídavných jmen.Samotnou logiku generování deleguje na utilitu `generateUniqueSubjects`.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Vstupní vlastnosti komponenty.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>subjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Seznam podstatných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>adjectives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Seznam přídavných jmen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setListOfGeneratedSubjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter výsledného seznamu vygenerovaných názvů.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setAlertInfo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Setter informační hlášky.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Components_GenerateForm.jsx.html">SubjectGQLModel/Components/GenerateForm.jsx</a>, <a href="SubjectGQLModel_Components_GenerateForm.jsx.html#line102">line 102</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Karta s inputem pro počet a tlačítkem Generate.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -4310,6 +6539,246 @@ Stavy komponenty:
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="computeOrderby"><span class="type-signature"></span>computeOrderby<span class="signature">(sortConfig)</span><span class="type-signature"> &rarr; {string|undefined}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Vrací orderby parametr pro backend na základě aktuálního nastavení řazení.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sortConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Konfigurace řazení
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>column</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Název sloupce nebo null</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>direction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">'asc' nebo null</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line80">line 80</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Název DB pole pro orderby nebo undefined
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -4971,7 +7440,7 @@ Stavy komponenty:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Components_SemestersManager.jsx.html">SubjectGQLModel/Components/SemestersManager.jsx</a>, <a href="SubjectGQLModel_Components_SemestersManager.jsx.html#line10">line 10</a>
+        <a href="SubjectGQLModel_Pages_SubjectSubPage.jsx.html">SubjectGQLModel/Pages/SubjectSubPage.jsx</a>, <a href="SubjectGQLModel_Pages_SubjectSubPage.jsx.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -5029,7 +7498,7 @@ Stavy komponenty:
     
 
     
-    <h4 class="name" id="getSemesterName"><span class="type-signature"></span>getSemesterName<span class="signature">(order)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="safeParseWhere"><span class="type-signature"></span>safeParseWhere<span class="signature">(sp, paramName)</span><span class="type-signature"> &rarr; {Object|null}</span></h4>
     
 
     
@@ -5037,7 +7506,7 @@ Stavy komponenty:
 
 
 <div class="description">
-    Generuje název semestru podle pořadí.Lichá čísla = zimní semestr, sudá čísla = letní semestr.
+    Bezpečně parsuje JSON where parametr z URL.
 </div>
 
 
@@ -5063,6 +7532,8 @@ Stavy komponenty:
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -5073,13 +7544,13 @@ Stavy komponenty:
 
         <tr>
             
-                <td class="name"><code>order</code></td>
+                <td class="name"><code>sp</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">URLSearchParams</span>
 
 
             
@@ -5088,8 +7559,41 @@ Stavy komponenty:
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">Pořadí semestru (1, 2, 3, ...)</td>
+            <td class="description last">Search params z URL</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paramName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    where
+                
+                </td>
+            
+
+            <td class="description last">Název parametru (default "where")</td>
         </tr>
 
     
@@ -5130,7 +7634,7 @@ Stavy komponenty:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Pages_SubjectSubPage.jsx.html">SubjectGQLModel/Pages/SubjectSubPage.jsx</a>, <a href="SubjectGQLModel_Pages_SubjectSubPage.jsx.html#line12">line 12</a>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -5159,7 +7663,7 @@ Stavy komponenty:
 
         
 <div class="param-desc">
-    Název semestru, např. "1. ročník zimní"
+    Parsovaný objekt nebo null při chybě/prázdném vstupu
 </div>
 
 
@@ -5170,7 +7674,270 @@ Stavy komponenty:
     </dt>
     <dd>
         
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sortItemsClientSide"><span class="type-signature"></span>sortItemsClientSide<span class="signature">(items, sortConfig)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Lokálně seřadí položky pro client-side sloupce.Pro backend sloupce vrací data beze změny (řadí server).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>items</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pole předmětů k seřazení</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Konfigurace řazení
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>column</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Název sloupce</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>direction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">'asc' nebo null</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Pages_PageVector.jsx.html">SubjectGQLModel/Pages/PageVector.jsx</a>, <a href="SubjectGQLModel_Pages_PageVector.jsx.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Seřazené pole (nová instance) nebo původní pole
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
 
 
     </dd>
@@ -5790,13 +8557,13 @@ Stavy komponenty:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LinkFragmentStr">LinkFragmentStr</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SemestersManager">SemestersManager</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-SemestersManager.html">SemestersManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNamedTypedItemCard">AddNamedTypedItemCard</a></li><li><a href="global.html#AlertBanner">AlertBanner</a></li><li><a href="global.html#CLIENT_SIDE_SORT_COLUMNS">CLIENT_SIDE_SORT_COLUMNS</a></li><li><a href="global.html#COLUMN_TO_DB_FIELD">COLUMN_TO_DB_FIELD</a></li><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#ConfirmForm">ConfirmForm</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DEFAULT_ADJECTIVES">DEFAULT_ADJECTIVES</a></li><li><a href="global.html#DEFAULT_SUBJECTS">DEFAULT_SUBJECTS</a></li><li><a href="global.html#DataForm">DataForm</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#Filter">Filter</a></li><li><a href="global.html#GenerateButton">GenerateButton</a></li><li><a href="global.html#GenerateDialog">GenerateDialog</a></li><li><a href="global.html#GenerateForm">GenerateForm</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#JsonStateTools">JsonStateTools</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#PageVector">PageVector</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#StringFilter">StringFilter</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectGenerateCard">SubjectGenerateCard</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectName">buildSubjectName</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#computeOrderby">computeOrderby</a></li><li><a href="global.html#filterParameterName">filterParameterName</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#generateUniqueSubjects">generateUniqueSubjects</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li><li><a href="global.html#loadDictionaryToState">loadDictionaryToState</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#safeParseWhere">safeParseWhere</a></li><li><a href="global.html#sortItemsClientSide">sortItemsClientSide</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 03 2026 19:20:12 GMT+0200 (stredoeurópsky letný čas)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 10 2026 14:49:13 GMT+0200 (stredoeurópsky letný čas)
 </footer>
 
 <script> prettyPrint(); </script>

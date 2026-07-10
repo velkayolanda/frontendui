@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: SubjectGQLModel/Components/ConfirmEdit.jsx</title>
+    <title>JSDoc: Source: SubjectGQLModel/Components/ConfirmForm.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: SubjectGQLModel/Components/ConfirmEdit.jsx</h1>
+    <h1 class="page-title">Source: SubjectGQLModel/Components/ConfirmForm.jsx</h1>
 
     
 
@@ -26,102 +26,200 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { UpdateAsyncAction } from "../Queries";
-import { MediumEditableContent } from "./MediumEditableContent";
-import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";
-import { useCallback } from "react";
-import { useGQLEntityContext } from "../../../../_template/src/Base/Helpers/GQLEntityProvider";
+            <pre class="prettyprint source linenums"><code>import { CardCapsule } from "@hrbolek/uoisfrontend-shared";
+import { useEffect, useState } from "react";
 
 /**
- * ConfirmEdit komponenta pro editaci entity Subject s explicitním potvrzením.
+ * Univerzální potvrzovací formulář pro výběr položek pomocí checkboxů.
  *
- * Používá hook `useEditAction` v režimu "confirm" - změny se neukládají automaticky,
- * ale až po kliknutí na tlačítko "Uložit změny". Uživatel může změny také zrušit.
+ * Komponenta zobrazuje:
+ * - stránkování seznamu (tlačítka Prev / Next),
+ * - více sloupcové zobrazení položek (výchozí rozložení 4 sloupce × 10 řádků),
+ * - hromadné akce pro výběr / zrušení výběru (na aktuální stránce i globálně),
+ * - potvrzení nebo zrušení akce.
  *
- * Po úspěšném uložení se aktualizuje kontext (GQLEntityContext), což způsobí
- * překreslení všech komponent na stránce, které tento kontext používají.
+ * Interní stav výběru se inicializuje z `itemList` a při změně `itemList` se resetuje.
+ * Po potvrzení (`onConfirm`) se vrací pouze zaškrtnuté položky v původním pořadí.
  *
  * @component
- * @param {Object} props
- * @param {Object} props.item - Entita Subject k editaci
- * @param {React.ReactNode} [props.children] - Další obsah zobrazený ve formuláři
+ * @param {Object} props - Vstupní vlastnosti komponenty ConfirmForm.
+ * @param {Array} [props.itemList=[]] - Seznam položek určených k potvrzení.
+ * @param {Function} [props.getLabel] - Funkce pro vykreslení popisku položky. Přijímá (item, index).
+ * @param {Function} [props.onConfirm] - Callback volaný po kliknutí na Confirm; dostane pouze vybrané položky.
+ * @param {Function} [props.onCancel] - Callback volaný po kliknutí na Cancel.
+ * @param {React.ReactNode} [props.children] - Volitelný obsah vykreslený mezi sekcí „Options" a akčními tlačítky.
+ * @param {number} [props.rowsPerColumn=10] - Počet řádků na každém sloupci.
+ * @param {number} [props.columnsPerPage=4] - Počet sloupců na každé stránce.
  *
- * @example
- * &lt;ConfirmEdit item={subjectEntity}>
- *   &lt;p>Dodatečné informace&lt;/p>
- * &lt;/ConfirmEdit>
+ * @returns {JSX.Element} Potvrzovací formulář se stránkováním a výběrem položek.
  */
-export const ConfirmEdit = ({ item, children }) => {
-    // Získání funkcí z kontextu pro aktualizaci stavu po uložení
-    const { run , error, loading, entity, data, onChange: contextOnChange, onBlur: contextOnBlur } = useGQLEntityContext()
+export const ConfirmForm = ({
+  itemList = [],
+  getLabel,
+  onConfirm,
+  onCancel,
+  rowsPerColumn = 10,
+  columnsPerPage = 4,
+  ...props
+}) => {
+  const resolveLabel = (item, index) => {
+    if (getLabel) return getLabel(item, index);
+    if (typeof item === "string") return item;
+    if (item &amp;&amp; typeof item === "object") {
+      if ("name" in item &amp;&amp; "type" in item) return `${item.name} (${item.type})`;
+      if ("name" in item) return String(item.name);
+      return JSON.stringify(item);
+    }
+    return String(item ?? "");
+  };
 
-    /**
-     * Vytvoří handler pro mutační události, který spojí lokální změnu s notifikací kontextu.
-     * Nejprve notifikuje kontext o změně, poté provede mutaci.
-     */
-    const localOnMutationEvent = useCallback((mutationHandler, notifyHandler) => async (e) => {
-        const newItem = { ...item, [e.target.id]: e.target.value }
-        const newEvent = { target: { value: newItem } }
+  const [items, setItems] = useState(
+    (itemList ?? []).map((_, index) => ({
+      index,
+      checked: true,
+    }))
+  );
 
-        await notifyHandler(newEvent)
-        return await mutationHandler(e)
-    })
+  const pageSize = rowsPerColumn * columnsPerPage;
+  const [page, setPage] = useState(0);
 
-    /**
-     * Hook useEditAction v režimu "confirm":
-     * - draft: aktuální stav formuláře (kopie item s aplikovanými změnami)
-     * - dirty: true pokud jsou neuložené změny
-     * - onChange/onBlur: handlery pro vstupní pole
-     * - onCancel: vrátí draft na původní hodnoty
-     * - onConfirm: odešle mutaci na backend
-     */
-    const {
-        draft,
-        dirty,
-        onChange,
-        onBlur,
-        onCancel,
-        onConfirm,
-    } = useEditAction(UpdateAsyncAction, item, {mode: "confirm"})
+  useEffect(() => {
+    setItems((itemList ?? []).map((_, index) => ({ index, checked: true })));
+    setPage(0);
+  }, [itemList]);
 
-    /**
-     * Handler pro potvrzení změn.
-     * Po úspěšném uložení aktualizuje kontext, což způsobí překreslení celé stránky.
-     */
-    const handleConfirm = useCallback(async () => {
-        const result = await onConfirm();
-        console.log("ConfirmEdit handleConfirm result", result, "draft", draft)
-        if (result) {
-            const event = { target: { value: result } };
-            // důležité: použij params z kontextu (provider si je drží jako "poslední vars")
-            await contextOnChange(event);
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+  const start = page * pageSize;
+  const pageItems = items.slice(start, start + pageSize);
+
+  const columns = Array.from({ length: columnsPerPage }, (_, col) =>
+    pageItems.slice(col * rowsPerColumn, (col + 1) * rowsPerColumn)
+  );
+
+  const handleConfirm = () => {
+    onConfirm?.(items.filter((i) => i.checked).map((i) => itemList[i.index]));
+  };
+
+  const Navigation = () => (
+    &lt;div className="d-flex gap-2">
+      &lt;button
+        className="btn btn-outline-primary"
+        disabled={page === 0}
+        onClick={() => setPage((p) => Math.max(0, p - 1))}
+      >
+        Prev
+      &lt;/button>
+
+      &lt;button
+        className="btn btn-outline-primary"
+        disabled={page >= totalPages - 1}
+        onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+      >
+        Next
+      &lt;/button>
+
+      &lt;span className="align-self-center">
+        Page {page + 1} / {totalPages}
+      &lt;/span>
+    &lt;/div>
+  );
+
+  const SelectOptions = () => (
+    &lt;CardCapsule title="Options">
+      &lt;button
+        className="btn btn-outline-secondary"
+        disabled={pageItems.every((i) => i.checked)}
+        onClick={() =>
+          setItems((prev) =>
+            prev.map((i) =>
+              i.index >= start &amp;&amp; i.index &lt; start + pageSize ? { ...i, checked: true } : i
+            )
+          )
         }
-        return result;
-    }, [onConfirm, contextOnChange]);
+      >
+        Select all on page
+      &lt;/button>
 
+      &lt;button
+        className="btn btn-outline-secondary"
+        disabled={pageItems.every((i) => !i.checked)}
+        onClick={() =>
+          setItems((prev) =>
+            prev.map((i) =>
+              i.index >= start &amp;&amp; i.index &lt; start + pageSize ? { ...i, checked: false } : i
+            )
+          )
+        }
+      >
+        Deselect all on page
+      &lt;/button>
 
-    return (
-        &lt;MediumEditableContent item={item} onChange={onChange} onBlur={onBlur} >
-            {children}
-            &lt;hr />
-            {/* &lt;pre>{JSON.stringify(item, null, 2)}&lt;/pre> */}
-            &lt;button
-                className="btn btn-warning form-control"
-                onClick={onCancel}
-                disabled={!dirty || loading}
-            >
-                Zrušit změny
-            &lt;/button>
-            &lt;button
-                className="btn btn-primary form-control"
-                onClick={handleConfirm}
-                disabled={!dirty || loading}
-            >
-                Uložit změny
-            &lt;/button>
-        &lt;/MediumEditableContent>
-    )
-}</code></pre>
+      &lt;div>
+        &lt;button
+          className="btn btn-outline-secondary"
+          disabled={items.every((i) => i.checked)}
+          onClick={() => setItems((prev) => prev.map((i) => ({ ...i, checked: true })))}
+        >
+          Select all items
+        &lt;/button>
+
+        &lt;button
+          className="btn btn-outline-secondary"
+          disabled={items.every((i) => !i.checked)}
+          onClick={() => setItems((prev) => prev.map((i) => ({ ...i, checked: false })))}
+        >
+          Deselect all items
+        &lt;/button>
+      &lt;/div>
+    &lt;/CardCapsule>
+  );
+
+  const ItemList = () => (
+    &lt;CardCapsule title="Items">
+      &lt;div className="row">
+        {columns.map((colItems, colIdx) => (
+          &lt;div className="col-3" key={colIdx}>
+            {colItems.map((item) => (
+              &lt;div key={item.index}>
+                &lt;input
+                  type="checkbox"
+                  checked={item.checked}
+                  onChange={() =>
+                    setItems((prev) =>
+                      prev.map((i) =>
+                        i.index === item.index ? { ...i, checked: !i.checked } : i
+                      )
+                    )
+                  }
+                />
+                &lt;> &lt;/>
+                {resolveLabel(itemList[item.index], item.index)}
+              &lt;/div>
+            ))}
+          &lt;/div>
+        ))}
+      &lt;/div>
+    &lt;/CardCapsule>
+  );
+
+  return (
+    &lt;>
+      &lt;Navigation />
+      &lt;ItemList />
+      &lt;SelectOptions />
+      {props.children}
+      &lt;div>
+        &lt;button className="btn btn-outline-success" onClick={handleConfirm}>
+          Confirm
+        &lt;/button>
+        &lt;button className="btn btn-outline-danger" onClick={onCancel}>
+          Cancel
+        &lt;/button>
+      &lt;/div>
+    &lt;/>
+  );
+};
+</code></pre>
         </article>
     </section>
 

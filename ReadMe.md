@@ -259,6 +259,96 @@ Po deaktivaci řazení (třetí klik na sort tlačítko) přestával fungovat in
 
 ---
 
+## 26. 6. 2026 — Implementace řazení v PageVector a Table
+
+**Co se dělalo:**
+- Implementace řazení v `PageVector` a `Table` komponentách
+- Přidání `SortableTableHeader` pro záhlaví se šipkami řazení
+- Podpora řazení podle více sloupců
+
+---
+
+## 3. 7. 2026 — JSDoc konfigurace a generování dokumentace
+
+**Co se dělalo:**
+- Přidání JSDoc konfigurace (`jsdoc.config.json`)
+- Nastavení generování dokumentace do složky `docs/`
+- Vygenerována HTML dokumentace pro všechny komponenty a queries
+- Aktualizace `package.json` s příkazy pro generování dokumentace
+
+**Výsledek:**
+- Nová složka `packages/subjects/docs/` s kompletní HTML dokumentací
+- Příkaz `npm run docs -w @velkayolanda/package-subjects` pro regeneraci
+
+---
+
+## 6. 7. 2026 — Subject Generator (hromadné vytváření předmětů)
+
+**Problém:**
+Ruční vytváření velkého počtu předmětů (např. pro nový studijní program) bylo časově náročné.
+
+**Řešení — nové komponenty:**
+- `Components/GenerateForm.jsx` — hlavní formulář pro generování předmětů:
+  - Import/export JSON konfigurace
+  - Definice slovníků pro automatické generování názvů
+  - Nastavení počtu semestrů pro každý předmět
+  - Preview generovaných dat před uložením
+- `Components/AddNamedTypedItemCard.jsx` — karta pro přidání položky se jménem a typem
+- `Components/AlertBanner.jsx` — komponenta pro zobrazení upozornění
+- `Components/ConfirmForm.jsx` — potvrzovací formulář s preview
+- `Components/JsonStateTools.jsx` — nástroje pro import/export JSON stavu
+- `Tools/generatorUtils.js` — utility funkce pro generování:
+  - `generateUUID()` — generování UUID
+  - `generateSubjectName()` — generování názvu předmětu ze slovníku
+  - Výchozí slovníky pro názvy předmětů
+
+**Integrace:**
+- `GenerateButton` přidán do `PageVector` pro rychlý přístup
+- Permission gate — tlačítko viditelné pouze pro uživatele s oprávněním
+
+---
+
+## 6. 7. 2026 — Permission gate a externí programy
+
+**Co se dělalo:**
+- Přidání permission gate do `GenerateButton` — pouze oprávnění uživatelé vidí tlačítko
+- Rozšíření `ProgramSelect` o podporu externích programů (programy z jiných fakult/univerzit)
+- Oprava resetu stavu v confirm dialogu
+
+---
+
+## 9. 7. 2026 — Vylepšení GenerateForm a program fetching
+
+**Co se dělalo:**
+- Vylepšení logiky vkládání semestrů v `GenerateForm`
+- Přidání načítání programů před generováním předmětů
+- Automatické přiřazení předmětů k vybranému programu
+- Aktualizace `.gitignore`
+- Aktualizace submodulu `_uois`
+
+---
+
+## 10. 7. 2026 — Oprava ukládání semestrů (local state tracking)
+
+**Problém:**
+Semestry přidané v editačním režimu mizely po uložení. Autosave byl nestabilní při rychlých změnách.
+
+**Analýza:**
+1. `useEffect` reagující na `item?.semesters` přepisoval lokálně uložené semestry daty z props (které se ještě neaktualizovaly)
+2. Debounce timer mohl ukládat zastaralá data
+3. Souběžné save operace způsobovaly race conditions
+
+**Řešení (`EditMode.jsx`):**
+- Přidán `hasLocalSemesters` flag — zabraňuje přepsání lokálně uložených semestrů
+- Přidán `prevItemIdRef` — reset stavu pouze při změně ID předmětu (navigace na jiný předmět)
+- Přidán `currentSemestersRef` — vždy aktuální data pro save operaci
+- Přidán `isSavingRef` — prevence souběžných save operací
+- Přidán `pendingSaveRef` — změny během save se uloží po dokončení
+- Zvýšen debounce z 600ms na 800ms pro větší stabilitu
+- Přidán `limit: 100` do GraphQL fragmentu pro načtení všech semestrů (backend má default limit 10)
+
+---
+
 ## Přehled commitů
 
 | Datum | Commit | Co se řešilo |
@@ -280,6 +370,12 @@ Po deaktivaci řazení (třetí klik na sort tlačítko) přestával fungovat in
 | 26. 5. 2026 | `Add semester management features` | Potvrzovací dialog, kaskádové mazání, validace programu |
 | 1. 6. 2026 | `Add links`, `Sort semesters after removal` | Oprava pořadí po neúspěšném smazání, klikatelné odkazy |
 | 21. 6. 2026 | Opravy bugů | Pořadí semestrů — dvoustupňové řešení; infinite scroll po deaktivaci sortu |
+| 26. 6. 2026 | `Implement sorting functionality` | Řazení v PageVector a Table komponentách |
+| 3. 7. 2026 | `Add JSDoc configuration` | JSDoc konfigurace, generování HTML dokumentace |
+| 6. 7. 2026 | `Add subject generator` | GenerateForm, AddNamedTypedItemCard, generatorUtils |
+| 6. 7. 2026 | `Add permission gate` | Permission gate pro GenerateButton, podpora externích programů |
+| 9. 7. 2026 | `Improve semester insertion` | Vylepšení GenerateForm, program fetching |
+| 10. 7. 2026 | `Enhance semester management` | Local state tracking, oprava mizejících semestrů, limit 100 pro semesters query |
 
 ---
 

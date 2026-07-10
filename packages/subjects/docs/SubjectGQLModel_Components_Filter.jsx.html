@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Components/Filter.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Components/Filter.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useCallback } from "react"
+import { DateTimeFilter, Filter as BaseFilter, UUIDFilter, useFilterDesigner, Input, SimpleCardCapsule, Row, Col } from "../../../../_template/src/Base"
+
+/**
+ * Textový filtr pro použití uvnitř bloku {@link Filter}.
+ *
+ * Lokální náhrada za `StringFilter` ze šablony. Verze v šabloně má prohozené
+ * atributy `value` a zobrazovaný text v `&lt;option>` prvcích — stav `op` tak
+ * obsahuje český popisek ("Obsahuje") místo platného GQL operátoru ("_ilike"),
+ * což produkuje nefunkční filtrovací objekty jako `{ name: { "Obsahuje": "…" } }`.
+ * Tato verze správně ukládá GQL operátor do `value` a zobrazuje český popisek
+ * jako viditelný text.
+ *
+ * Podporované operátory: `_ilike`, `_startswith`, `_endswith`, `_eq`, `_gt`,
+ * `_lt`, `_between`. V režimu `_ilike` je hodnota automaticky obalena
+ * zástupnými znaky `%…%`, pokud žádné neobsahuje. V režimu `_between` se
+ * zobrazí dvě samostatná pole (`_gt` / `_lt`).
+ *
+ * @component
+ * @param {Object}  props
+ * @param {string}  props.id                   - Název GQL pole použitého jako klíč filtru (např. `"name"`, `"nameEn"`).
+ * @param {string}  [props.label]              - Titulek kapsle; pokud není uveden, použije se `props.id`.
+ * @param {string}  [props.initialValue=""]    - Předvyplněná hodnota jednoduchého vstupního pole.
+ * @param {string}  [props.initialOp="_ilike"] - Předvolený GQL operátor.
+ *
+ * @returns {JSX.Element}
+ *
+ * @example
+ * // Použití uvnitř &lt;Filter> pro filtrování pole `name`:
+ * &lt;StringFilter id="name" label="Název" />
+ */
+const StringFilter = ({ id, label, initialValue = "", initialOp = "_ilike" }) => {
+    const filterContext = useFilterDesigner()
+    if (!filterContext) throw Error("&lt;StringFilter /> must be placed inside &lt;Filter />")
+
+    const [op, setOp] = useState(initialOp)
+    const [text, setText] = useState(initialValue)
+
+    // Samostatný stav pro vstupní pole v režimu _between
+    const [from, setFrom] = useState("")
+    const [to, setTo] = useState("")
+
+    /** Předá výsledné pole výrazů (nebo null pro vymazání) nadřazenému Filter. */
+    const emitArrayOrNull = useCallback(
+        (arrOrNull) => {
+            filterContext.handleChange({ target: { id, value: arrOrNull } })
+        },
+        [filterContext, id]
+    )
+
+    /**
+     * Sestaví pole s jedním výrazem pro všechny operátory mimo _between.
+     * Pro operátor `_ilike` automaticky obalí hodnotu zástupnými znaky `%…%`.
+     *
+     * @param {string} nextOp   - GQL operátor.
+     * @param {string} nextText - Nezpracovaná vstupní hodnota.
+     * @returns {Array|null}
+     */
+    const buildSingle = useCallback(
+        (nextOp, nextText) => {
+            if (!nextText) return null
+            let v = nextText
+            if (nextOp === "_ilike") v = nextText.includes("%") ? nextText : `%${nextText}%`
+            return [{ [id]: { [nextOp]: v } }]
+        },
+        [id]
+    )
+
+    /**
+     * Sestaví pole se dvěma výrazy pro operátor `_between`.
+     * Každá neprázdná mez tvoří vlastní člen (`_gt` / `_lt`), takže
+     * částečně vyplněný rozsah stále vytvoří platný filtr.
+     *
+     * @param {string} nextFrom - Dolní mez.
+     * @param {string} nextTo   - Horní mez.
+     * @returns {Array|null}
+     */
+    const buildBetween = useCallback(
+        (nextFrom, nextTo) => {
+            const out = []
+            if (nextFrom) out.push({ [id]: { _gt: nextFrom } })
+            if (nextTo) out.push({ [id]: { _lt: nextTo } })
+            return out.length ? out : null
+        },
+        [id]
+    )
+
+    /**
+     * Centrální pomocná funkce pro odeslání výrazu. Přijímá přepisy libovolné
+     * části stavu, aby volající mohl odeslat s *novou* hodnotou ještě před
+     * tím, než React provede překreslení.
+     *
+     * @param {Object} prepisStavu
+     * @param {string} [prepisStavu.nextOp]
+     * @param {string} [prepisStavu.nextText]
+     * @param {string} [prepisStavu.nextFrom]
+     * @param {string} [prepisStavu.nextTo]
+     */
+    const emit = useCallback(
+        ({ nextOp = op, nextText = text, nextFrom = from, nextTo = to }) => {
+            if (nextOp === "_between") emitArrayOrNull(buildBetween(nextFrom, nextTo))
+            else emitArrayOrNull(buildSingle(nextOp, nextText))
+        },
+        [op, text, from, to, emitArrayOrNull, buildSingle, buildBetween]
+    )
+
+    const handleChangeOp = useCallback(
+        (e) => {
+            const next = e.target.value
+            if (next === op) return
+            setOp(next)
+            emit({ nextOp: next })
+        },
+        [op, emit]
+    )
+
+    const handleChangeText = useCallback(
+        (e) => {
+            const next = e.target.value
+            if (next === text) return
+            setText(next)
+            if (op !== "_between") emit({ nextText: next })
+        },
+        [op, text, emit]
+    )
+
+    const handleChangeFrom = useCallback(
+        (e) => {
+            const next = e.target.value
+            if (next === from) return
+            setFrom(next)
+            if (op === "_between") emit({ nextFrom: next })
+        },
+        [op, from, emit]
+    )
+
+    const handleChangeTo = useCallback(
+        (e) => {
+            const next = e.target.value
+            if (next === to) return
+            setTo(next)
+            if (op === "_between") emit({ nextTo: next })
+        },
+        [op, to, emit]
+    )
+
+    const showBetween = op === "_between"
+
+    return (
+        &lt;SimpleCardCapsule title={label || id}>
+            &lt;Row>
+                &lt;Col>
+                    {/* value={operátor} — zobrazovaný text je český popisek, NE naopak */}
+                    &lt;select className="form-control" value={op} onChange={handleChangeOp}>
+                        &lt;option value="_ilike">Obsahuje&lt;/option>
+                        &lt;option value="_startswith">Začíná na&lt;/option>
+                        &lt;option value="_endswith">Končí na&lt;/option>
+                        &lt;option value="_eq">Je rovno&lt;/option>
+                        &lt;option value="_gt">Je větší než&lt;/option>
+                        &lt;option value="_lt">Je menší než&lt;/option>
+                        &lt;option value="_between">Mezi&lt;/option>
+                    &lt;/select>
+                &lt;/Col>
+                {!showBetween ? (
+                    &lt;Col>
+                        &lt;Input className="form-control" value={text} onChange={handleChangeText} />
+                    &lt;/Col>
+                ) : (
+                    &lt;>
+                        &lt;Col>
+                            &lt;Input className="form-control" value={from} onChange={handleChangeFrom} placeholder="od…" />
+                        &lt;/Col>
+                        &lt;Col>
+                            &lt;Input className="form-control" value={to} onChange={handleChangeTo} placeholder="do…" />
+                        &lt;/Col>
+                    &lt;/>
+                )}
+            &lt;/Row>
+        &lt;/SimpleCardCapsule>
+    )
+}
+
+/**
+ * Filtrační panel pro entitu Subject.
+ *
+ * Skládá filtrovací ovládací prvky pro `SubjectGQLModel`. Každý podřízený prvek
+ * se zaregistruje v nadřazeném {@link BaseFilter} přes `FilterDesignerContext`
+ * a přispívá svou klauzulí do kombinovaného výrazu `where`.
+ *
+ * Výraz je buď předán do `onChange` (pro programové konzumenty), nebo zapsán
+ * do URL parametru po kliknutí na {@link FilterButton} předaný jako `children`.
+ *
+ * **Dostupná filtrační pole:**
+ * | Pole      | Ovládací prvek  | Poznámka                                        |
+ * |-----------|-----------------|--------------------------------------------------|
+ * | `id`      | `UUIDFilter`    | Přesná shoda UUID (`_eq`).                       |
+ * | `name`    | `StringFilter`  | Český název; podporuje všechny řetězcové operátory. |
+ * | `nameEn`  | `StringFilter`  | Anglický název; podporuje všechny řetězcové operátory. |
+ * | `created` | `DateTimeFilter`| Datum vytvoření; odesílá lokální čas bez konverze na UTC. |
+ *
+ * @component
+ * @param {Object}          props
+ * @param {string}          [props.id]       - Klíč relace; je-li uveden, výsledný výraz se zabalí
+ *   jako `{ [id]: výraz }`, aby bylo možné tento filtr vnořit do nadřazeného {@link Filter}.
+ * @param {function}        [props.onChange] - Voláno s `{ where }` při každé změně filtru.
+ * @param {React.ReactNode} [props.children] - Další filtrovací prvky nebo akční tlačítka
+ *   (např. {@link FilterButton}, {@link ResetFilterButton}) vykreslené uvnitř bloku.
+ *
+ * @returns {JSX.Element}
+ *
+ * @example
+ * // Typické použití v PageVector — tlačítka se předají jako children:
+ * &lt;Filter>
+ *   &lt;FilterButton paramName="gr_where">Filtrovat&lt;/FilterButton>
+ *   &lt;ResetFilterButton paramName="gr_where">Vymazat filtr&lt;/ResetFilterButton>
+ * &lt;/Filter>
+ */
+export const Filter = ({ id, onChange: handleChange, children }) => {
+    return (
+        &lt;BaseFilter id={id} onChange={handleChange}>
+            &lt;UUIDFilter id="id" />
+            &lt;StringFilter id="name" label="Název" />
+            &lt;StringFilter id="nameEn" label="Anglický název" />
+            {/* emitUtcIso={false} — backend přijímá řetězec datetime-local přímo */}
+            &lt;DateTimeFilter id="created" emitUtcIso={false} />
+            {children}
+        &lt;/BaseFilter>
+    )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-SemestersManager.html">SemestersManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNamedTypedItemCard">AddNamedTypedItemCard</a></li><li><a href="global.html#AlertBanner">AlertBanner</a></li><li><a href="global.html#CLIENT_SIDE_SORT_COLUMNS">CLIENT_SIDE_SORT_COLUMNS</a></li><li><a href="global.html#COLUMN_TO_DB_FIELD">COLUMN_TO_DB_FIELD</a></li><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#ConfirmForm">ConfirmForm</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DEFAULT_ADJECTIVES">DEFAULT_ADJECTIVES</a></li><li><a href="global.html#DEFAULT_SUBJECTS">DEFAULT_SUBJECTS</a></li><li><a href="global.html#DataForm">DataForm</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#Filter">Filter</a></li><li><a href="global.html#GenerateButton">GenerateButton</a></li><li><a href="global.html#GenerateDialog">GenerateDialog</a></li><li><a href="global.html#GenerateForm">GenerateForm</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#JsonStateTools">JsonStateTools</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#PageVector">PageVector</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#StringFilter">StringFilter</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectGenerateCard">SubjectGenerateCard</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectName">buildSubjectName</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#computeOrderby">computeOrderby</a></li><li><a href="global.html#filterParameterName">filterParameterName</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#generateUniqueSubjects">generateUniqueSubjects</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li><li><a href="global.html#loadDictionaryToState">loadDictionaryToState</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#safeParseWhere">safeParseWhere</a></li><li><a href="global.html#sortItemsClientSide">sortItemsClientSide</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 10 2026 14:49:13 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
