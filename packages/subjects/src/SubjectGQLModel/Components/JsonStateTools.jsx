@@ -86,7 +86,7 @@ export const JsonStateTools = ({
         ref={fileInputRef}
         type="file"
         accept="application/json,.json"
-        style={{ display: "none" }}
+        className = "d-none"
         onChange={loadFromJsonFile}
       />
     </>
