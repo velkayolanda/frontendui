@@ -1,3 +1,4 @@
+/** @module Queries */
 /**
  * @fileoverview GraphQL fragmenty pro entitu Subject.
  *

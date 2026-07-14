@@ -1,3 +1,4 @@
+/** @module Scalars */
 import { createAsyncGraphQLAction, useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
 import { ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 

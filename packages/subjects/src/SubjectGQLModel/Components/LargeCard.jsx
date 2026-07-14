@@ -1,3 +1,4 @@
+/** @module Components */
 // import Row from "react-bootstrap/Row"
 import { MediumCard } from "./MediumCard"
 import { CardCapsule as CardCapsule_} from "./CardCapsule"

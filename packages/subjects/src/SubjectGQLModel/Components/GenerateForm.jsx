@@ -1,3 +1,4 @@
+/** @module Components */
 import { CardCapsule, Dialog, LoadingSpinner } from "@hrbolek/uoisfrontend-shared";
 import { useEffect, useState } from "react";
 import { ProgramSelect } from "./ProgramSelect";

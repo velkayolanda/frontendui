@@ -1,4 +1,5 @@
- import { useCallback, useState, useRef, useEffect } from "react";
+/** @module Components */
+import { useCallback, useState, useRef, useEffect } from "react";
 import { UpdateAsyncAction, SemesterInsertAsyncAction, SemesterDeleteAsyncAction, SemesterUpdateAsyncAction } from "../Queries";
 import { MediumEditableContent } from "./MediumEditableContent";
 import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";

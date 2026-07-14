@@ -1,3 +1,4 @@
+/** @module Pages */
 import { UpdateBody } from "../Mutations/Update"
 import { PageItemBase } from "./PageBase"
 

@@ -1,3 +1,4 @@
+/** @module Pages */
 import { GeneratedContentBase } from "../../../../_template/src/Base/Pages/Page"
 import { ReadItemURI } from "../Components"
 import { ReadAsyncAction } from "../Queries"

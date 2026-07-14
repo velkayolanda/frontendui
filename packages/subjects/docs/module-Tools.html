@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: Tools</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: Tools</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".buildSubjectName"><span class="type-signature">(static, constant) </span>buildSubjectName<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Sestaví výsledný název předmětu z podstatného a přídavného jména
+podle typu přídavného jména a rodu podstatného jména.</p>
+<p>Pravidla:</p>
+<ul>
+<li>Pokud je přídavné jméno typu <code>mekke</code>, použije se přímo ve tvaru
+<code>Adjective + Subject</code> (s velkým počátečním písmenem).</li>
+<li>Jinak se upraví koncovka přídavného jména podle rodu podstatného jména:
+<ul>
+<li><code>zensky</code> -&gt; <code>á</code></li>
+<li><code>stredni</code> -&gt; <code>é</code></li>
+<li><code>muzsky</code> -&gt; <code>ý</code></li>
+<li><code>mnozne</code> -&gt; <code>é</code></li>
+<li>výchozí -&gt; <code>ý</code></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>buildSubjectName({ name: "informatika", type: "zensky" }, { name: "teoretický", type: "tvrde" })// => "Teoretická Informatika"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".generateUUID"><span class="type-signature">(static, constant) </span>generateUUID<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Vygeneruje náhodný identifikátor ve formátu UUID v4.</p>
+<p>Poznámka:</p>
+<ul>
+<li>Formát odpovídá UUID v4 (<code>xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</code>),</li>
+<li>implementace využívá <code>Math.random()</code>,</li>
+<li>není určeno pro kryptografické/bezpečnostní použití.</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line167">line 167</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>generateUUID() // např. "3f8c2a4e-91b7-4c2e-a9d1-6d2c8f7b1a22"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".generateUniqueSubjects"><span class="type-signature">(static, constant) </span>generateUniqueSubjects<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Vygeneruje unikátní kombinace přídavných a podstatných jmen.</p>
+<p>Funkce vybírá náhodné dvojice indexů <code>subject + adjective</code> tak,
+aby se neopakovaly. Výsledkem je pole vygenerovaných názvů a doprovodná zpráva.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".loadDictionaryToState"><span class="type-signature">(static, constant) </span>loadDictionaryToState<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Načte slovník <code>name -&gt; type</code> do cílového stavu přes předaný callback.</p>
+<p>Každý záznam slovníku převádí na payload <code>{ name, type }</code>
+a předává ho funkci <code>addToState</code>.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line148">line 148</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".randomInt"><span class="type-signature">(static, constant) </span>randomInt<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Vrátí náhodné celé číslo včetně obou hranic intervalu <code>&lt;0, N&gt;</code>.</p>
+<p>Rozsah:</p>
+<ul>
+<li>minimum: <code>0</code></li>
+<li>maximum: <code>N</code></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Tools_generatorUtils.js.html">SubjectGQLModel/Tools/generatorUtils.js</a>, <a href="SubjectGQLModel_Tools_generatorUtils.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>randomInt(5) // může vrátit 0,1,2,3,4 nebo 5</code></pre>
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components.html">Components</a></li><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-Mutations.html">Mutations</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-Queries.html">Queries</a></li><li><a href="module-Scalars.html">Scalars</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-Tools.html">Tools</a></li><li><a href="module-Vectors.html">Vectors</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 14 2026 12:45:26 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

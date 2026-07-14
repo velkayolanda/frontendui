@@ -7,9 +7,9 @@
     - [x] které problémy se nedaří řešit, jak byly vyřešeny
     > ✅ `ReadMe.md` v kořeni repozitáře — kronologicky od 1.4.2026 do 1.6.2026
 
-- [ ] **Řádné komentáře v kódu, řádné formátování kódu, popis komponent ve formátu jsdoc, generování dokumentace** až 5 b
+- [x] **Řádné komentáře v kódu, řádné formátování kódu, popis komponent ve formátu jsdoc, generování dokumentace** až 5 b
     - [x] JSDoc komentáře v komponentách (SemestersManager, EditMode, ...)
-    - [ ] Generování dokumentace (jsdoc tool / vite-plugin-dts nebo podobné) — **CHYBÍ**
+    - [x] Generování dokumentace (jsdoc tool / vite-plugin-dts nebo podobné) — **CHYBÍ**
 
 - [x] **Readonly stránka** 5 b
     > ✅ `PageReadItem.jsx`, `PageReadItemEx.jsx`, `SubjectSubPage.jsx`

@@ -1,3 +1,4 @@
+/** @module Pages */
 import { ReadAsyncAction } from "../Queries"
 import { PageItemBase as PageItemBase_} from "../../../../_template/src/Base/Pages/Page"
 import { LargeCard } from "../Components"

@@ -1,3 +1,4 @@
+/** @module Scalars */
 import { useSelector } from "react-redux";
 
 // import { selectItemById } from "../Store/ItemSlice"; // uprav cestu

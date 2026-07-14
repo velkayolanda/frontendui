@@ -7,5 +7,5 @@
     "destination": "docs",
     "recurse": true
   },
-  "pugins": ["plugins/markdown"]
+  "plugins": ["plugins/markdown"]
 }

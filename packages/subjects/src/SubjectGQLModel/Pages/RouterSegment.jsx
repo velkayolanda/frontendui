@@ -1,3 +1,4 @@
+/** @module Pages */
 import { PageVector } from "./PageVector"
 import { PageUpdateItem } from "./PageUpdateItem"
 import { PageCreateItem } from "./PageCreateItem"

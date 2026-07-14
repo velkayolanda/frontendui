@@ -1,3 +1,4 @@
+/** @module Vectors */
 import { useEffect } from "react";
 import { Col } from "react-bootstrap";
 import { useAsyncAction, createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult, createQueryStrLazy } from "@hrbolek/uoisfrontend-gql-shared"

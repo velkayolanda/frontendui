@@ -1,3 +1,4 @@
+/** @module Components */
 import { useState } from "react";
 import { CardCapsule } from "@hrbolek/uoisfrontend-shared";
 

@@ -1,3 +1,4 @@
+/** @module Components */
 import { useMemo } from "react"
 import { KebabMenu, TableRow, TableBody } from "../../../../_template/src/Base/Components/Table"
 import { Link } from "./Link"
@@ -119,6 +120,7 @@ const buildSubjectTableDef = (data) => {
                                     className="btn btn-sm btn-outline-secondary border-0 text-start w-100"
                                     item={row}
                                     action="edit"
+                                    rbacitem={row?.rbacobject}
                                 >
                                     Editovat
                                 </UpdateLink>

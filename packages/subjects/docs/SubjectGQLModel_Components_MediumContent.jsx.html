@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SubjectGQLModel/Components/MediumContent.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SubjectGQLModel/Components/MediumContent.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module Components */
+import { Col } from "../../../../_template/src/Base/Components/Col"
+import { Row } from "../../../../_template/src/Base/Components/Row"
+import { Link } from "./Link"
+/**
+ * Readonly zobrazení entity Subject na úrovni "medium" (bez semestrů).
+ * Vykresluje jen pole, která mají hodnotu — prázdná pole se nezobrazí.
+ *
+ * @component
+ * @param {Object} props
+ * @param {Object} props.item - Entita Subject (MediumFragment nebo LargeFragment)
+ * @param {React.ReactNode} [props.children] - Další obsah zobrazený za atributy
+ */
+// export const MediumContent = ({ item, children}) => {
+//     return (
+//         &lt;MediumContent_ item={item}>
+//             {children}
+//         &lt;/MediumContent_>
+//     )
+// }
+
+// export const MediumContent_ = ({ item, children }) => {
+//     return (
+//         &lt;>
+//             {Object.entries(item).map(([attribute_name, attribute_value]) => {
+//                 // if (attribute_name !== "id") return null
+//                 if (Array.isArray(attribute_value)) return null
+//                 if (typeof attribute_value === "object" &amp;&amp; attribute_value !== null) return null
+//                 let attribute_value_result = attribute_value
+//                 // let attribute_value_result = attribute_value
+//                 if (Array.isArray(attribute_value))
+//                     // attribute_value_result = &lt;CardCapsule>&lt;Table data={attribute_value} />&lt;/CardCapsule>
+//                     return null
+//                 else if (typeof attribute_value === "object" &amp;&amp; attribute_value !== null)
+//                     // attribute_value_result = &lt;MediumCard item={attribute_value} />
+//                     return null
+//                 else if (attribute_name === "__typename") {
+//                     /*attribute_value_result = &lt;Link item={attribute_value} />*/
+//                     // console.log("else1", attribute_name, attribute_value)
+//                 }
+//                 if (attribute_name === "id")
+//                     attribute_value_result = &lt;Link item={item}>{item?.id || "Data error"}&lt;/Link>
+//                 if (attribute_name === "name")
+//                     attribute_value_result = &lt;Link item={item} />
+//                 // else return null
+//                 if (attribute_value)
+//                     return (
+//                         &lt;Row key={attribute_name}>
+//                             &lt;Col className="col-4">&lt;b>{attribute_name}&lt;/b>&lt;/Col>
+//                             &lt;Col className="col-8">{attribute_value_result}&lt;/Col>
+//                         &lt;/Row>
+//                     )
+//                 else return null
+//             })}
+//             {Object.entries(item).map(([attribute_name, attribute_value]) => {
+//                 if (attribute_value !== null) return null
+//                 let attribute_value_result = JSON.stringify(attribute_value)
+//                 if (Array.isArray(attribute_value))
+//                     // attribute_value_result = &lt;CardCapsule>&lt;Table data={attribute_value} />&lt;/CardCapsule>
+//                     return null
+//                 else if (typeof attribute_value === "object" &amp;&amp; attribute_value !== null)
+//                     // attribute_value_result = &lt;MediumCard item={attribute_value} />
+//                     return null
+//                 else if (attribute_name === "__typename") {
+//                     /*attribute_value_result = &lt;Link item={attribute_value} />*/
+//                     console.log("else2", attribute_name, attribute_value)
+//                 }
+//                 if (attribute_value)
+//                     return null
+//                 else
+//                     return (
+//                         &lt;Row key={attribute_name}>
+//                             &lt;Col className="col-4">&lt;b>{attribute_name}&lt;/b>&lt;/Col>
+//                             &lt;Col className="col-8">{attribute_value_result}&lt;/Col>
+//                         &lt;/Row>
+//                     )
+//             })}
+//             {children}
+//         &lt;/>
+//     )
+// }
+import { MediumContent as MediumContent_} from "../../../../_template/src/Base/Components/MediumContent"
+import {Attribute, formatDateTime} from "../../../../_template/src/Base/Components"
+
+//export { MediumContent } from "../../../../_template/src/Base/Components/MediumContent"
+
+export const MediumContent = ({ item, children}) => {
+    console.log("item", item)
+    return (
+        &lt;>
+            {item?.name &amp;&amp; (
+                &lt;Attribute label="Název">
+                    &lt;Link item={item} />
+                &lt;/Attribute>
+            )}
+            {item?.nameEn &amp;&amp; (
+                &lt;Attribute label="Anglický název">
+                    {item.nameEn}
+                &lt;/Attribute>
+            )}
+            {item?.description &amp;&amp; (
+                &lt;Attribute label="Popis">
+                    {item.description}
+                &lt;/Attribute>
+            )}
+            {item?.descriptionEn &amp;&amp; (
+                &lt;Attribute label="Anglický popis">
+                    {item.descriptionEn}
+                &lt;/Attribute>
+            )}
+            {(item?.program?.name || item?.program?.id) &amp;&amp; (
+                &lt;Attribute label="Program">
+                    &lt;a href={`/program/ProgramGQLModel/${item?.program?.id}`}>
+                        {item?.program?.name || item?.program?.id}
+                    &lt;/a>
+                &lt;/Attribute>
+            )}
+            {item?.rbacobject?.currentUserRoles?.length > 0 &amp;&amp; (
+                &lt;Attribute label="Moje role">
+                    {item.rbacobject.currentUserRoles.map(role => (
+                        &lt;span key={role.id} className="badge bg-secondary me-1">
+                    {role.roletype?.name}
+                &lt;/span>
+                    ))}
+                &lt;/Attribute>
+            )}
+            &lt;hr />
+            {item?.createdby?.fullname &amp;&amp; (
+                &lt;Attribute label="Vytvořil">
+                    {item.createdby.fullname}
+                &lt;/Attribute>
+            )}
+            {item?.created &amp;&amp; (
+                &lt;Attribute label="Vytvořeno">
+                    {formatDateTime(item.created)}
+                &lt;/Attribute>
+            )}
+            {item?.lastchange &amp;&amp; (
+                &lt;Attribute label="Změněno">
+                    {formatDateTime(item.lastchange)}
+                &lt;/Attribute>
+            )}
+            {item?.changedby?.fullname &amp;&amp; (
+                &lt;Attribute label="Změnil">
+                    {item.changedby.fullname}
+                &lt;/Attribute>
+            )}
+            {children}
+        &lt;/>
+    )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components.html">Components</a></li><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-Mutations.html">Mutations</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-Queries.html">Queries</a></li><li><a href="module-Scalars.html">Scalars</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-Tools.html">Tools</a></li><li><a href="module-Vectors.html">Vectors</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 14 2026 12:45:26 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

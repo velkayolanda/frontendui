@@ -1,3 +1,4 @@
+/** @module Components */
 import { UpdateAsyncAction } from "../Queries";
 import { MediumEditableContent } from "./MediumEditableContent";
 import { useEditAction } from "../../../../dynamic/src/Hooks/useEditAction";

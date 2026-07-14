@@ -1,3 +1,4 @@
+/** @module Components */
 import { useState, useCallback } from "react"
 import { DateTimeFilter, Filter as BaseFilter, UUIDFilter, useFilterDesigner, Input, SimpleCardCapsule, Row, Col } from "../../../../_template/src/Base"
 

@@ -1,3 +1,4 @@
+/** @module Components */
 import { ChildWrapper } from "@hrbolek/uoisfrontend-shared";
 
 /**

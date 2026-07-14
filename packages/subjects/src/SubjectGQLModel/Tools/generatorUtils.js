@@ -1,3 +1,4 @@
+/** @module Tools */
 /**
  * Vrátí náhodné celé číslo včetně obou hranic intervalu `<0, N>`.
  *

@@ -1,7 +1,7 @@
 /**
  * @fileoverview Komponenta pro správu semestrů předmětu (Subject).
  * Umožňuje přidávání, odebírání a změnu pořadí semestrů.
- * @module SemestersManager
+ * @module Components
  */
 
 import React, { useState, useCallback, useEffect } from "react";

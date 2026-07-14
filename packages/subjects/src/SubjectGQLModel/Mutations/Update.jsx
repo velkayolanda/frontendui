@@ -1,3 +1,4 @@
+/** @module Mutations */
 import {
     UpdateBody as BaseUpdateBody,
     UpdateButton as BaseUpdateButton,

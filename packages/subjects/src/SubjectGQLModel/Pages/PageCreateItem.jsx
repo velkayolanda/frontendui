@@ -1,3 +1,4 @@
+/** @module Pages */
 import { ReadAsyncAction } from "../Queries"
 import { Row } from "../../../../_template/src/Base/Components/Row";
 import { CreateBody } from "../Mutations/Create";

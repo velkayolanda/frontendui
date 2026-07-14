@@ -1,3 +1,4 @@
+/** @module Components */
 import { Input } from "../../../../_template/src/Base/FormControls/Input"
 import { Label } from "../../../../_template/src/Base/FormControls/Label"
 import { ProgramSelect } from "./ProgramSelect"

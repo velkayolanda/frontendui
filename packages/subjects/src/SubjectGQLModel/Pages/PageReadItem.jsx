@@ -1,3 +1,4 @@
+/** @module Pages */
 import { GeneratedContentBase } from "../../../../_template/src/Base/Pages/Page"
 import { PageItemBase } from "./PageBase"
 import { SubjectSubPage } from "./SubjectSubPage"

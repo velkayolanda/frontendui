@@ -1,3 +1,4 @@
+/** @module Pages */
 import Nav from 'react-bootstrap/Nav'
 import { Link, LinkURI } from '../Components'
 import { ProxyLink } from '../../../../_template/src/Base/Components/ProxyLink';

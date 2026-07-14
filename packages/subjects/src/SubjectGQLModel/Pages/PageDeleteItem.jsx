@@ -1,3 +1,4 @@
+/** @module Pages */
 import { PageItemBase } from "./PageBase";
 import { DeleteBody } from "../Mutations/Delete";
 

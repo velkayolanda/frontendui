@@ -1,3 +1,4 @@
+/** @module Components */
 import { URIRoot } from "../../uriroot";
 import { registerLink } from "../../../../_template/src/Base/Components/Link";
 import { ProxyLink } from "../../../../_template/src/Base/Components/ProxyLink";

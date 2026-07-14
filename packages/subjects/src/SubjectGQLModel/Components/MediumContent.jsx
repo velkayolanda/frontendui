@@ -1,3 +1,4 @@
+/** @module Components */
 import { Col } from "../../../../_template/src/Base/Components/Col"
 import { Row } from "../../../../_template/src/Base/Components/Row"
 import { Link } from "./Link"

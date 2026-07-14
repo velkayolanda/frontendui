@@ -1,3 +1,4 @@
+/** @module Components */
 import { useRef } from "react";
 
 /**

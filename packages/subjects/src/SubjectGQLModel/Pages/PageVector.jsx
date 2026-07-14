@@ -1,3 +1,4 @@
+/** @module Pages */
 /**
  * @fileoverview Stránka se seznamem předmětů s infinite scroll a řazením.
  *

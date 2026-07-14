@@ -1,3 +1,4 @@
+/** @module Pages */
 import { CardCapsule } from "../Components/CardCapsule"
 import { Table } from "../Components/Table"
 import { Attribute } from "../../../../_template/src/Base/Components"

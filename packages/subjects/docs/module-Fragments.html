@@ -38,7 +38,47 @@
     <div class="container-overview">
     
         
-            <div class="description">GraphQL fragmenty pro entitu Subject.Hierarchie fragmentů (menší ⊂ větší):```LinkFragment ⊂ MediumFragment ⊂ LargeFragment```## Použití fragmentů| Fragment | Použití | Obsah ||----------|---------|-------|| LinkFragment | Seznamy, odkazy, tabulky | Skalární pole entity || MediumFragment | Detailní zobrazení | Link + relace (createdby, changedby, rbacobject, program) || LargeFragment | Editační stránka | Medium + semesters (limit: 100) + guarantors |## Pomocné fragmenty- **RoleFragment** - Struktura role (RoleGQLModel)- **RBACFragment** - Práva aktuálního uživatele (currentUserRoles)## Důležité- LargeFragment obsahuje `semesters(limit: 100)` pro načtení všech semestrů- **NEPOUŽÍVEJ** LargeFragment v delete mutaci - způsobuje transakční konflikty</div>
+            <div class="description"><p>GraphQL fragmenty pro entitu Subject.</p>
+<p>Hierarchie fragmentů (menší ⊂ větší):</p>
+<pre class="prettyprint source"><code>LinkFragment ⊂ MediumFragment ⊂ LargeFragment
+</code></pre>
+<h2>Použití fragmentů</h2>
+<table>
+<thead>
+<tr>
+<th>Fragment</th>
+<th>Použití</th>
+<th>Obsah</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LinkFragment</td>
+<td>Seznamy, odkazy, tabulky</td>
+<td>Skalární pole entity</td>
+</tr>
+<tr>
+<td>MediumFragment</td>
+<td>Detailní zobrazení</td>
+<td>Link + relace (createdby, changedby, rbacobject, program)</td>
+</tr>
+<tr>
+<td>LargeFragment</td>
+<td>Editační stránka</td>
+<td>Medium + semesters (limit: 100) + guarantors</td>
+</tr>
+</tbody>
+</table>
+<h2>Pomocné fragmenty</h2>
+<ul>
+<li><strong>RoleFragment</strong> - Struktura role (RoleGQLModel)</li>
+<li><strong>RBACFragment</strong> - Práva aktuálního uživatele (currentUserRoles)</li>
+</ul>
+<h2>Důležité</h2>
+<ul>
+<li>LargeFragment obsahuje <code>semesters(limit: 100)</code> pro načtení všech semestrů</li>
+<li><strong>NEPOUŽÍVEJ</strong> LargeFragment v delete mutaci - způsobuje transakční konflikty</li>
+</ul></div>
         
 
         
@@ -87,7 +127,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line1">line 1</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -144,7 +184,8 @@
 
 
 <div class="description">
-    Velký fragment - Medium + semesters + guarantors.Závislosti: MediumFragment (a transitively LinkFragment, RBACFragment)
+    <p>Velký fragment - Medium + semesters + guarantors.
+Závislosti: MediumFragment (a transitively LinkFragment, RBACFragment)</p>
 </div>
 
 
@@ -182,7 +223,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line222">line 222</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line223">line 223</a>
     </li></ul></dd>
     
 
@@ -206,7 +247,7 @@
 
 
 <div class="description">
-    Základní fragment - skalární pole Subject
+    <p>Základní fragment - skalární pole Subject</p>
 </div>
 
 
@@ -244,7 +285,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line210">line 210</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line211">line 211</a>
     </li></ul></dd>
     
 
@@ -268,7 +309,8 @@
 
 
 <div class="description">
-    Střední fragment - Link + relace.Závislosti: LinkFragment, RBACFragment (automaticky se připojí do query)
+    <p>Střední fragment - Link + relace.
+Závislosti: LinkFragment, RBACFragment (automaticky se připojí do query)</p>
 </div>
 
 
@@ -306,7 +348,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line216">line 216</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line217">line 217</a>
     </li></ul></dd>
     
 
@@ -330,7 +372,7 @@
 
 
 <div class="description">
-    Fragment pro RBAC práva - RBACObjectGQLModel.currentUserRoles
+    <p>Fragment pro RBAC práva - RBACObjectGQLModel.currentUserRoles</p>
 </div>
 
 
@@ -368,7 +410,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line207">line 207</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line208">line 208</a>
     </li></ul></dd>
     
 
@@ -392,7 +434,7 @@
 
 
 <div class="description">
-    Fragment pro role - RoleGQLModel
+    <p>Fragment pro role - RoleGQLModel</p>
 </div>
 
 
@@ -430,7 +472,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line204">line 204</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line205">line 205</a>
     </li></ul></dd>
     
 
@@ -454,7 +496,19 @@
 
 
 <div class="description">
-    LargeFragment - kompletní fragment pro editační stránku.Obsahuje MediumFragment + semestry a garanty.Přidává k Medium:- semesters: Pole semestrů předmětu (id, order, lastchange)  - Používá limit: 100 pro načtení všech semestrů (backend má default 10)- guarantors: Pole garantů předmětu (id)**VAROVÁNÍ**: Nepoužívej v delete mutaci!Načítání semestrů uvnitř delete transakce způsobuje konflikty v backendu.
+    <p>LargeFragment - kompletní fragment pro editační stránku.
+Obsahuje MediumFragment + semestry a garanty.</p>
+<p>Přidává k Medium:</p>
+<ul>
+<li>semesters: Pole semestrů předmětu (id, order, lastchange)
+<ul>
+<li>Používá limit: 100 pro načtení všech semestrů (backend má default 10)</li>
+</ul>
+</li>
+<li>guarantors: Pole garantů předmětu (id)</li>
+</ul>
+<p><strong>VAROVÁNÍ</strong>: Nepoužívej v delete mutaci!
+Načítání semestrů uvnitř delete transakce způsobuje konflikty v backendu.</p>
 </div>
 
 
@@ -492,7 +546,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line102">line 102</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -516,7 +570,15 @@
 
 
 <div class="description">
-    LinkFragment - základní skalární pole entity Subject.Použij pro seznamy (Table), odkazy (Link) a rychlé náhledy.Obsahuje:- Identifikátory: id, __typename- Metadata: lastchange, created, createdbyId, changedbyId- Základní atributy: name, nameEn, description, descriptionEn- Relační ID: programId, rbacobjectId, guarantorsGroupId
+    <p>LinkFragment - základní skalární pole entity Subject.
+Použij pro seznamy (Table), odkazy (Link) a rychlé náhledy.</p>
+<p>Obsahuje:</p>
+<ul>
+<li>Identifikátory: id, __typename</li>
+<li>Metadata: lastchange, created, createdbyId, changedbyId</li>
+<li>Základní atributy: name, nameEn, description, descriptionEn</li>
+<li>Relační ID: programId, rbacobjectId, guarantorsGroupId</li>
+</ul>
 </div>
 
 
@@ -554,7 +616,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line44">line 44</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -578,7 +640,15 @@
 
 
 <div class="description">
-    MediumFragment - rozšířený fragment pro detailní zobrazení.Obsahuje LinkFragment + relace pro zobrazení souvisejících entit.Přidává k Link:- createdby: Uživatel, který entitu vytvořil (id, fullname)- changedby: Uživatel, který entitu naposledy změnil (id, fullname)- rbacobject: RBAC práva včetně rolí aktuálního uživatele- program: Přiřazený studijní program (id, name)
+    <p>MediumFragment - rozšířený fragment pro detailní zobrazení.
+Obsahuje LinkFragment + relace pro zobrazení souvisejících entit.</p>
+<p>Přidává k Link:</p>
+<ul>
+<li>createdby: Uživatel, který entitu vytvořil (id, fullname)</li>
+<li>changedby: Uživatel, který entitu naposledy změnil (id, fullname)</li>
+<li>rbacobject: RBAC práva včetně rolí aktuálního uživatele</li>
+<li>program: Přiřazený studijní program (id, name)</li>
+</ul>
 </div>
 
 
@@ -616,7 +686,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line72">line 72</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -640,7 +710,18 @@
 
 
 <div class="description">
-    RBACFragment (RBRoles) - RBAC práva aktuálního uživatele.Používá se pro kontrolu oprávnění v UI.Obsahuje:- currentUserRoles: Pole rolí přihlášeného uživatele  - roletype: Typ role (id, name)  - group: Skupina, ke které role patří (id, name, grouptype)  - valid, startdate, enddate: Platnost role
+    <p>RBACFragment (RBRoles) - RBAC práva aktuálního uživatele.
+Používá se pro kontrolu oprávnění v UI.</p>
+<p>Obsahuje:</p>
+<ul>
+<li>currentUserRoles: Pole rolí přihlášeného uživatele
+<ul>
+<li>roletype: Typ role (id, name)</li>
+<li>group: Skupina, ke které role patří (id, name, grouptype)</li>
+<li>valid, startdate, enddate: Platnost role</li>
+</ul>
+</li>
+</ul>
 </div>
 
 
@@ -678,7 +759,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line167">line 167</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -702,7 +783,14 @@
 
 
 <div class="description">
-    RoleFragment - struktura role (RoleGQLModel).Používá se pro detailní zobrazení rolí uživatelů.Obsahuje:- Identifikátory a metadata- Časové omezení: valid, startdate, enddate- Relace: roletype, user, group
+    <p>RoleFragment - struktura role (RoleGQLModel).
+Používá se pro detailní zobrazení rolí uživatelů.</p>
+<p>Obsahuje:</p>
+<ul>
+<li>Identifikátory a metadata</li>
+<li>Časové omezení: valid, startdate, enddate</li>
+<li>Relace: roletype, user, group</li>
+</ul>
 </div>
 
 
@@ -740,7 +828,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line132">line 132</a>
+        <a href="SubjectGQLModel_Queries_Fragments.jsx.html">SubjectGQLModel/Queries/Fragments.jsx</a>, <a href="SubjectGQLModel_Queries_Fragments.jsx.html#line133">line 133</a>
     </li></ul></dd>
     
 
@@ -774,13 +862,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-SemestersManager.html">SemestersManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddNamedTypedItemCard">AddNamedTypedItemCard</a></li><li><a href="global.html#AlertBanner">AlertBanner</a></li><li><a href="global.html#CLIENT_SIDE_SORT_COLUMNS">CLIENT_SIDE_SORT_COLUMNS</a></li><li><a href="global.html#COLUMN_TO_DB_FIELD">COLUMN_TO_DB_FIELD</a></li><li><a href="global.html#CardCapsule">CardCapsule</a></li><li><a href="global.html#Children">Children</a></li><li><a href="global.html#ConfirmEdit">ConfirmEdit</a></li><li><a href="global.html#ConfirmForm">ConfirmForm</a></li><li><a href="global.html#CreateBody">CreateBody</a></li><li><a href="global.html#CreateBodyWithSemesters">CreateBodyWithSemesters</a></li><li><a href="global.html#CreateButton">CreateButton</a></li><li><a href="global.html#CreateDialog">CreateDialog</a></li><li><a href="global.html#CreateLink">CreateLink</a></li><li><a href="global.html#DEFAULT_ADJECTIVES">DEFAULT_ADJECTIVES</a></li><li><a href="global.html#DEFAULT_SUBJECTS">DEFAULT_SUBJECTS</a></li><li><a href="global.html#DataForm">DataForm</a></li><li><a href="global.html#DeleteAsyncAction">DeleteAsyncAction</a></li><li><a href="global.html#DeleteBody">DeleteBody</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteDialog">DeleteDialog</a></li><li><a href="global.html#DeleteLink">DeleteLink</a></li><li><a href="global.html#DeleteMutationStr">DeleteMutationStr</a></li><li><a href="global.html#EditMode">EditMode</a></li><li><a href="global.html#Filter">Filter</a></li><li><a href="global.html#GenerateButton">GenerateButton</a></li><li><a href="global.html#GenerateDialog">GenerateDialog</a></li><li><a href="global.html#GenerateForm">GenerateForm</a></li><li><a href="global.html#InsertAsyncAction">InsertAsyncAction</a></li><li><a href="global.html#InsertMutationStr">InsertMutationStr</a></li><li><a href="global.html#InteractiveMutations">InteractiveMutations</a></li><li><a href="global.html#JsonStateTools">JsonStateTools</a></li><li><a href="global.html#LargeCard">LargeCard</a></li><li><a href="global.html#LiveEdit">LiveEdit</a></li><li><a href="global.html#LiveEditWrapper">LiveEditWrapper</a></li><li><a href="global.html#LiveEdit_">LiveEdit_</a></li><li><a href="global.html#MediumCard">MediumCard</a></li><li><a href="global.html#MediumEditableContent">MediumEditableContent</a></li><li><a href="global.html#MyNavDropdown">MyNavDropdown</a></li><li><a href="global.html#PageItemBase">PageItemBase</a></li><li><a href="global.html#PageLink">PageLink</a></li><li><a href="global.html#PageReadItemRolesOn">PageReadItemRolesOn</a></li><li><a href="global.html#PageVector">PageVector</a></li><li><a href="global.html#ProgramPageAsyncAction">ProgramPageAsyncAction</a></li><li><a href="global.html#ProgramPageQueryStr">ProgramPageQueryStr</a></li><li><a href="global.html#ProgramSelect">ProgramSelect</a></li><li><a href="global.html#ReadAsyncAction">ReadAsyncAction</a></li><li><a href="global.html#SortButton">SortButton</a></li><li><a href="global.html#SortableTableHeader">SortableTableHeader</a></li><li><a href="global.html#StringFilter">StringFilter</a></li><li><a href="global.html#SubjectEditForm">SubjectEditForm</a></li><li><a href="global.html#SubjectGQLModelRouterSegments">SubjectGQLModelRouterSegments</a></li><li><a href="global.html#SubjectGenerateCard">SubjectGenerateCard</a></li><li><a href="global.html#SubjectSubPage">SubjectSubPage</a></li><li><a href="global.html#TemplateLink">TemplateLink</a></li><li><a href="global.html#TemplateScalarAttribute">TemplateScalarAttribute</a></li><li><a href="global.html#TemplateScalarAttributeLazy">TemplateScalarAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute">TemplateVectorsAttribute</a></li><li><a href="global.html#TemplateVectorsAttributeInfinite">TemplateVectorsAttributeInfinite</a></li><li><a href="global.html#TemplateVectorsAttributeLazy">TemplateVectorsAttributeLazy</a></li><li><a href="global.html#TemplateVectorsAttribute_old">TemplateVectorsAttribute_old</a></li><li><a href="global.html#UpdateAsyncAction">UpdateAsyncAction</a></li><li><a href="global.html#UpdateBody">UpdateBody</a></li><li><a href="global.html#UpdateButton">UpdateButton</a></li><li><a href="global.html#UpdateDialog">UpdateDialog</a></li><li><a href="global.html#UpdateLink">UpdateLink</a></li><li><a href="global.html#UpdateMutationStr">UpdateMutationStr</a></li><li><a href="global.html#VectorsVisualiser">VectorsVisualiser</a></li><li><a href="global.html#buildSubjectName">buildSubjectName</a></li><li><a href="global.html#buildSubjectTableDef">buildSubjectTableDef</a></li><li><a href="global.html#computeOrderby">computeOrderby</a></li><li><a href="global.html#filterParameterName">filterParameterName</a></li><li><a href="global.html#followUpTemplateVectorItemDelete">followUpTemplateVectorItemDelete</a></li><li><a href="global.html#followUpTemplateVectorItemInsert">followUpTemplateVectorItemInsert</a></li><li><a href="global.html#followUpTemplateVectorItemUpdate">followUpTemplateVectorItemUpdate</a></li><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#generateUniqueSubjects">generateUniqueSubjects</a></li><li><a href="global.html#getSemesterName">getSemesterName</a></li><li><a href="global.html#loadDictionaryToState">loadDictionaryToState</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#safeParseWhere">safeParseWhere</a></li><li><a href="global.html#sortItemsClientSide">sortItemsClientSide</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components.html">Components</a></li><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-Mutations.html">Mutations</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-Queries.html">Queries</a></li><li><a href="module-Scalars.html">Scalars</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-Tools.html">Tools</a></li><li><a href="module-Vectors.html">Vectors</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Jul 10 2026 14:49:13 GMT+0200 (stredoeurópsky letný čas)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 14 2026 12:45:26 GMT+0200 (stredoeurópsky letný čas)
 </footer>
 
 <script> prettyPrint(); </script>

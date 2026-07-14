@@ -1,0 +1,7860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: Queries</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: Queries</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DeleteAsyncAction"><span class="type-signature">(static, constant) </span>DeleteAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro smazání entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(DeleteAsyncAction({ id: "uuid", lastchange: "2026-05-01T00:00:00Z" }, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".InsertAsyncAction"><span class="type-signature">(static, constant) </span>InsertAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro vytvoření nové entity Subject.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>dispatch(InsertAsyncAction({  programId: "uuid-programu",  name: "Nový předmět",  nameEn: "New Subject"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ProgramPageAsyncAction"><span class="type-signature">(static, constant) </span>ProgramPageAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro načtení seznamu programů.
+Používá se s dispatch v Redux store.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const result = await dispatch(ProgramPageAsyncAction({ skip: 0, limit: 100 }, gqlClient))
+const programs = result?.data?.programPage</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".ReadAsyncAction"><span class="type-signature">(static, constant) </span>ReadAsyncAction<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>An async action for executing a GraphQL query to read  entities.</p>
+<p>This action is created using <code>createAsyncGraphQLAction</code> with a predefined <code>QueryRead</code> query.
+It can be dispatched with query variables to fetch data related to  entities from the GraphQL API.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">function</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html">SubjectGQLModel/Queries/ReadAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ReadAsyncAction.jsx.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example usage:const queryVariables = { id: "12345" };dispatch(ReadAsyncAction(queryVariables))  .then((result) => {    console.log("Fetched data:", result);  })  .catch((error) => {    console.error("Error fetching data:", error);  });</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".UpdateAsyncAction"><span class="type-signature">(static, constant) </span>UpdateAsyncAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Async action pro aktualizaci entity Subject.
+Používá se s dispatch v Redux store.</p>
+<p>Konfigurace:</p>
+<ul>
+<li>updateItemsFromGraphQLResult: Aktualizuje položky v Redux store z výsledku</li>
+<li>reduceToFirstEntity: Vrátí první entitu z výsledku (pro použití v komponentách)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const updatedSubject = await dispatch(UpdateAsyncAction({  id: "uuid",  lastchange: "2026-05-01T00:00:00Z",  name: "Aktualizovaný název"}, gqlClient))</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DeleteMutationStr"><span class="type-signature">(inner, constant) </span>DeleteMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro smazání entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k smazání (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModelDeleteError při chybě (s detaily: msg, code, failed, location, input)</li>
+<li>Úspěšné smazání nevrací data (jen prázdný výsledek)</li>
+</ul>
+<p>DŮLEŽITÉ: Nepoužíváme LargeFragment v Entity, protože načítání semestrů
+během delete transakce způsobuje transakční konflikty v backendu.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html">SubjectGQLModel/Queries/DeleteAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_DeleteAsyncAction.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~InsertMutationStr"><span class="type-signature">(inner, constant) </span>InsertMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro vytvoření nové entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>programId: UUID programu (povinné) - předmět musí patřit do programu</li>
+<li>id: UUID nové entity (volitelné) - pokud není zadáno, vygeneruje se</li>
+<li>name: Název předmětu v češtině (volitelné)</li>
+<li>nameEn: Název předmětu v angličtině (volitelné)</li>
+<li>description: Popis předmětu v češtině (volitelné)</li>
+<li>descriptionEn: Popis předmětu v angličtině (volitelné)</li>
+<li>groupId: UUID skupiny (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelInsertError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html">SubjectGQLModel/Queries/InsertAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_InsertAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~ProgramPageQueryStr"><span class="type-signature">(inner, constant) </span>ProgramPageQueryStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL query pro načtení seznamu programů.</p>
+<p>Používá se primárně v ProgramSelect komponentě pro zobrazení
+dostupných programů při vytváření/editaci předmětu.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>skip: Počet záznamů k přeskočení (pro stránkování)</li>
+<li>limit: Maximální počet vrácených záznamů</li>
+<li>where: Filtr dle ProgramInputFilter (volitelné)</li>
+</ul>
+<p>Vrací pole programů s:</p>
+<ul>
+<li>__typename: Typ entity</li>
+<li>id: UUID programu</li>
+<li>name: Název v češtině</li>
+<li>nameEn: Název v angličtině</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html">SubjectGQLModel/Queries/ProgramPageAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_ProgramPageAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~UpdateMutationStr"><span class="type-signature">(inner, constant) </span>UpdateMutationStr<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>GraphQL mutace pro aktualizaci entity Subject.</p>
+<p>Vstupní parametry:</p>
+<ul>
+<li>id: UUID entity k aktualizaci (povinné)</li>
+<li>lastchange: DateTime poslední změny pro optimistic locking (povinné)</li>
+<li>name: Nový název v češtině (volitelné)</li>
+<li>nameEn: Nový název v angličtině (volitelné)</li>
+<li>description: Nový popis v češtině (volitelné)</li>
+<li>descriptionEn: Nový popis v angličtině (volitelné)</li>
+</ul>
+<p>Vrací:</p>
+<ul>
+<li>SubjectGQLModel při úspěchu (s daty dle LargeFragment)</li>
+<li>SubjectGQLModelUpdateError při chybě (s detaily: msg, failed)</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html">SubjectGQLModel/Queries/UpdateAsyncAction.jsx</a>, <a href="SubjectGQLModel_Queries_UpdateAsyncAction.jsx.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components.html">Components</a></li><li><a href="module-Fragments.html">Fragments</a></li><li><a href="module-Mutations.html">Mutations</a></li><li><a href="module-Pages.html">Pages</a></li><li><a href="module-Queries.html">Queries</a></li><li><a href="module-Scalars.html">Scalars</a></li><li><a href="module-SemesterDeleteAsyncAction.html">SemesterDeleteAsyncAction</a></li><li><a href="module-SemesterInsertAsyncAction.html">SemesterInsertAsyncAction</a></li><li><a href="module-SemesterUpdateAsyncAction.html">SemesterUpdateAsyncAction</a></li><li><a href="module-Tools.html">Tools</a></li><li><a href="module-Vectors.html">Vectors</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 14 2026 12:45:26 GMT+0200 (stredoeurópsky letný čas)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

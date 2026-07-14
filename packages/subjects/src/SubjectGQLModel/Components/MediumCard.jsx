@@ -1,3 +1,4 @@
+/** @module Components */
 import { PersonFill } from "react-bootstrap-icons"
 import { CardCapsule } from "./CardCapsule"
 import { MediumContent } from "./MediumContent"

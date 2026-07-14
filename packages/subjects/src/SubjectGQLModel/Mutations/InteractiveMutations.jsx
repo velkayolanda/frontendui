@@ -1,3 +1,4 @@
+/** @module Mutations */
 import { CardCapsule, VectorItemsURI } from "../Components"
 import { CreateButton, CreateLink } from "./Create"
 import { UpdateButton, UpdateLink } from "./Update"

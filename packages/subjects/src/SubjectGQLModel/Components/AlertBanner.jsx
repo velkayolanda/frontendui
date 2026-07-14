@@ -1,3 +1,4 @@
+/** @module Components */
 /**
  * Jednoduchý znovupoužitelný alert banner.
  *

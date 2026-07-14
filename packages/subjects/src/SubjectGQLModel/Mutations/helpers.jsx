@@ -1,3 +1,4 @@
+/** @module Mutations */
 export const makeMutationURI = (linkURI, action, { withId = false } = {}) => {
     const viewSegmentRe = /\/view(\/|$)/;
     if (!viewSegmentRe.test(linkURI)) throw new Error(`LinkURI must contain '/view'. Got: ${linkURI}`);
