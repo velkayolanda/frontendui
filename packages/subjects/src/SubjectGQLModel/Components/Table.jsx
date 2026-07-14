@@ -1,6 +1,7 @@
 /** @module Components */
 import { useMemo } from "react"
 import { KebabMenu, TableRow, TableBody } from "../../../../_template/src/Base/Components/Table"
+import { formatDateTime } from "../../../../_template/src/Base/Components/Attribute"
 import { Link } from "./Link"
 import { UpdateLink, UpdateButton } from "../Mutations/Update"
 import { DeleteButton } from "../Mutations/Delete"
@@ -37,20 +38,20 @@ const SortableTableHeader = ({ tableDef, sortConfig, onSort }) => {
 
     return (
         <thead>
-            <tr>
-                {Object.entries(tableDef).map(([key, { label }]) => (
-                    <th key={key}>
-                        {label}
-                        {sortableColumns.includes(key) && (
-                            <SortButton
-                                column={key}
-                                sortConfig={sortConfig}
-                                onSort={onSort}
-                            />
-                        )}
-                    </th>
-                ))}
-            </tr>
+        <tr>
+            {Object.entries(tableDef).map(([key, { label }]) => (
+                <th key={key}>
+                    {label}
+                    {sortableColumns.includes(key) && (
+                        <SortButton
+                            column={key}
+                            sortConfig={sortConfig}
+                            onSort={onSort}
+                        />
+                    )}
+                </th>
+            ))}
+        </tr>
         </thead>
     )
 }
@@ -96,7 +97,7 @@ const buildSubjectTableDef = (data) => {
         lastchange:{
             label: "Změněno",
             component: ({ row }) => (
-                <td>{row?.lastchange}</td>
+                <td>{formatDateTime(row?.lastchange)}</td>
             )
         },
         tools: {
