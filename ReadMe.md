@@ -376,6 +376,9 @@ Semestry přidané v editačním režimu mizely po uložení. Autosave byl nesta
 | 6. 7. 2026 | `Add permission gate` | Permission gate pro GenerateButton, podpora externích programů |
 | 9. 7. 2026 | `Improve semester insertion` | Vylepšení GenerateForm, program fetching |
 | 10. 7. 2026 | `Enhance semester management` | Local state tracking, oprava mizejících semestrů, limit 100 pro semesters query |
+| 10. 7. 2026 | `Refactor prop types in components` | Refaktoring prop types v komponentách, vylepšení dokumentace, oprava sorteru a tabulky semestrů |
+| 10. 7. 2026 | `Add JSDoc module annotations` | Přidání JSDoc module anotací do různých komponent a queries |
+| 14. 7. 2026 | `Improve permissions comment` | Vylepšení komentáře oprávnění v Delete komponentě, formátování data poslední změny v Table |
 
 ---
 
