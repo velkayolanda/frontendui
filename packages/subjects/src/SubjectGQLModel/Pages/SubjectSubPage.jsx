@@ -69,7 +69,7 @@ export const SubjectSubPage = ({ item }) => {
                     <tr key={semester.id}>
                         <td>{semester.order}</td>
                         <td>{getSemesterName(semester.order)}</td>
-                        <td><a href={`/semestr/SemesterGQLModel/${semester.id}`}>{semester.id}</a></td>
+                        <td><a href={`/semestr/SemesterGQLModel/view/${semester.id}`}>{semester.id}</a></td>
                         <td>{item.lastchange}</td>
                     </tr>
                 ))}

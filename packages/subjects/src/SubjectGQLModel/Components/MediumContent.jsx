@@ -110,7 +110,7 @@ export const MediumContent = ({ item, children}) => {
             )}
             {(item?.program?.name || item?.program?.id) && (
                 <Attribute label="Program">
-                    <a href={`/program/ProgramGQLModel/${item?.program?.id}`}>
+                    <a href={`/program/ProgramGQLModel/view/${item?.program?.id}`}>
                         {item?.program?.name || item?.program?.id}
                     </a>
                 </Attribute>
