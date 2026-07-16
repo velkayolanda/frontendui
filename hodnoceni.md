@@ -28,5 +28,5 @@
     > - Automatické vytvoření náhodného počtu semestrů (1-12) pro každý předmět
     > - Výběr programu z API nebo náhodný výběr
 
-- [ ] **Publikace npm** 5 b (včetně prokázání funkčnosti)
-    > ❌ Balíček `@velkayolanda/package-subjects` není publikován na npm
+- [x] **Publikace npm** 5 b (včetně prokázání funkčnosti)
+    > ✅ Balíček `@velkayolanda/package-subjects` je publikován na npm
